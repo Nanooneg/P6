@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- ============================================================= -->
+  <!--                       Information projet                      -->
+  <!-- ============================================================= -->
+
+  <!-- Infos Maven -->
+  <groupId>com.nanoo</groupId>
+  <artifactId>escalade</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!-- Infos générales -->
+  <name>escalade</name>
+  <description>projet 6 - parcours OC développeur d'application Java</description>
+  <url>http://maven.apache.org</url>
+
+  <!-- Infos organisation -->
+  <organization>
+    <name>OpenClassrooms</name>
+    <url>www.openclassrooms.com</url>
+  </organization>
+
+  <!-- ============================================================= -->
+  <!--                           Proprietés                          -->
+  <!-- ============================================================= -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <!-- ============================================================= -->
+  <!--                             Modules                           -->
+  <!-- ============================================================= -->
+  <modules>
+    <module>escalade-business</module>
+    <module>escalade-webapp</module>
+    <module>escalade-consumer</module>
+    <module>escalade-model</module>
+  </modules>
+
+  <!-- ============================================================= -->
+  <!--                           Dépendances                         -->
+  <!-- ============================================================= -->
+  <!-- xxx -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- Modules -->
+      <dependency>
+        <groupId>com.nanoo</groupId>
+        <artifactId>escalade-business</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.nanoo</groupId>
+        <artifactId>escalade-consumer</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.nanoo</groupId>
+        <artifactId>escalade-model</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>com.nanoo</groupId>
+        <artifactId>escalade-webapp</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+
+      <!-- Dépendances -->
+
+    </dependencies>
+  </dependencyManagement>
+</project>

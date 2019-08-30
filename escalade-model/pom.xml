@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- ============================================================= -->
+  <!--                       Information projet                      -->
+  <!-- ============================================================= -->
+
+  <!-- Infos Parent -->
+  <parent>
+    <groupId>com.nanoo</groupId>
+    <artifactId>escalade</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <!-- Infos Module -->
+  <groupId>com.nanoo</groupId>
+  <artifactId>escalade-model</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <!-- Infos générales -->
+  <name>escalade-model</name>
+  <description>Module Model - projet 6 - parcours OC développeur d'application Java</description>
+
+  <!-- ============================================================= -->
+  <!--                           Proprietés                          -->
+  <!-- ============================================================= -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <!-- ============================================================= -->
+  <!--                           Dépendances                         -->
+  <!-- ============================================================= -->
+  <dependencies>
+    <!-- Bibliothèques tierces -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
