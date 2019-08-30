@@ -26,6 +26,14 @@
   <description>Module Webapp - projet 6 - parcours OC développeur d'application Java</description>
 
   <!-- ============================================================= -->
+  <!--                           Proprietés                          -->
+  <!-- ============================================================= -->
+  <properties>
+    <application.name>Les amis de l'escalade</application.name>
+    <maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
+  </properties>
+
+  <!-- ============================================================= -->
   <!--                           Dépendances                         -->
   <!-- ============================================================= -->
   <dependencies>
@@ -41,10 +49,24 @@
 
     <!-- Bibliothèques tierces -->
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>javax.servlet.jsp-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -53,5 +75,22 @@
   <!-- ============================================================= -->
   <build>
     <finalName>escalade-webapp</finalName>
+
+    <plugins>
+      <!-- Packaging WAR -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <!--<configuration>
+          <webResources>
+            <Directory>${basedir}/src/main/webapp/</Directory>
+            <filtering>true</filtering>
+            <includes>jsp/_include/header.jsp</includes>
+            <includes>jsp/_include/footer.jsp</includes>
+            <includes>jsp/about.jsp</includes>
+          </webResources>
+        </configuration>-->
+      </plugin>
+    </plugins>
   </build>
 </project>
