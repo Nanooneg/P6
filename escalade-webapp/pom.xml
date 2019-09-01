@@ -2,95 +2,76 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <!-- ============================================================= -->
-  <!--                       Information projet                      -->
-  <!-- ============================================================= -->
+    <!-- ============================================================= -->
+    <!--                       Information projet                      -->
+    <!-- ============================================================= -->
 
-  <!-- Infos Parent -->
-  <parent>
+    <!-- Infos Parent -->
+    <parent>
+        <groupId>com.nanoo</groupId>
+        <artifactId>escalade</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <!-- Infos Module -->
     <groupId>com.nanoo</groupId>
-    <artifactId>escalade</artifactId>
+    <artifactId>escalade-webapp</artifactId>
     <version>1.0-SNAPSHOT</version>
-  </parent>
+    <packaging>war</packaging>
 
-  <!-- Infos Module -->
-  <groupId>com.nanoo</groupId>
-  <artifactId>escalade-webapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+    <!-- Infos générales -->
+    <name>escalade-webapp Maven Webapp</name>
+    <description>Module Webapp - projet 6 - parcours OC développeur d'application Java</description>
 
-  <!-- Infos générales -->
-  <name>escalade-webapp Maven Webapp</name>
-  <description>Module Webapp - projet 6 - parcours OC développeur d'application Java</description>
+    <!-- ============================================================= -->
+    <!--                           Proprietés                          -->
+    <!-- ============================================================= -->
+    <properties>
+        <application.name>Les amis de l'escalade</application.name>
+        <maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
+    </properties>
 
-  <!-- ============================================================= -->
-  <!--                           Proprietés                          -->
-  <!-- ============================================================= -->
-  <properties>
-    <application.name>Les amis de l'escalade</application.name>
-    <maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
-  </properties>
+    <!-- ============================================================= -->
+    <!--                           Dépendances                         -->
+    <!-- ============================================================= -->
+    <dependencies>
+        <!-- Déclaration des modules -->
+        <dependency>
+            <groupId>com.nanoo</groupId>
+            <artifactId>escalade-business</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.nanoo</groupId>
+            <artifactId>escalade-model</artifactId>
+        </dependency>
 
-  <!-- ============================================================= -->
-  <!--                           Dépendances                         -->
-  <!-- ============================================================= -->
-  <dependencies>
-    <!-- Déclaration des modules -->
-    <dependency>
-      <groupId>com.nanoo</groupId>
-      <artifactId>escalade-business</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.nanoo</groupId>
-      <artifactId>escalade-model</artifactId>
-    </dependency>
+        <!-- Bibliothèques tierces -->
 
-    <!-- Bibliothèques tierces -->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>javax.servlet.jsp-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet.jsp.jstl</groupId>
-      <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-  </dependencies>
+    </dependencies>
 
-  <!-- ============================================================= -->
-  <!--                              Build                            -->
-  <!-- ============================================================= -->
-  <build>
-    <finalName>escalade-webapp</finalName>
+    <!-- ============================================================= -->
+    <!--                              Build                            -->
+    <!-- ============================================================= -->
+    <build>
+        <finalName>escalade-webapp</finalName>
 
-    <plugins>
-      <!-- Packaging WAR -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <!--<configuration>
-          <webResources>
-            <Directory>${basedir}/src/main/webapp/</Directory>
-            <filtering>true</filtering>
-            <includes>jsp/_include/header.jsp</includes>
-            <includes>jsp/_include/footer.jsp</includes>
-            <includes>jsp/about.jsp</includes>
-          </webResources>
-        </configuration>-->
-      </plugin>
-    </plugins>
-  </build>
+        <plugins>
+            <!-- Packaging WAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <!--<configuration>
+                  <webResources>
+                    <Directory>${basedir}/src/main/webapp/</Directory>
+                    <filtering>true</filtering>
+                    <includes>jsp/_include/header.jsp</includes>
+                    <includes>jsp/_include/footer.jsp</includes>
+                    <includes>jsp/about.jsp</includes>
+                  </webResources>
+                </configuration>-->
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -34,6 +34,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring.version>5.1.9.RELEASE</spring.version>
+        <hibernate.version>5.4.4.Final</hibernate.version>
     </properties>
 
     <!-- ============================================================= -->
@@ -52,7 +53,7 @@
     <!-- xxx -->
     <dependencyManagement>
         <dependencies>
-            <!-- Modules -->
+            <!-- ===== Modules ===== -->
             <dependency>
                 <groupId>com.nanoo</groupId>
                 <artifactId>escalade-business</artifactId>
@@ -74,7 +75,8 @@
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 
-            <!-- Bibliothèques tierces -->
+            <!-- ===== Bibliothèques tierces ===== -->
+            <!-- Java servlet, jsp et jstl -->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -101,19 +103,35 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>2.1.10.RELEASE</version>
+            </dependency>
 
+            <!-- Hibernate -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+
+            <!-- Joda Time -->
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>2.10.3</version>
             </dependency>
 
+            <!-- PostgreSql -->
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>42.2.6</version>
+                <scope>runtime</scope>
             </dependency>
 
+            <!-- Junit -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

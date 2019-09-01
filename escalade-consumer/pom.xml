@@ -44,9 +44,10 @@
 
     <!-- Bibliothèques tierces -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
     </dependency>
+
   </dependencies>
 
   <!-- ============================================================= -->
