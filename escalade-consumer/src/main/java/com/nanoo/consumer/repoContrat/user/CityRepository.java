@@ -1,4 +1,4 @@
-package com.nanoo.consumer.repoContrat;
+package com.nanoo.consumer.repoContrat.user;
 
 import com.nanoo.model.entities.user.CityCode;
 import org.springframework.data.repository.CrudRepository;
