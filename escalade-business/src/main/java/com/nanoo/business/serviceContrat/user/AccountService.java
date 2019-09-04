@@ -1,4 +1,4 @@
-package com.nanoo.business.serviceContrat;
+package com.nanoo.business.serviceContrat.user;
 
 /**
  * @author nanoo

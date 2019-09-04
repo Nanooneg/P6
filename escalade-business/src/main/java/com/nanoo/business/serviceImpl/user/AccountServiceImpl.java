@@ -1,6 +1,6 @@
-package com.nanoo.business.serviceImpl;
+package com.nanoo.business.serviceImpl.user;
 
-import com.nanoo.business.serviceContrat.AccountService;
+import com.nanoo.business.serviceContrat.user.AccountService;
 import org.springframework.stereotype.Service;
 
 /**

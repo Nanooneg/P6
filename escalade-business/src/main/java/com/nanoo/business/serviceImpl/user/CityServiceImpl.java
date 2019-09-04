@@ -1,6 +1,6 @@
-package com.nanoo.business.serviceImpl;
+package com.nanoo.business.serviceImpl.user;
 
-import com.nanoo.business.serviceContrat.CityService;
+import com.nanoo.business.serviceContrat.user.CityService;
 import com.nanoo.consumer.repoContrat.user.CityRepository;
 import com.nanoo.model.entities.user.CityCode;
 import org.springframework.beans.factory.annotation.Autowired;

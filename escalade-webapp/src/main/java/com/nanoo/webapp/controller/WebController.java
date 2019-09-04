@@ -1,6 +1,6 @@
 package com.nanoo.webapp.controller;
 
-import com.nanoo.business.serviceContrat.CityService;
+import com.nanoo.business.serviceContrat.user.CityService;
 import com.nanoo.model.entities.user.CityCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
