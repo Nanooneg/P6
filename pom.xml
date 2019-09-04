@@ -76,6 +76,7 @@
             </dependency>
 
             <!-- ===== Bibliothèques tierces ===== -->
+
             <!-- Java servlet, jsp et jstl -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -90,9 +91,9 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>javax.servlet.jsp.jstl</groupId>
-                <artifactId>javax.servlet.jsp.jstl-api</artifactId>
-                <version>1.2.2</version>
+                <groupId>jstl</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
             </dependency>
 
             <!-- Spring library -->
@@ -114,6 +115,19 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
                 <version>${hibernate.version}</version>
+            </dependency>
+
+            <!-- Log4j -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.12.1</version>
+            </dependency>
+
+            <!-- Lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
             </dependency>
 
             <!-- Joda Time -->

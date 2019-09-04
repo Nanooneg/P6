@@ -6,4 +6,20 @@
 
   <display-name>escalade</display-name>
 
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:bootstrapContext.xml</param-value>
+  </context-param>
+
+  <!-- Inclusion de taglibs dans toutes les JSP -->
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/inc/taglibs.jsp</include-prelude>
+    </jsp-property-group>
+  </jsp-config>
+
 </web-app>
