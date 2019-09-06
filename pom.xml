@@ -122,6 +122,13 @@
                 <version>${hibernate.version}</version>
             </dependency>
 
+            <!-- Commons dbcp -->
+            <!--<dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-dbcp2</artifactId>
+                <version>2.7.0</version>
+            </dependency>-->
+
 
             <!-- EhCache -->
             <dependency>
@@ -141,6 +148,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
+                <version>1.18.8</version>
             </dependency>
 
             <!-- Joda Time -->

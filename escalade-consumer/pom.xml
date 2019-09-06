@@ -68,13 +68,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
+        <!--<configuration>
           <archive>
             <manifest>
-              <mainClass>com.nanoo.consumer.App</mainClass>
+              <mainClass></mainClass>
             </manifest>
           </archive>
-        </configuration>
+        </configuration>-->
       </plugin>
     </plugins>
   </build>

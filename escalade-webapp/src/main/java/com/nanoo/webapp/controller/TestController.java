@@ -1,10 +1,10 @@
 package com.nanoo.webapp.controller;
 
-import com.nanoo.business.serviceContrat.user.AccountService;
-import com.nanoo.model.entities.user.Account;
-import com.nanoo.model.entities.user.Address;
-import com.nanoo.model.entities.user.EnumRole;
-import com.nanoo.model.entities.user.EnumTitle;
+import com.nanoo.business.serviceContract.AccountService;
+import com.nanoo.model.entities.Account;
+import com.nanoo.model.entities.Address;
+import com.nanoo.model.entities.EnumRole;
+import com.nanoo.model.entities.EnumTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,17 +61,7 @@ public class TestController {
         account.setRoleName(EnumRole.ADMIN);
     
         /*Test de sauvegarde de données*/
-        /*Configuration conf = new Configuration().configure(*/
-        /*        new File("/home/nanoo/dev/intelliJ-workspace/escalade/escalade-webapp/src/main/resources/persistence/hibernate.cfg.xml"));*/
-        /*SessionFactory sf = conf.buildSessionFactory();*/
-        /*Session session = sf.openSession();*/
-        /*session.beginTransaction();*/
-        
-        //session.save(account);
         accountService.saveAccount(account);
-        
-        /*session.getTransaction().commit();*/
-        /*session.close();*/
         
         return "index";
         }

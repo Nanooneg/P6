@@ -67,7 +67,6 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.8</version>
     </dependency>
 
     <dependency>
@@ -90,13 +89,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <configuration>
+        <!--<configuration>
           <archive>
             <manifest>
-              <mainClass>com.nanoo.model.App</mainClass>
+              <mainClass></mainClass>
             </manifest>
           </archive>
-        </configuration>
+        </configuration>-->
       </plugin>
     </plugins>
   </build>
