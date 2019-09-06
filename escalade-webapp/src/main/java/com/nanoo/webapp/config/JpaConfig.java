@@ -27,7 +27,7 @@ import java.util.Properties;
 public class JpaConfig {
     
     /*@Autowired
-    private Environment env;*/
+    private Environment env;*/      // Impossible d'accéder à un fichier properties depuis une variable d'environnement
     
     Properties properties = new Properties();
     {
@@ -81,12 +81,16 @@ public class JpaConfig {
     private Properties additionalProperties() {
         Properties addProperties = new Properties();
         addProperties.setProperty("hibernate.hbm2ddl.auto", properties.getProperty("spring.jpa.hibernate.ddl-auto"));
+        addProperties.setProperty("hibernate.show_sql", properties.getProperty("spring.jpa.show-sql"));
         addProperties.setProperty("hibernate.dialect", properties.getProperty("spring.jpa.properties.hibernate.dialect"));
         addProperties.setProperty("hibernate.current_session_context_class", properties.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
-        addProperties.setProperty("hibernate.jdbc.lob.non_contextual_creation", properties.getProperty("spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation"));
-        addProperties.setProperty("hibernate.show_sql", properties.getProperty("spring.jpa.show-sql"));
         addProperties.setProperty("hibernate.format_sql", properties.getProperty("spring.jpa.properties.hibernate.format_sql"));
-        //addProperties.setProperty("",properties.getProperty(""));
+        addProperties.setProperty("hibernate.jdbc.lob.non_contextual_creation", properties.getProperty("spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation"));
+        addProperties.setProperty("hibernate.cache.use_second_level_cache",properties.getProperty("spring.jpa.properties.hibernate.cache.use_second_level_cache"));
+        addProperties.setProperty("hibernate.cache.region.factory_class",properties.getProperty("spring.jpa.properties.hibernate.cache.region.factory_class"));
+        addProperties.setProperty("hibernate.cache.provider_class",properties.getProperty("spring.jpa.properties.hibernate.cache.provider_class"));
+        addProperties.setProperty("hibernate.use_sql_comments",properties.getProperty("spring.jpa.use_sql_comments"));
+        //addProperties.setProperty("",properties.getProperty("")); // TO DO : Add more properties later
         return addProperties;
     }
 }
