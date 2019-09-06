@@ -2,6 +2,8 @@ package com.nanoo.model.entities.publication;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -13,6 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Data @NoArgsConstructor
+@Cacheable @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Topo implements Serializable {
     
     @Id

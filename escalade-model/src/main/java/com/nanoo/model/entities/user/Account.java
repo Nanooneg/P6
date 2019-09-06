@@ -1,9 +1,7 @@
 package com.nanoo.model.entities.user;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -20,14 +18,18 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String title;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 4)
+    private EnumTitle title;
     private String lastName;
     private String firstName;
     private String mail;
-    @Column(name = "id_address")
-    private Integer idAddress;
-    @Column(name = "role_name")
-    private String roleName;
+    private Address address;
+    /*@Column(name = "id_address")
+    private Integer idAddress;*/
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_name", length = 6)
+    private EnumRole roleName;
     private String login;
     private String password;
     @Column(name = "date_of_creation")

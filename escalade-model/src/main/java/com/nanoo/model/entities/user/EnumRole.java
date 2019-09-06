@@ -6,9 +6,9 @@ package com.nanoo.model.entities.user;
  */
 public enum EnumRole {
     
-    ADMINISTRATOR("Administrator"), ASSO_MEMBER("Association member"), CONSUMER("Consumer");
+    ADMIN/*("Administrator")*/, MEMBER/*("Association member")*/, USER/*("Consumer")*/;
     
-    EnumRole(String role) {
+  /*  EnumRole(String role) {
     }
-    
+    */
 }

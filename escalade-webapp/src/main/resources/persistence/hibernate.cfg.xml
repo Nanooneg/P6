@@ -18,17 +18,21 @@
         <!-- Set the current session context -->
         <property name="current_session_context_class">thread</property>
         <!-- create if no exist the database schema on startup -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
+        
+        <!-- Enable 2nd level cache with EhCache -->
+        <property name="cache.use_second_level_cache">true</property>
+        <property name="cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</property>
+        <property name="cache.provider_class">org.hibernate.cache.ehcache.internal.EhcacheRegionFactory</property>
 
         <!-- dbcp connection pool configuration -->
-        <property name="hibernate.dbcp.initialSize">5</property>
-        <property name="hibernate.dbcp.maxTotal">20</property>
-        <property name="hibernate.dbcp.maxIdle">10</property>
-        <property name="hibernate.dbcp.minIdle">5</property>
-        <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+        <property name="dbcp.initialSize">5</property>
+        <property name="dbcp.maxTotal">20</property>
+        <property name="dbcp.maxIdle">10</property>
+        <property name="dbcp.minIdle">5</property>
+        <property name="dbcp.maxWaitMillis">-1</property>
 
         <!-- déclaration des entitées -->
-        <mapping class="com.nanoo.model.entities.user.CityCode" />
         <mapping class="com.nanoo.model.entities.user.Account" />
         <mapping class="com.nanoo.model.entities.user.Address" />
         <!-- <mapping class="com.nanoo.model.entities.user.EnumRole" /> -->
