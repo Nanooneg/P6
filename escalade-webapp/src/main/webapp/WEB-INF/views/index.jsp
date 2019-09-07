@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>Index - DevMode</title>
-    <link type="text/css" rel="stylesheet" href="<c:url value="/style/style.css"/>"/>
+    <link type="text/css" href="<c:url value="../../inc/style.css"/>"/>
 </head>
 <body>
 <div align="center">
