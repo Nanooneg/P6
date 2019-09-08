@@ -1,5 +1,8 @@
+#Directory
 .idea/
-*.iml
-*.txt
 target/
 keep/
+
+#File
+*.iml
+*.txt

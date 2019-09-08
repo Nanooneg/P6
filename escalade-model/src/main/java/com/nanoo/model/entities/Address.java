@@ -3,8 +3,8 @@ package com.nanoo.model.entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * @author nanoo
@@ -12,10 +12,8 @@ import java.io.Serializable;
  */
 @Embeddable
 @Data @NoArgsConstructor
-public class Address implements Serializable {
+public class Address {
     
-    @Column(name = "street_nbr")
-    private String streetNbr;
     @Column(name = "street_name")
     private String streetName;
     @Column(name = "postal_code")

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
 
 /**
  * @author nanoo
@@ -16,10 +14,8 @@ import java.io.Serializable;
 @Entity
 @Data @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Way extends Publication implements Serializable {
+public class Way extends Publication {
     
-    @Id
-    private Integer id;
     @Column(name = "id_sector")
     private Integer idSector;
     private String rating;

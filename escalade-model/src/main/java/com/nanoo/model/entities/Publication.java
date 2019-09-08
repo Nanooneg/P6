@@ -2,8 +2,6 @@ package com.nanoo.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
@@ -13,9 +11,8 @@ import java.io.Serializable;
  * @author nanoo
  * @create 02/09/2019 - 15:34
  */
-@Entity
+@MappedSuperclass
 @Data @NoArgsConstructor
-/*@Cacheable @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)*/
 public class Publication implements Serializable {
     
     @Id

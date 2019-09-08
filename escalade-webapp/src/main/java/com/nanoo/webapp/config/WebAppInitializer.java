@@ -1,6 +1,7 @@
 package com.nanoo.webapp.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  * @create 01/09/2019 - 14:36
  */
 @Configuration
+@EnableWebMvc
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
    
     @Override

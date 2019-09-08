@@ -20,15 +20,12 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Enumerated(EnumType.STRING)
-    @Column(length = 4)
-    private EnumTitle title;
+    private String title;
     private String lastName;
     private String firstName;
     private String mail;
+    @Embedded
     private Address address;
-    /*@Column(name = "id_address")
-    private Integer idAddress;*/
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 6)
     private EnumRole roleName;

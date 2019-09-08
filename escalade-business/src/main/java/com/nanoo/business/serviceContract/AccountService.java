@@ -1,6 +1,6 @@
 package com.nanoo.business.serviceContract;
 
-import com.nanoo.model.entities.Account;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author nanoo
@@ -8,6 +8,6 @@ import com.nanoo.model.entities.Account;
  */
 public interface AccountService {
     
-    public void saveAccount(Account account);
+    public void saveAccount(HttpServletRequest req);
 
 }
