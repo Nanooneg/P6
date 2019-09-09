@@ -14,11 +14,13 @@
     <link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body>
-<jsp:include page="common/header.jsp">
-<div class="container-fluid blue">
+
+<%@include file="common/header.jsp" %>
+
+<div class="container-fluid background">
     <div id="login-box" >
         <form id="login-form" class="form" action="" method="post">
-            <h3 class="text-center text-info">Je m'authentifie</h3>
+            <h2 class="text-center text-info">Je m'authentifie</h2>
             <div class="form-group">
                 <label for="username" class="text-info">Pseudo:</label><br>
                 <input type="text" name="username" id="username" class="form-control">
@@ -36,5 +38,8 @@
         </form>
     </div>
 </div>
+
+<%@include file="common/footer.jsp" %>
+
 </body>
 </html>

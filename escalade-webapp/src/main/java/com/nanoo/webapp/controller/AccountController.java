@@ -16,16 +16,17 @@ import java.util.List;
 public class AccountController {
 
     @RequestMapping("/login")
-    public ModelAndView testBootstrap(){
+    public ModelAndView displayLoginForm(){
         return new ModelAndView("login");
     }
 
     @RequestMapping("/register")
-    public ModelAndView createAccount(){
+    public ModelAndView displayAccountCreationForm(){
         List<EnumTitle> listTitle = Arrays.asList(EnumTitle.values());
         
         ModelAndView mav = new ModelAndView("register");
         mav.addObject("listTitle",listTitle);
+        
         return mav;
     }
 }

@@ -16,10 +16,13 @@
 
 <%@include file="common/header.jsp" %>
 
-<div class="container-fluid blue">
+<div class="container-fluid background">
     <div id="login-box">
         <h3 class="text-center text-info">${message}</h3>
     </div>
 </div>
+
+<%@include file="common/footer.jsp" %>
+
 </body>
 </html>

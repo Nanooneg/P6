@@ -1,14 +1,24 @@
 body {
-    margin: 20px;
+    margin: auto;
     padding: 5px;
     height: 100vh;
+    font-family: "Roboto", Times New Roman, Georgia,sans-serif;
 }
 
-.blue {
+.background {
     height: 100vh;
-    background-color: #14668b;
+    background : url("../pictures/background2_50.png") no-repeat center center fixed;
 }
 
+.navbar {
+    position: fixed;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.footer {
+
+}
 #login-box {
     margin-top: 120px;
     margin-left: auto;
@@ -16,9 +26,29 @@ body {
     padding: 20px;
     max-width: 600px;
     height: auto;
-    border: 2px solid #9C9C9C;
-    background-color: #EAEAEA;
+    border: 1px solid #9c9c9c;
+    background-color: rgba(232, 232, 232, 0.9);
 }
+.form-control {
+    border: 1px solid #9c9c9c;
+}
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #9c9c9c;
+}
+.btn-info {
+    background-color: saddlebrown;
+    border-color: saddlebrown;
+}
+.btn-info:hover {
+    background-color: #8b603b;
+    border-color: #8b603b;
+}
+
+.text-info {
+    color: saddlebrown !important;
+}
+
 
 /* try to remove padding on two columns form-item
 #login-box .col-md-6 .leftSide{
