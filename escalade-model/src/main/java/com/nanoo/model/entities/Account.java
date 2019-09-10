@@ -2,7 +2,6 @@ package com.nanoo.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,20 +19,24 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String mail;
     @Embedded
     private Address address;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_name", length = 6)
+    @Column(name = "role_name", length = 6, nullable = false)
     private EnumRole roleName;
-    private String login;
+    @Column(length = 56,nullable = false)
     private String password;
-    @Column(name = "date_of_creation")
-    private DateTime dateOfCreation;
+    @Column(name = "date_of_creation", nullable = false)
+    private String dateOfCreation;
     @Column(name = "date_of_update")
-    private DateTime dateOfUpdate;
+    private String dateOfUpdate;
     
 }

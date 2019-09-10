@@ -16,13 +16,15 @@
 <body>
 
 <%@include file="common/header.jsp" %>
-
+<%--TODO get display for errors returned after form validation--%>
 <div class="container-fluid background">
-    <div id="login-box" >
-        <form id="login-form" class="form" action="home" method="post">
+    <div id="login-box">
+        <form id="login-form" class="form" action="/login" method="post">
             <h2 class="text-center text-info">Je crée mon compte</h2>
             <div class="form-group">
-                <%--<label for="title" class="text-info">Civilité:</label><br>--%>
+                <h4 class="text-center text-info">${result}</h4>
+            </div>
+            <div class="form-group">
                 <select id="title" name="title" class="text-info">
                     <option>Civilité</option>
                     <c:forEach items="${listTitle}" var="title">
@@ -31,38 +33,33 @@
                 </select>
             </div>
             <div class="form-group">
-                <%--<label for="lastName" class="text-info">Nom:</label><br>--%>
                 <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nom">
             </div>
             <div class="form-group">
-                <%--<label for="firstName" class="text-info">Prenom:</label><br>--%>
                 <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Prénom">
             </div>
             <div class="form-group">
-                <%--<label for="mail" class="text-info">Mail:</label><br>--%>
                 <input type="email" name="mail" id="mail" class="form-control" placeholder="Adresse mail">
+                <span class="error">${registration.errors['mail']}</span>
             </div>
             <div class="form-group">
-                <%--<label for="streetName" class="text-info">Adresse:</label><br>--%>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
+                <span class="error">${registration.errors['password']}</span>
+            </div>
+            <div class="form-group">
+                <input type="password" name="passwordConf" id="passwordConf" class="form-control"
+                       placeholder="Confirmez le mot de passe">
+            </div>
+            <div class="form-group">
                 <input type="text" name="streetName" id="streetName" class="form-control" placeholder="Adresse">
             </div>
             <div>
                 <div class="col-md-6 form-group">
-                    <%--<label for="postalCode" class="text-info">Code postal:</label><br>--%>
                     <input type="text" name="postalCode" id="postalCode" class="form-control" placeholder="Code postal">
                 </div>
                 <div class="col-md-6 form-group">
-                    <%--<label for="city" class="text-info">Ville:</label><br>--%>
                     <input type="text" name="city" id="city" class="form-control" placeholder="Ville">
                 </div>
-            </div>
-            <div class="form-group">
-                <%--<label for="username" class="text-info">Pseudo:</label><br>--%>
-                <input type="text" name="username" id="username" class="form-control" placeholder="Pseudonyme">
-            </div>
-            <div class="form-group">
-                <%--<label for="password" class="text-info">Mot de passe:</label><br>--%>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
             </div>
             <div class="form-group">
                 <input type="submit" name="submit" class="btn btn-md btn-info" value="Je m'inscris!">

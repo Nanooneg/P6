@@ -158,6 +158,13 @@
                 <version>2.10.3</version>
             </dependency>
 
+            <!-- Jasypt -->
+            <dependency>
+                <groupId>org.jasypt</groupId>
+                <artifactId>jasypt</artifactId>
+                <version>1.9.2</version>
+            </dependency>
+
             <!-- PostgreSql -->
             <dependency>
                 <groupId>org.postgresql</groupId>

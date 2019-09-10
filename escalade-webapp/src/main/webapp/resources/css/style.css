@@ -49,6 +49,11 @@ body {
     color: saddlebrown !important;
 }
 
+span .error {
+    font-style: italic;
+    color: red;
+    margin-left: 5px;
+}
 
 /* try to remove padding on two columns form-item
 #login-box .col-md-6 .leftSide{

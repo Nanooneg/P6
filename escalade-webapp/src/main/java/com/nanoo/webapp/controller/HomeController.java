@@ -1,6 +1,6 @@
 package com.nanoo.webapp.controller;
 
-import com.nanoo.business.serviceContract.AccountService;
+import com.nanoo.business.serviceContract.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
     
     @Autowired
-    private AccountService accountService;
+    private RegistrationService registrationService;
     
-    
-    @RequestMapping("/home")
+    @RequestMapping("/")
     public ModelAndView home(){
         
         ModelAndView mav = new ModelAndView("home");
@@ -29,14 +28,6 @@ public class HomeController {
         return mav;
     }
     
-    @RequestMapping(value = "/home", method = RequestMethod.POST)
-    public ModelAndView homePageAfterCreateAccountRequest(HttpServletRequest req) {
-        accountService.saveAccount(req);
-        
-        ModelAndView mav = new ModelAndView("home");
-        mav.addObject("message","La création de ton compte a été prise en compte !!");
-        
-        return mav;
-    }
+    
     
 }

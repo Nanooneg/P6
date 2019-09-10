@@ -18,7 +18,10 @@
 
 <div class="container-fluid background">
     <div id="login-box">
+        <c:if test="${empty result}">
         <h3 class="text-center text-info">${message}</h3>
+        </c:if>
+        <h3 class="text-center text-info">${result}</h3>
     </div>
 </div>
 
