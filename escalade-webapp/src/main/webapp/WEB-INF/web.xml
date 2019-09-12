@@ -14,6 +14,24 @@
     <param-value>classpath:bootstrapContext.xml</param-value>
   </context-param>
 
+  <!--Filtre pour encoder les données provenant des requêtes Http en utf-8-->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <servlet-name>dispatcher</servlet-name>
+  </filter-mapping>
+
   <!-- Inclusion de taglibs dans toutes les JSP -->
   <jsp-config>
     <jsp-property-group>

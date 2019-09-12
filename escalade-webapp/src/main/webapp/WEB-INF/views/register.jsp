@@ -3,62 +3,51 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-
-    <title>Je crée mon compte</title>
-
-    <%-- css --%>
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
-</head>
-<body>
-
 <%@include file="common/header.jsp" %>
-<%--TODO get display for errors returned after form validation--%>
+
 <div class="container-fluid background">
     <div id="login-box">
-        <form id="login-form" class="form" action="/login" method="post">
+        <form:form id="login-form" class="form" action="/login" method="post" modelAttribute="account">
             <h2 class="text-center text-info">Je crée mon compte</h2>
             <div class="form-group">
-                <h4 class="text-center text-info">${result}</h4>
+                <h4 class="text-center text-info">${registration.result}</h4>
             </div>
             <div class="form-group">
-                <select id="title" name="title" class="text-info">
-                    <option>Civilité</option>
-                    <c:forEach items="${listTitle}" var="title">
-                        <option>${title}</option>
-                    </c:forEach>
-                </select>
+                <form:select path="title" class="text-info">
+                    <form:option value="Civil" label="Civil"/>
+                    <form:options items="${listTitle}"/>
+                </form:select>
             </div>
             <div class="form-group">
-                <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Nom">
+                <form:input path="lastName" type="text" cssClass="form-control" placeholder="Nom" required="true"/>
             </div>
             <div class="form-group">
-                <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Prénom">
+                <form:input path="firstName" type="text" cssClass="form-control" placeholder="Prénom" required="true"/>
             </div>
             <div class="form-group">
-                <input type="email" name="mail" id="mail" class="form-control" placeholder="Adresse mail">
+                <form:input path="mail" type="email" cssClass="form-control" placeholder="Adresse mail" required="true"/>
                 <span class="error">${registration.errors['mail']}</span>
             </div>
             <div class="form-group">
-                <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe">
+                <form:input path="password" type="password" cssClass="form-control" placeholder="Mot de passe" required="true"/>
+                <form:errors path="password" cssClass="error"/>
                 <span class="error">${registration.errors['password']}</span>
             </div>
             <div class="form-group">
-                <input type="password" name="passwordConf" id="passwordConf" class="form-control"
-                       placeholder="Confirmez le mot de passe">
+                <form:input path="confirmation" type="password" name="passwordConf" id="passwordConf" class="form-control"
+                       placeholder="Confirmez le mot de passe" required="true"/>
             </div>
             <div class="form-group">
-                <input type="text" name="streetName" id="streetName" class="form-control" placeholder="Adresse">
+                <form:input path="streetName" type="text" name="streetName" id="streetName" class="form-control"
+                            placeholder="Adresse"/>
             </div>
             <div>
                 <div class="col-md-6 form-group">
-                    <input type="text" name="postalCode" id="postalCode" class="form-control" placeholder="Code postal">
+                    <form:input path="postalCode" type="text" name="postalCode" id="postalCode" class="form-control"
+                                placeholder="Code postal"/>
                 </div>
                 <div class="col-md-6 form-group">
-                    <input type="text" name="city" id="city" class="form-control" placeholder="Ville">
+                    <form:input path="city" type="text" name="city" id="city" class="form-control" placeholder="Ville"/>
                 </div>
             </div>
             <div class="form-group">
@@ -67,11 +56,9 @@
             <div id="register-link" class="text-right">
                 <a href="<c:url value="/login"/>" class="text-info">J'ai déjà un compte</a>
             </div>
-        </form>
+
+        </form:form>
     </div>
 </div>
 
 <%@include file="common/footer.jsp" %>
-
-</body>
-</html>

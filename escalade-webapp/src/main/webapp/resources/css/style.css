@@ -49,10 +49,14 @@ body {
     color: saddlebrown !important;
 }
 
-span .error {
+.error {
     font-style: italic;
     color: red;
     margin-left: 5px;
+}
+
+::placeholder {
+    color: saddlebrown;
 }
 
 /* try to remove padding on two columns form-item

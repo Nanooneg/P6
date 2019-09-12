@@ -1,13 +1,8 @@
 package com.nanoo.webapp.controller;
 
-import com.nanoo.business.serviceContract.RegistrationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author nanoo
@@ -16,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class HomeController {
     
-    @Autowired
-    private RegistrationService registrationService;
+    private static final String MESSAGE_ATT = "message";
     
-    @RequestMapping("/")
-    public ModelAndView home(){
+    private static final String HOME_VIEW = "home";
+    
+    @GetMapping(value = {"/","/home"})
+    public String home(Model model){
         
-        ModelAndView mav = new ModelAndView("home");
-        mav.addObject("message", "Page de bienvenue");
+        model.addAttribute(MESSAGE_ATT, "Page de bienvenue");
         
-        return mav;
+        return HOME_VIEW;
     }
     
     

@@ -26,10 +26,7 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"com.nanoo.consumer"})
 public class JpaConfig {
     
-    /*@Autowired
-    private Environment env;*/      // Impossible d'accéder à un fichier properties depuis une variable d'environnement
-    
-    Properties properties = new Properties();
+    private Properties properties = new Properties();
     {
         try {
             properties.load(getClass().getResourceAsStream("/persistence/jdbc.properties"));

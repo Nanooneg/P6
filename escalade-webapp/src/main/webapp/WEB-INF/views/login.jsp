@@ -3,18 +3,6 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-
-    <title>Je m'authentifie</title>
-
-    <%-- css --%>
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
-</head>
-<body>
-
 <%@include file="common/header.jsp" %>
 
 <div class="container-fluid background">
@@ -45,6 +33,3 @@
 </div>
 
 <%@include file="common/footer.jsp" %>
-
-</body>
-</html>

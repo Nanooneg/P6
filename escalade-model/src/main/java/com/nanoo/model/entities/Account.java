@@ -19,24 +19,33 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @Column(nullable = false)
+    
+    /* Required */
+    @Column(length = 4, nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(length = 30, nullable = false)
     private String lastName;
-    @Column(nullable = false)
+    @Column(length = 30, nullable = false)
     private String firstName;
-    @Column(nullable = false)
+    @Column(length = 30, unique = true,nullable = false)
     private String mail;
-    @Embedded
-    private Address address;
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 6, nullable = false)
     private EnumRole roleName;
-    @Column(length = 56,nullable = false)
+    @Column(length = 56, nullable = false)
     private String password;
-    @Column(name = "date_of_creation", nullable = false)
+    @Transient
+    private String confirmation;
+    @Column(name = "date_of_creation",length = 30, nullable = false)
     private String dateOfCreation;
-    @Column(name = "date_of_update")
+    @Column(name = "date_of_update",length = 30, nullable = false)
     private String dateOfUpdate;
     
+    /* Not required */
+    @Column(name = "street_name", length = 30)
+    private String streetName;
+    @Column(name = "postal_code")
+    private int postalCode;
+    @Column(length = 30)
+    private String city;
 }
