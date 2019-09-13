@@ -10,18 +10,11 @@
     <title>Escalade</title>
 
     <%-- css --%>
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+
 </head>
 <body>
-<div class="navbar">
-    <ul class="nav nav-pills">
-        <li class="nav-item">
-            <a class="nav-link active text-info" href="<c:url value="/"/>">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-info" href="<c:url value="/login"/>">Account</a>
-        </li>
-    </ul>
-</div>
-
+<div class="wrapper">
+<%-- Navbar --%>
+<%@include file="navbar.jsp"%>

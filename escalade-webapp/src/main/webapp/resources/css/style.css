@@ -1,69 +1,108 @@
+/*=========== Common content ============*/
 body {
-    margin: auto;
-    padding: 5px;
-    height: 100vh;
-    font-family: "Roboto", Times New Roman, Georgia,sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: Times New Roman, Georgia, Quicksand,sans-serif;
 }
 
-.background {
-    height: 100vh;
-    background : url("../pictures/background2_50.png") no-repeat center center fixed;
-}
-
-.navbar {
+.wrapper{
+    background-image : url("../pictures/montagne_retouche2.png");
+    background-repeat: no-repeat;
+    min-height: 100%;
+    min-width: 100vw;
     position: fixed;
-    font-weight: bold;
-    font-size: 25px;
+    top: 0;
+    left: 0;
 }
 
+/*=========== Header content ============*/
+#menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    padding: 6px 30px;
+    box-sizing: border-box;
+    transition: 0.3s;
+    background: rgba(255,255,255,0.8);
+}
+
+.custom-link{
+    color: #151515;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+.custom-link:focus{
+    outline: none;
+}
+.custom-link:hover{
+    background: #e1e1e1 !important;
+    color: #454545;
+    border-radius: 3px;
+}
+
+/*=========== footer content ============*/
 .footer {
 
 }
-#login-box {
-    margin-top: 120px;
+
+/*============== Login box ==============*/
+#center-box {
     margin-left: auto;
     margin-right: auto;
+    margin-top: 50vh;
+    transform: translateY(-50%);
     padding: 20px;
-    max-width: 600px;
+    max-width: 500px;
     height: auto;
     border: 1px solid #9c9c9c;
-    background-color: rgba(232, 232, 232, 0.9);
+    background: rgba(255,255,255,0.8);
 }
+/*============= Form fields =============*/
 .form-control {
-    border: 1px solid #9c9c9c;
+    border: 1px solid #bfbfbf;
 }
 .form-control:focus {
     box-shadow: none;
     border: 2px solid #9c9c9c;
 }
-.btn-info {
-    background-color: saddlebrown;
-    border-color: saddlebrown;
-}
-.btn-info:hover {
-    background-color: #8b603b;
-    border-color: #8b603b;
-}
-
-.text-info {
-    color: saddlebrown !important;
-}
-
-.error {
-    font-style: italic;
-    color: red;
-    margin-left: 5px;
+.form-control:hover {
+    box-shadow: none;
+    border: 2px solid #9c9c9c;
 }
 
 ::placeholder {
-    color: saddlebrown;
+    color: #000000;
+    font-size: 15px;
+}
+/*======== Buttons in form fields =======*/
+.btn-info {
+    background-color: #000000;
+    border-color: #000000;
 }
 
-/* try to remove padding on two columns form-item
-#login-box .col-md-6 .leftSide{
-    padding-left: auto;
+.btn-info:focus {
+    background-color: #000000;
+    Border-color: rgba(255,255,255,0.8);
 }
 
-#login-box .col-md-6 .rightSide{
-    padding-right: auto;
-}*/
+.btn-info:hover {
+    background-color: #000000;
+    Border-color: rgba(255,255,255,0.8);
+}
+/*============ Text content ============*/
+
+.text-info {
+    color: #000000 !important;
+}
+/*============= Error text =============*/
+
+.error {
+    font-style: italic !important;
+    color: red !important;
+    margin-left: 5px !important;
+}

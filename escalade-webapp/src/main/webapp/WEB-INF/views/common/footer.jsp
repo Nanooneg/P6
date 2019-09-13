@@ -3,8 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<div class="footer">
-    <%--TODO--%>
+<%--TODO--%>
 </div>
 </body>
 </html>

@@ -5,8 +5,8 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<div class="container-fluid background">
-    <div id="login-box">
+<div class="container-fluid">
+    <div id="center-box">
         <c:if test="${empty registration.result}">
             <h3 class="text-center text-info">${message}</h3>
         </c:if>

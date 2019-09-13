@@ -5,8 +5,8 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<div class="container-fluid background">
-    <div id="login-box">
+<div class="container-fluid">
+    <div id="center-box">
         <form id="login-form" class="form" action="/home" method="post">
             <h2 class="text-center text-info">Je m'authentifie</h2>
             <div class="form-group">

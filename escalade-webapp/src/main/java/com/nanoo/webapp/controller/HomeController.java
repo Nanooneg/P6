@@ -18,7 +18,7 @@ public class HomeController {
     @GetMapping(value = {"/","/home"})
     public String home(Model model){
         
-        model.addAttribute(MESSAGE_ATT, "Page de bienvenue");
+        model.addAttribute(MESSAGE_ATT, "Test");
         
         return HOME_VIEW;
     }
