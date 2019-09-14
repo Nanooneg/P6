@@ -1,5 +1,6 @@
 package com.nanoo.model.entities;
 
+import com.nanoo.model.enums.EnumRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

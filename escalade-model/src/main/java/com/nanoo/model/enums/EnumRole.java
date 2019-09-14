@@ -1,4 +1,4 @@
-package com.nanoo.model.entities;
+package com.nanoo.model.enums;
 
 /**
  * @author nanoo

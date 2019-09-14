@@ -8,16 +8,20 @@
 <div class="container-fluid">
     <div id="center-box">
         <form id="login-form" class="form" action="/home" method="post">
-            <h2 class="text-center text-info">Je m'authentifie</h2>
+            <h1 class="text-center text-info">Je m'authentifie</h1>
             <div class="form-group">
                 <label for="mail" class="text-info">Adresse e-mail:</label><br>
                 <input type="email" name="mail" id="mail" class="form-control">
-                <span class="error">${registration.errors['mail']}</span>
+                <c:if test="${!empty registration.errors}">
+                    <span class="error">${registration.errors['mail']}</span>
+                </c:if>
             </div>
             <div class="form-group">
                 <label for="password" class="text-info">Mot de passe:</label><br>
                 <input type="password" name="password" id="password" class="form-control">
-                <span class="error">${registration.errors['password']}</span>
+                <c:if test="${!empty registration.errors}">
+                    <span class="error">${registration.errors['password']}</span>
+                </c:if>
             </div>
             <div class="form-group">
                 <input type="submit" name="submit" class="btn btn-info btn-md" value="C'est parti!">

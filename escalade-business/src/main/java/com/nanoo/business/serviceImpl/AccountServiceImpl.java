@@ -2,13 +2,15 @@ package com.nanoo.business.serviceImpl;
 
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.consumer.repository.AccountRepository;
+import com.nanoo.model.DTO.AccountDTO;
 import com.nanoo.model.entities.Account;
-import com.nanoo.model.entities.EnumRole;
+import com.nanoo.model.enums.EnumRole;
 import lombok.Getter;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,30 +38,40 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
     
+    private Account account;
+    private ModelMapper mMapper;
+    
     /**
      * TODO
-     * @param account
+     * @param accountDTO
      * @return
      */
     @Override
-    public Account saveAccountTestMVC(Account account){
+    public AccountDTO saveAccountTestMVC(AccountDTO accountDTO){
         result = "";
         errors = new HashMap<>();
         
-        passwordValidation(account.getPassword(),account.getConfirmation());
-        mailValidation(account.getMail());
+        passwordValidation(accountDTO.getPassword(),accountDTO.getConfirmation());
+        mailValidation(accountDTO.getMail());
         
         if (errors.isEmpty()) {
+            account = new Account();
+            mMapper = new ModelMapper();
+            mMapper.map(accountDTO,account);
+            
             account.setRoleName(EnumRole.USER); // role is set USER by default.
             account.setTitle(processTitle(account.getTitle()));
             account.setDateOfCreation(getCurrentDateTime());
             account.setDateOfUpdate(account.getDateOfCreation());
             account.setPassword(encryptPassword(account.getPassword()));
+            account=accountRepository.save(account);
             result = "L'inscription est un succés !";
-            return accountRepository.save(account);
+            
+            mMapper.map(account,accountDTO);
+            return accountDTO;
         }else {
             result = "Échec de l'inscription...";
-            return account;
+            return accountDTO;
         }
         
     }
@@ -67,25 +79,29 @@ public class AccountServiceImpl implements AccountService {
     /**
      * This method get Http request, take parameters values of it and call some methods for data process.
      * Then call the consumer layer to check if the user is registered
-     * @param account TODO
+     * @param accountDTO TODO
      * @return true if the user is registered
      */
     @Override
-    public Account searchRegisteredAccount(Account account){
+    public AccountDTO searchRegisteredAccount(AccountDTO accountDTO){
         result = "";
         errors = new HashMap<>();
         
-        Account fullAccount = accountRepository.findFirstByMail(account.getMail());
+        
+        
+        Account fullAccount = accountRepository.findFirstByMail(accountDTO.getMail());
         
         if (fullAccount == null) {
             setError(MAIL_FIELD, "Aucun compte ne correspond à votre adresse mail");
-            return account;
-        }else if (!checkPassword(account.getPassword(), fullAccount.getPassword())) {
+            return accountDTO;
+        }else if (!checkPassword(accountDTO.getPassword(), fullAccount.getPassword())) {
             setError(PASSWORD_FIELD, "Le mot de passe renseigné n'est pas correct");
-            return account;
+            return accountDTO;
         }else{
             result = "Vous êtes connecté !";
-            return fullAccount;
+            mMapper = new ModelMapper();
+            mMapper.map(fullAccount,accountDTO);
+            return accountDTO;
         }
     }
     

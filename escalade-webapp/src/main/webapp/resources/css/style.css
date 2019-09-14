@@ -2,7 +2,11 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Times New Roman, Georgia, Quicksand,sans-serif;
+    /*font-family: Times New Roman, Georgia, Quicksand,sans-serif;TODO change font police*/
+}
+
+label{
+    margin-left: 2px;
 }
 
 .wrapper{
@@ -14,8 +18,8 @@ body {
     top: 0;
     left: 0;
 }
-
 /*=========== Header content ============*/
+
 #menu {
     position: fixed;
     top: 0;
@@ -27,11 +31,10 @@ body {
     transition: 0.3s;
     background: rgba(255,255,255,0.8);
 }
-
 .custom-link{
     color: #151515;
     font-size: 25px;
-    font-weight: bold;
+    /*font-weight: bold;*/
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.3s;
@@ -39,17 +42,17 @@ body {
 .custom-link:focus{
     outline: none;
 }
+
 .custom-link:hover{
     background: #e1e1e1 !important;
     color: #454545;
     border-radius: 3px;
 }
-
 /*=========== footer content ============*/
+
 .footer {
 
 }
-
 /*============== Login box ==============*/
 #center-box {
     margin-left: auto;
@@ -63,6 +66,20 @@ body {
     background: rgba(255,255,255,0.8);
 }
 /*============= Form fields =============*/
+
+label{
+    font-size: 15px !important;
+    margin-bottom: 3px !important;
+}
+select:focus,select:hover{
+    outline: none;
+}
+option:focus,option:hover{
+    background-color: #9c9c9c;
+    text-decoration: none;
+    outline: none;
+}
+
 .form-control {
     border: 1px solid #bfbfbf;
 }
@@ -82,17 +99,18 @@ body {
 /*======== Buttons in form fields =======*/
 .btn-info {
     background-color: #000000;
-    border-color: #000000;
+    Border: none;
+    transition: 0.3s;
 }
 
 .btn-info:focus {
-    background-color: #000000;
-    Border-color: rgba(255,255,255,0.8);
+    background-color: #454545;
+    Border: none;
 }
 
 .btn-info:hover {
-    background-color: #000000;
-    Border-color: rgba(255,255,255,0.8);
+    background-color: #454545;
+    Border: none;
 }
 /*============ Text content ============*/
 

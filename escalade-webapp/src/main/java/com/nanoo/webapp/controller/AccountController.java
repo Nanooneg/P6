@@ -1,8 +1,9 @@
 package com.nanoo.webapp.controller;
 
 import com.nanoo.business.serviceContract.AccountService;
+import com.nanoo.model.DTO.AccountDTO;
 import com.nanoo.model.entities.Account;
-import com.nanoo.model.entities.EnumTitle;
+import com.nanoo.model.enums.EnumTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,11 +40,11 @@ public class AccountController {
     
     @PostMapping("/login")
     public String displayLoginFormAfterRegisterAccount(
-            @ModelAttribute("account") Account account, Model model){
-        
-        account = accountService.saveAccountTestMVC(account);
+            @ModelAttribute("account")AccountDTO accountDTO, Model model){
     
-        model.addAttribute(ACCOUNT_ATT,account);
+        accountDTO = accountService.saveAccountTestMVC(accountDTO);
+    
+        model.addAttribute(ACCOUNT_ATT,accountDTO);
         model.addAttribute(ACCOUNT_SERV_ATT,accountService);
         
         if (accountService.getErrors().isEmpty()) {
@@ -65,11 +66,11 @@ public class AccountController {
     
     @PostMapping(value = "/home")
     public String homePageAfterLoginRequest(
-            @ModelAttribute ("account") Account account, Model model) {
-        
-        account = accountService.searchRegisteredAccount(account);
+            @ModelAttribute ("account") AccountDTO accountDTO, Model model) {
     
-        model.addAttribute(ACCOUNT_ATT,account);
+        accountDTO = accountService.searchRegisteredAccount(accountDTO);
+    
+        model.addAttribute(ACCOUNT_ATT,accountDTO);
         model.addAttribute(ACCOUNT_SERV_ATT,accountService);
         
         if (accountService.getErrors().isEmpty()) {
