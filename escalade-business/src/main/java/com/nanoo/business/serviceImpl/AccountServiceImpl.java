@@ -5,16 +5,15 @@ import com.nanoo.consumer.repository.AccountRepository;
 import com.nanoo.model.DTO.AccountDTO;
 import com.nanoo.model.entities.Account;
 import com.nanoo.model.enums.EnumRole;
-import lombok.Getter;
+import com.nanoo.model.mapper.AccountMapper;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,14 +31,18 @@ public class AccountServiceImpl implements AccountService {
     private static final String MAIL_FIELD = "mail";
     private static final String PASSWORD_FIELD = "password";
     
-    @Getter private String result;
-    @Getter private Map<String,String> errors;
+    private String result;
+    private Map<String,String> errors;
+    
+    @Override
+    public String getResult() { return result; }
+    @Override
+    public Map<String, String> getErrors() { return errors; }
     
     @Autowired
     private AccountRepository accountRepository;
-    
-    private Account account;
-    private ModelMapper mMapper;
+    @Autowired
+    private AccountMapper accountMapper;
     
     /**
      * TODO
@@ -55,22 +58,20 @@ public class AccountServiceImpl implements AccountService {
         mailValidation(accountDTO.getMail());
         
         if (errors.isEmpty()) {
-            account = new Account();
-            mMapper = new ModelMapper();
-            mMapper.map(accountDTO,account);
+            Account account = accountMapper.fromDtoToAccount(accountDTO);
             
             account.setRoleName(EnumRole.USER); // role is set USER by default.
             account.setTitle(processTitle(account.getTitle()));
             account.setDateOfCreation(getCurrentDateTime());
             account.setDateOfUpdate(account.getDateOfCreation());
             account.setPassword(encryptPassword(account.getPassword()));
-            account=accountRepository.save(account);
+            accountRepository.save(account);
             result = "L'inscription est un succés !";
             
-            mMapper.map(account,accountDTO);
             return accountDTO;
         }else {
             result = "Échec de l'inscription...";
+            
             return accountDTO;
         }
         
@@ -87,8 +88,6 @@ public class AccountServiceImpl implements AccountService {
         result = "";
         errors = new HashMap<>();
         
-        
-        
         Account fullAccount = accountRepository.findFirstByMail(accountDTO.getMail());
         
         if (fullAccount == null) {
@@ -99,9 +98,7 @@ public class AccountServiceImpl implements AccountService {
             return accountDTO;
         }else{
             result = "Vous êtes connecté !";
-            mMapper = new ModelMapper();
-            mMapper.map(fullAccount,accountDTO);
-            return accountDTO;
+            return accountMapper.fromAccountToDto(fullAccount);
         }
     }
     
@@ -176,7 +173,6 @@ public class AccountServiceImpl implements AccountService {
     /**
      * This method check if the mail address format is good and not in the DataBase yet.
      * @param mail user mail address
-     * @throws DataValidationException if validation fail
      */
     private void mailValidation(String mail) {
         if ( mail != null ) {

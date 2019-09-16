@@ -63,10 +63,14 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-ehcache</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
 
     <dependency>
-      <groupId>org.modelmapper.extensions</groupId>
-      <artifactId>modelmapper-spring</artifactId>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
     </dependency>
 
     <dependency>
