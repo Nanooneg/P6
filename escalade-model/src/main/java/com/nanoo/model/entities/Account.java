@@ -1,6 +1,7 @@
 package com.nanoo.model.entities;
 
 import com.nanoo.model.enums.EnumRole;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * @create 31/08/2019 - 12:01
  */
 @Entity
-@NoArgsConstructor
+@Data @NoArgsConstructor
 public class Account implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -49,112 +50,4 @@ public class Account implements Serializable {
     @Column(length = 30)
     private String city;
     
-    
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
-    public String getTitle() {
-        return title;
-    }
-    
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public String getLastName() {
-        return lastName;
-    }
-    
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    
-    public String getFirstName() {
-        return firstName;
-    }
-    
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    
-    public String getMail() {
-        return mail;
-    }
-    
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-    
-    public EnumRole getRoleName() {
-        return roleName;
-    }
-    
-    public void setRoleName(EnumRole roleName) {
-        this.roleName = roleName;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getConfirmation() {
-        return confirmation;
-    }
-    
-    public void setConfirmation(String confirmation) {
-        this.confirmation = confirmation;
-    }
-    
-    public String getDateOfCreation() {
-        return dateOfCreation;
-    }
-    
-    public void setDateOfCreation(String dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
-    }
-    
-    public String getDateOfUpdate() {
-        return dateOfUpdate;
-    }
-    
-    public void setDateOfUpdate(String dateOfUpdate) {
-        this.dateOfUpdate = dateOfUpdate;
-    }
-    
-    public String getStreetName() {
-        return streetName;
-    }
-    
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-    
-    public int getPostalCode() {
-        return postalCode;
-    }
-    
-    public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
-    }
-    
-    public String getCity() {
-        return city;
-    }
-    
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

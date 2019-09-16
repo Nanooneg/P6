@@ -5,11 +5,17 @@ import com.nanoo.model.DTO.AccountDTO;
 import com.nanoo.model.entities.Account;
 import com.nanoo.model.enums.EnumTitle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,26 +39,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     
-    @GetMapping("/login")
-    public ModelAndView displayLoginForm(){
-        return new ModelAndView(LOGIN_VIEW);
-    }
-    
-    @PostMapping("/login")
-    public String displayLoginFormAfterRegisterAccount(
-            @ModelAttribute("account")AccountDTO accountDTO, Model model){
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
         
-        accountDTO = accountService.saveAccountTestMVC(accountDTO);
-    
-        model.addAttribute(ACCOUNT_ATT,accountDTO);
-        model.addAttribute(ACCOUNT_SERV_ATT,accountService);
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         
-        if (accountService.getErrors().isEmpty()) {
-            return LOGIN_VIEW;
-        }else {
-            model.addAttribute(TITLE_ATT,listTitle);
-            return REGISTER_VIEW;
-        }
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
     
     @GetMapping("/register")
@@ -63,6 +55,31 @@ public class AccountController {
         
         return REGISTER_VIEW;
     }
+    
+    @GetMapping("/login")
+    public String displayLoginForm(Model model){
+        
+        model.addAttribute(ACCOUNT_ATT,new Account());
+        
+        return LOGIN_VIEW;
+    }
+    
+    @PostMapping("/login")
+    public String displayLoginFormAfterRegisterAccount(
+            @Valid @ModelAttribute("account")AccountDTO accountDTO, BindingResult bResult, Model model){
+    
+        model.addAttribute(ACCOUNT_ATT,accountDTO);
+        model.addAttribute(ACCOUNT_SERV_ATT,accountService);
+        
+        if (!bResult.hasErrors()) {
+            accountService.saveAccountTestMVC(accountDTO);
+            return LOGIN_VIEW;
+        }else{
+            model.addAttribute(TITLE_ATT,listTitle);
+            return REGISTER_VIEW;
+        }
+    }
+    
     
     @PostMapping(value = "/home")
     public String homePageAfterLoginRequest(
@@ -75,7 +92,7 @@ public class AccountController {
         
         if (accountService.getErrors().isEmpty()) {
             return REGISTERED_HOME_VIEW;
-        }else {
+        }else{
             return LOGIN_VIEW;
         }
     }

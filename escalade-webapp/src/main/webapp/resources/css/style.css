@@ -91,6 +91,9 @@ option:focus,option:hover{
     box-shadow: none;
     border: 2px solid #9c9c9c;
 }
+.form-error {
+    border: red;
+}
 
 ::placeholder {
     color: #000000;

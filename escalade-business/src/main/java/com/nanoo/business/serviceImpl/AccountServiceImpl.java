@@ -50,30 +50,18 @@ public class AccountServiceImpl implements AccountService {
      * @return
      */
     @Override
-    public AccountDTO saveAccountTestMVC(AccountDTO accountDTO){
+    public void saveAccountTestMVC(AccountDTO accountDTO){
         result = "";
-        errors = new HashMap<>();
         
-        passwordValidation(accountDTO.getPassword(),accountDTO.getConfirmation());
-        mailValidation(accountDTO.getMail());
-        
-        if (errors.isEmpty()) {
-            Account account = accountMapper.fromDtoToAccount(accountDTO);
-            
-            account.setRoleName(EnumRole.USER); // role is set USER by default.
-            account.setTitle(processTitle(account.getTitle()));
-            account.setDateOfCreation(getCurrentDateTime());
-            account.setDateOfUpdate(account.getDateOfCreation());
-            account.setPassword(encryptPassword(account.getPassword()));
-            accountRepository.save(account);
-            result = "L'inscription est un succés !";
-            
-            return accountDTO;
-        }else {
-            result = "Échec de l'inscription...";
-            
-            return accountDTO;
-        }
+        Account account = accountMapper.fromDtoToAccount(accountDTO);
+        account.setTitle(processTitle(account.getTitle()));
+        account.setRoleName(EnumRole.USER); // role is set USER by default.
+        account.setPassword(encryptPassword(account.getPassword()));
+        account.setDateOfCreation(getCurrentDateTime());
+        account.setDateOfUpdate(account.getDateOfCreation());
+    
+        accountRepository.save(account);
+        result = "L'inscription est un succés !";
         
     }
     

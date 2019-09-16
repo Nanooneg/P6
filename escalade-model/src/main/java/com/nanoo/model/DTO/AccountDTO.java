@@ -1,130 +1,47 @@
 package com.nanoo.model.DTO;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * @author nanoo
  * @create 14/09/2019 - 14:43
  */
+@Data
 @NoArgsConstructor
 public class AccountDTO {
-
-    private Integer id;
+    
+    /* Required */
+    @NotNull(message = "Ce champ est requis")
     private String title;
+    @NotNull(message = "Ce champ est requis")
     private String lastName;
+    @NotNull(message = "Ce champ est requis")
     private String firstName;
+    @Email(message = "Veuillez renseigner une adresse mail valide")
+    @NotNull(message = "Ce champ est requis")
     private String mail;
-    private String roleName;
+    private String roleName; // Set by default (USER)
+    @NotNull(message = "Ce champ est requis")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})",
+            message = "6 caractères minimum (1 majuscule 1 chiffre et 1 symbole (@#$%)")
     private String password;
+    @NotNull(message = "Vous devez confirmer votre mot de passe")
+    //@IsConfirmationOk
     private String confirmation;
-    private String dateOfCreation;
-    private String dateOfUpdate;
+    
+    private Integer id; // Auto-generated
+    private String dateOfCreation; // Auto-set
+    private String dateOfUpdate; // Auto-set
+    
+    /* Not required */
     private String streetName;
-    private int postalCode;
+    @Pattern(regexp = "^[0-9]{5}", message = "Veuillez renseigner un code postal valide")
+    private String postalCode;
     private String city;
     
-    
-    public Integer getId() {
-        return id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    
-    public String getTitle() {
-        return title;
-    }
-    
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public String getLastName() {
-        return lastName;
-    }
-    
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    
-    public String getFirstName() {
-        return firstName;
-    }
-    
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    
-    public String getMail() {
-        return mail;
-    }
-    
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-    
-    public String getRoleName() {
-        return roleName;
-    }
-    
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public String getConfirmation() {
-        return confirmation;
-    }
-    
-    public void setConfirmation(String confirmation) {
-        this.confirmation = confirmation;
-    }
-    
-    public String getDateOfCreation() {
-        return dateOfCreation;
-    }
-    
-    public void setDateOfCreation(String dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
-    }
-    
-    public String getDateOfUpdate() {
-        return dateOfUpdate;
-    }
-    
-    public void setDateOfUpdate(String dateOfUpdate) {
-        this.dateOfUpdate = dateOfUpdate;
-    }
-    
-    public String getStreetName() {
-        return streetName;
-    }
-    
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-    
-    public int getPostalCode() {
-        return postalCode;
-    }
-    
-    public void setPostalCode(int postalCode) {
-        this.postalCode = postalCode;
-    }
-    
-    public String getCity() {
-        return city;
-    }
-    
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

@@ -10,15 +10,15 @@ import java.util.Map;
  */
 public interface AccountService {
     
-    Map<String,String> getErrors();
     String getResult();
+    Map<String,String> getErrors();
     
     /**
      *
      * @param accountDTO
      * @return
      */
-    AccountDTO saveAccountTestMVC(AccountDTO accountDTO);
+    void saveAccountTestMVC(AccountDTO accountDTO);
     
     /**
      * This method get Http request, take parameters values of it and call some methods for data process.
