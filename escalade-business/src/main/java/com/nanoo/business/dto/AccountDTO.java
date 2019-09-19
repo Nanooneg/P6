@@ -1,9 +1,10 @@
-package com.nanoo.model.DTO;
+package com.nanoo.business.dto;
 
+import com.nanoo.business.customValidation.FieldsEquality;
+import com.nanoo.business.customValidation.IsAvailable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -13,6 +14,8 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @NoArgsConstructor
+@FieldsEquality(firstFieldName = "password", secondFieldName = "confirmation",
+                message = "Le mot de passe et la confirmation ne sont pas identiques")
 public class AccountDTO {
     
     /* Required */
@@ -22,8 +25,10 @@ public class AccountDTO {
     private String lastName;
     @NotNull(message = "Ce champ est requis")
     private String firstName;
-    @Email(message = "Veuillez renseigner une adresse mail valide")
     @NotNull(message = "Ce champ est requis")
+    @IsAvailable(message = "Cette adresse mail est déjà utilisé dans un autre compte")
+    @Pattern(regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)",
+            message = "Veuillez renseigner une adresse mail valide")
     private String mail;
     private String roleName; // Set by default (USER)
     @NotNull(message = "Ce champ est requis")
@@ -31,7 +36,6 @@ public class AccountDTO {
             message = "6 caractères minimum (1 majuscule 1 chiffre et 1 symbole (@#$%)")
     private String password;
     @NotNull(message = "Vous devez confirmer votre mot de passe")
-    //@IsConfirmationOk
     private String confirmation;
     
     private Integer id; // Auto-generated

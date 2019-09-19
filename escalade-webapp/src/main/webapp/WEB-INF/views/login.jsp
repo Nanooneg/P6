@@ -5,9 +5,9 @@
 <%@page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<div class="container-fluid">
+<section class="container-fluid">
     <div id="center-box">
-        <form:form id="login-form" action="/home" method="post" modelAttribute="account">
+        <form:form id="login-form" action="/user/user-area" method="post" modelAttribute="account">
             <h1 class="text-center text-info">Je m'authentifie</h1>
             <div class="form-group">
                 <label class="text-info">Adresse e-mail:</label><br>
@@ -34,6 +34,6 @@
             </div>
         </form:form>
     </div>
-</div>
+</section>
 
 <%@include file="common/footer.jsp" %>

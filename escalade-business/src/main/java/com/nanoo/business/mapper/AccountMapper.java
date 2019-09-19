@@ -1,6 +1,6 @@
-package com.nanoo.model.mapper;
+package com.nanoo.business.mapper;
 
-import com.nanoo.model.DTO.AccountDTO;
+import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.model.entities.Account;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -19,5 +19,19 @@ public interface AccountMapper {
     
     @InheritInverseConfiguration
     AccountDTO fromAccountToDto (Account account);
+    
+    /* Custom mapping with only Id and name */
+    default AccountDTO fromAccountToDtoLight (Account account){
+        if ( account == null ) {
+            return null;
+        }
+    
+        AccountDTO accountDTO = new AccountDTO();
+    
+        accountDTO.setId( account.getId() );
+        accountDTO.setFirstName( account.getFirstName() );
+    
+        return accountDTO;
+    }
     
 }

@@ -5,7 +5,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<div class="container-fluid">
+<section class="container-fluid">
     <div id="center-box">
         <form:form id="login-form" action="/login" method="post" modelAttribute="account">
             <h1 class="text-center text-info">Je crée mon compte</h1>
@@ -20,24 +20,24 @@
             </div>
             <div class="form-group">
                 <form:input path="lastName" type="text" cssClass="form-control" placeholder="Nom"/>
-                <form:errors path="lastName" cssClass="error" />
+                <form:errors path="lastName" cssClass="error" required="true"/>
             </div>
             <div class="form-group">
                 <form:input path="firstName" type="text" cssClass="form-control" placeholder="Prénom"/>
-                <form:errors path="firstName" cssClass="error" />
+                <form:errors path="firstName" cssClass="error" required="true"/>
             </div>
             <div class="form-group">
                 <form:input path="mail" type="email" cssClass="form-control" placeholder="Adresse mail"/>
-                <form:errors path="mail" cssClass="error" />
+                <form:errors path="mail" cssClass="error" required="true"/>
             </div>
             <div class="form-group">
-                <form:password path="password" cssClass="form-control" placeholder="Mot de passe" id="password" required="true"/>
+                <form:password path="password" cssClass="form-control" placeholder="Mot de passe" required="true"
+                               id="password" name="password" />
                 <form:errors path="password" cssClass="error"/>
             </div>
             <div class="form-group">
-                <form:password path="confirmation" cssClass="form-control" placeholder="Confirmez le mot de passe"
-                id="confirmation" required="true"/>
-                <form:errors path="confirmation" cssClass="error" />
+                <form:password path="confirmation" cssClass="form-control" placeholder="Confirmez le mot de passe" required="true"/>
+                <form:errors path="confirmation" cssClass="error" required="true"/>
             </div>
             <div class="form-group">
                 <form:input path="streetName" type="text" cssClass="form-control" placeholder="Adresse"/>
@@ -60,23 +60,6 @@
             </div>
         </form:form>
     </div>
-</div>
-
-<script>
-    //TODO fine another solution or put this script in js file
-    var password = document.getElementById("password")
-        , confirmation = document.getElementById("confirmation");
-
-    function validatePassword(){
-        if(password.value !== confirmation.value) {
-            confirmation.setCustomValidity("Passwords Don't Match");
-        } else {
-            confirmation.setCustomValidity('');
-        }
-    }
-
-    password.onchange = validatePassword;
-    confirmation.onkeyup = validatePassword;
-</script>
+</section>
 
 <%@include file="common/footer.jsp" %>

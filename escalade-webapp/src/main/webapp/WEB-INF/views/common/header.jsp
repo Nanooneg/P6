@@ -3,6 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,5 +17,6 @@
 </head>
 <body>
 <div class="wrapper">
+
 <%-- Navbar --%>
 <%@include file="navbar.jsp"%>

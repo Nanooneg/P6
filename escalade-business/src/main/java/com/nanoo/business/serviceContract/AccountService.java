@@ -1,6 +1,6 @@
 package com.nanoo.business.serviceContract;
 
-import com.nanoo.model.DTO.AccountDTO;
+import com.nanoo.business.dto.AccountDTO;
 
 import java.util.Map;
 

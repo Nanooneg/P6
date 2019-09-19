@@ -2,10 +2,11 @@ package com.nanoo.business.serviceImpl;
 
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.consumer.repository.AccountRepository;
-import com.nanoo.model.DTO.AccountDTO;
+import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.model.entities.Account;
 import com.nanoo.model.enums.EnumRole;
-import com.nanoo.model.mapper.AccountMapper;
+import com.nanoo.business.mapper.AccountMapper;
+import lombok.Data;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -23,6 +24,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
+@Data
 public class AccountServiceImpl implements AccountService {
     
     private static final String FORMAT_DATE = "dd/MM/yyyy HH:mm:ss";
@@ -73,20 +75,18 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public AccountDTO searchRegisteredAccount(AccountDTO accountDTO){
-        result = "";
         errors = new HashMap<>();
         
-        Account fullAccount = accountRepository.findFirstByMail(accountDTO.getMail());
+        Account account = accountRepository.findFirstByMail(accountDTO.getMail());
         
-        if (fullAccount == null) {
+        if (account == null) {
             setError(MAIL_FIELD, "Aucun compte ne correspond à votre adresse mail");
             return accountDTO;
-        }else if (!checkPassword(accountDTO.getPassword(), fullAccount.getPassword())) {
+        }else if (!checkPassword(accountDTO.getPassword(), account.getPassword())) {
             setError(PASSWORD_FIELD, "Le mot de passe renseigné n'est pas correct");
             return accountDTO;
         }else{
-            result = "Vous êtes connecté !";
-            return accountMapper.fromAccountToDto(fullAccount);
+            return accountMapper.fromAccountToDtoLight(account);
         }
     }
     
@@ -111,24 +111,6 @@ public class AccountServiceImpl implements AccountService {
         DateTime date = new DateTime();
         DateTimeFormatter formatter = DateTimeFormat.forPattern( FORMAT_DATE );
         return date.toString( formatter );
-    }
-    
-    /**
-     * This method check if there is a valid confirmed password
-     *
-     * @param password user password
-     * @param confirmation pasword confirmation
-     */
-    private void passwordValidation(String password, String confirmation) {
-        if (password != null && confirmation != null) {
-            if (!password.equals(confirmation))
-                setError(PASSWORD_FIELD,"Le mot de passe renseigné et sa confirmation ne sont pas les mêmes.");
-            /*else if (!password.matches("^[a-zA-Z0-9]{6}")) TODO = style validation doesn't work */
-            else if (password.length() > 6 )
-                setError(PASSWORD_FIELD,"Le mot de passe doit contenir au minimum 6 caractères");
-        } else {
-            setError(PASSWORD_FIELD,"Merci de renseigner un mot de passe et le confirmer.");
-        }
     }
     
     /**
@@ -158,21 +140,6 @@ public class AccountServiceImpl implements AccountService {
         return passwordEncryptor.checkPassword(plainPassword,encryptedPassword);
     }
     
-    /**
-     * This method check if the mail address format is good and not in the DataBase yet.
-     * @param mail user mail address
-     */
-    private void mailValidation(String mail) {
-        if ( mail != null ) {
-            if ( !mail.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-                setError(MAIL_FIELD,"Merci de saisir une adresse mail valide.");
-            } else if ( !accountRepository.findByMail(mail).isEmpty() ) {
-                setError(MAIL_FIELD,"Cette adresse email appartient déjà à un compte");
-            }
-        } else {
-            setError(MAIL_FIELD,"Merci de saisir une adresse mail.");
-        }
-    }
     
     /**
      * save errors in a Map

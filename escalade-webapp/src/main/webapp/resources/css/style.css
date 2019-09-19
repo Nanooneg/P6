@@ -22,6 +22,7 @@ label{
 
 #menu {
     position: fixed;
+    margin: 0 0 40px;
     top: 0;
     left: 0;
     width: 100%;
@@ -49,11 +50,24 @@ label{
     border-radius: 3px;
 }
 /*=========== footer content ============*/
-
 .footer {
 
 }
-/*============== Login box ==============*/
+
+/*============ Text content ============*/
+
+.text-info {
+    color: #000000 !important;
+}
+/*============= Error text =============*/
+
+.error {
+    font-style: italic !important;
+    color: red !important;
+    margin-left: 5px !important;
+}
+
+/*============== Login/Center box ==============*/
 #center-box {
     margin-left: auto;
     margin-right: auto;
@@ -115,15 +129,26 @@ option:focus,option:hover{
     background-color: #454545;
     Border: none;
 }
-/*============ Text content ============*/
 
-.text-info {
-    color: #000000 !important;
+/*============= Homepage box ===========*/
+.homepage-box {
+    padding: 20px;
+    border: 1px solid #9c9c9c;
+    background: rgba(255,255,255,0.8);
 }
-/*============= Error text =============*/
 
-.error {
-    font-style: italic !important;
-    color: red !important;
-    margin-left: 5px !important;
+#center-boxes {
+/*    margin-left: auto;
+    margin-right: auto;*/
+/*    margin-top: 50vh;
+    transform: translateY(-50%);*/
+/*    padding: 20px;*/
+    display: block;
+    margin-top: 100px;
+    max-width: 95vw;
+    height: auto;
+}
+
+.box{
+    margin: 20px;
 }
