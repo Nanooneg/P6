@@ -21,6 +21,6 @@ public class Site extends Publication{
     private String region;
     private String location;
     @Column(name = "is_official_label")
-    private boolean isOfficialLabel;
+    private boolean officialLabel;
     
 }

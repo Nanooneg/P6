@@ -52,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
      * @return
      */
     @Override
-    public void saveAccountTestMVC(AccountDTO accountDTO){
+    public void saveAccount(AccountDTO accountDTO){
         result = "";
         
         Account account = accountMapper.fromDtoToAccount(accountDTO);
@@ -76,6 +76,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO searchRegisteredAccount(AccountDTO accountDTO){
         errors = new HashMap<>();
+        result = "La connection a échoué !";
         
         Account account = accountRepository.findFirstByMail(accountDTO.getMail());
         
@@ -86,6 +87,7 @@ public class AccountServiceImpl implements AccountService {
             setError(PASSWORD_FIELD, "Le mot de passe renseigné n'est pas correct");
             return accountDTO;
         }else{
+            result = "";
             return accountMapper.fromAccountToDtoLight(account);
         }
     }

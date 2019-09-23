@@ -1,13 +1,13 @@
 <%--
-  @Date: 16/09/2019 - 23:07
+  @Date: 24/09/2019 - 00:16
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section class="container-fluid">
-    <div id="center-box">
-        <h1 class="text-center text-info">Page de bienvenue</h1>
+<section>
+    <div id="display-box">
+
     </div>
 </section>
 

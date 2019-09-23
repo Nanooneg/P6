@@ -10,7 +10,8 @@
         <form:form id="login-form" action="/login" method="post" modelAttribute="account">
             <h1 class="text-center text-info">Je crée mon compte</h1>
             <div class="form-group">
-                <h4 class="text-center text-info">${registration.result}</h4>
+                <c:if test="${empty message}"><br/></c:if>
+                <h4 class="text-center text-info error">${message}</h4>
             </div>
             <div class="form-group">
                 <form:select path="title" class="text-info">
@@ -52,8 +53,8 @@
                                 placeholder="Ville"/>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" name="submit" class="btn btn-md btn-info" value="Je m'inscris!">
+            <div class="form-group text-center button-place">
+                <input type="submit" name="submit" class="btn btn-lg btn-info" value="Je m'inscris!">
             </div>
             <div id="register-link" class="text-right">
                 <a href="<c:url value="/login"/>" class="text-info">J'ai déjà un compte</a>

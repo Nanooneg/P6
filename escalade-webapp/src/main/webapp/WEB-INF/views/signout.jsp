@@ -3,7 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/sessionChecking.jsp" %>
+<%--<%@include file="common/sessionChecking.jsp" %>  TODO delete this and replace header by include--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +51,7 @@
 
                 <br/>
                 <div id="register-link" class="text-center">
-                    <a href="<c:url value="/user/user-area"/>" class="text-info">Non je reste encore un peu</a>
+                    <a href="<c:out value="javascript:history.go(-1)"/>" class="text-info">Non je reste encore un peu</a>
                 </div>
             </div>
         </div>

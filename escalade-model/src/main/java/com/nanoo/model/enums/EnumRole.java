@@ -6,9 +6,16 @@ package com.nanoo.model.enums;
  */
 public enum EnumRole {
     
-    ADMIN/*("Administrator")*/, MEMBER/*("Association member")*/, USER/*("Consumer")*/;
+    ADMIN("Administrator"), MEMBER("Association member"), USER("Consumer");
     
-  /*  EnumRole(String role) {
+    private String abbreviation ;
+    
+    private EnumRole(String abbreviation) {
+        this.abbreviation = abbreviation ;
     }
-    */
+    
+    public String getAbbreviation() {
+        return  this.abbreviation ;
+    }
+    
 }

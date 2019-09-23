@@ -9,6 +9,11 @@ label{
     margin-left: 2px;
 }
 
+h1 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
 .wrapper{
     background-image : url("../pictures/montagne_retouche2.png");
     background-repeat: no-repeat;
@@ -18,8 +23,8 @@ label{
     top: 0;
     left: 0;
 }
-/*=========== Header content ============*/
 
+/*=========== Header content ============*/*
 #menu {
     position: fixed;
     margin: 0 0 40px;
@@ -49,18 +54,18 @@ label{
     color: #454545;
     border-radius: 3px;
 }
+
 /*=========== footer content ============*/
 .footer {
 
 }
 
 /*============ Text content ============*/
-
 .text-info {
     color: #000000 !important;
 }
-/*============= Error text =============*/
 
+/*============= Error text =============*/
 .error {
     font-style: italic !important;
     color: red !important;
@@ -79,8 +84,8 @@ label{
     border: 1px solid #9c9c9c;
     background: rgba(255,255,255,0.8);
 }
-/*============= Form fields =============*/
 
+/*============= Form fields =============*/
 label{
     font-size: 15px !important;
     margin-bottom: 3px !important;
@@ -113,6 +118,7 @@ option:focus,option:hover{
     color: #000000;
     font-size: 15px;
 }
+
 /*======== Buttons in form fields =======*/
 .btn-info {
     background-color: #000000;
@@ -129,6 +135,9 @@ option:focus,option:hover{
     background-color: #454545;
     Border: none;
 }
+.button-place {
+    margin-top: 20px;
+}
 
 /*============= Homepage box ===========*/
 .homepage-box {
@@ -138,11 +147,6 @@ option:focus,option:hover{
 }
 
 #center-boxes {
-/*    margin-left: auto;
-    margin-right: auto;*/
-/*    margin-top: 50vh;
-    transform: translateY(-50%);*/
-/*    padding: 20px;*/
     display: block;
     margin-top: 100px;
     max-width: 95vw;
@@ -151,4 +155,31 @@ option:focus,option:hover{
 
 .box{
     margin: 20px;
+}
+
+/*============== Search-box ==============*/
+#display-box {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 130px;
+    padding: 20px;
+    max-width: 80%;
+    height: auto;
+    border: 1px solid #9c9c9c;
+    background: rgba(255,255,255,0.8);
+}
+.checkbox-boolean {
+    line-height: 1.7;
+}
+
+/*============== Result-box ==============*/
+.result-box {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    padding: 20px;
+    max-width: 80%;
+    height: auto;
+    border: 1px solid #9c9c9c;
+    background: rgba(255,255,255,0.8);
 }

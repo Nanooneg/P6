@@ -9,8 +9,8 @@
 <header id="menu" class="page-header">
     <ul class="nav nav-pills pull-left">
         <li><a class="custom-link" href="<c:url value="/"/>">Home</a></li>
-        <li><a class="custom-link" href="<c:url value="#"/>">Topo</a></li>
-        <li><a class="custom-link" href="<c:url value="#"/>">Site de grimpe</a></li>
+        <li><a class="custom-link" href="<c:url value="/topo"/>">Topo</a></li>
+        <li><a class="custom-link" href="<c:url value="/climbSpot"/>">Site de grimpe</a></li>
     </ul>
     <ul class="nav nav-pills pull-right">
         <c:choose>

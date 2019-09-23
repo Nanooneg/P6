@@ -6,8 +6,16 @@ package com.nanoo.model.enums;
  */
 public enum EnumTitle {
     
-    MR,MME,MLLE;
+    MR("Mr"),MME("Mme"),MLLE("Mlle");
     
+    private String abbreviation ;
     
+    private EnumTitle(String abbreviation) {
+        this.abbreviation = abbreviation ;
+    }
+    
+    public String getAbbreviation() {
+        return  this.abbreviation ;
+    }
     
 }

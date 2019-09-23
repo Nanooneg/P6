@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 
 /**
  * @author nanoo
@@ -16,7 +17,9 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @FieldsEquality(firstFieldName = "password", secondFieldName = "confirmation",
                 message = "Le mot de passe et la confirmation ne sont pas identiques")
-public class AccountDTO {
+public class AccountDTO implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     /* Required */
     @NotNull(message = "Ce champ est requis")
@@ -30,7 +33,6 @@ public class AccountDTO {
     @Pattern(regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)",
             message = "Veuillez renseigner une adresse mail valide")
     private String mail;
-    private String roleName; // Set by default (USER)
     @NotNull(message = "Ce champ est requis")
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})",
             message = "6 caractères minimum (1 majuscule 1 chiffre et 1 symbole (@#$%)")
@@ -39,6 +41,7 @@ public class AccountDTO {
     private String confirmation;
     
     private Integer id; // Auto-generated
+    private String roleName; // Set by default (USER)
     private String dateOfCreation; // Auto-set
     private String dateOfUpdate; // Auto-set
     

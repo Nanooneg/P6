@@ -15,7 +15,6 @@ import java.io.Serializable;
  */
 @Entity
 @Data @NoArgsConstructor
-/*@Cacheable @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)*/
 public class Topo implements Serializable{
     
     @Id

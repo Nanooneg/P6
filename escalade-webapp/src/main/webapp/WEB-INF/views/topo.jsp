@@ -1,5 +1,5 @@
 <%--
-  @Date: 16/09/2019 - 23:07
+  @Date: 23/09/2019 - 11:06
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
@@ -7,7 +7,12 @@
 
 <section class="container-fluid">
     <div id="center-box">
-        <h1 class="text-center text-info">Page de bienvenue</h1>
+        <form:form>
+            <h1 class="text-center text-info">Topo</h1>
+            <div class="form-group">
+
+            </div>
+        </form:form>
     </div>
 </section>
 

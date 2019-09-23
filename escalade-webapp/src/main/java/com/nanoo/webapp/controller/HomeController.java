@@ -19,7 +19,7 @@ public class HomeController {
     private static final String ACCOUNT_ATT = "account";
     
     private static final String HOME_VIEW = "home";
-    private static final String USER_HOME_VIEW = "userHome";
+    private static final String USER_HOME_VIEW = "user";
     
     @GetMapping(value = {"/","/home"})
     public String home(Model model, HttpServletRequest request){
@@ -38,7 +38,7 @@ public class HomeController {
     
     @GetMapping("/unlog")
     public String logout(HttpServletRequest request){
-    
+        
         HttpSession session = request.getSession();
         session.invalidate();
         

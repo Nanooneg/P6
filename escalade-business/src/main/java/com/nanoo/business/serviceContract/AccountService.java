@@ -18,7 +18,7 @@ public interface AccountService {
      * @param accountDTO
      * @return
      */
-    void saveAccountTestMVC(AccountDTO accountDTO);
+    void saveAccount(AccountDTO accountDTO);
     
     /**
      * This method get Http request, take parameters values of it and call some methods for data process.
