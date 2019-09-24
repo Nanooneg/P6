@@ -16,7 +16,7 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = false)
 public class Sector extends Publication {
     
-    @Column(name = "id_site")
+    @Column(name = "id_site", nullable = false)
     private Integer idSite;
     
 }

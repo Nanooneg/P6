@@ -16,8 +16,9 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = false)
 public class Way extends Publication {
     
-    @Column(name = "id_sector")
+    @Column(name = "id_sector", nullable = false)
     private Integer idSector;
+    @Column(length = 20, nullable = false)
     private String rating;
     @Column(name = "pitch_nbr")
     private int pitchNbr;
