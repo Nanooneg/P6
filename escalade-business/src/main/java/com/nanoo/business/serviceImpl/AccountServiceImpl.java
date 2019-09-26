@@ -1,16 +1,14 @@
 package com.nanoo.business.serviceImpl;
 
-import com.nanoo.business.serviceContract.AccountService;
-import com.nanoo.consumer.repository.AccountRepository;
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.mapper.AccountMapper;
+import com.nanoo.business.serviceContract.AccountService;
+import com.nanoo.business.util.DateUtil;
+import com.nanoo.consumer.repository.AccountRepository;
 import com.nanoo.model.entities.Account;
 import com.nanoo.model.enums.EnumRole;
-import com.nanoo.business.mapper.AccountMapper;
 import lombok.Data;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,15 +34,12 @@ public class AccountServiceImpl implements AccountService {
     private String result;
     private Map<String,String> errors;
     
-    @Override
-    public String getResult() { return result; }
-    @Override
-    public Map<String, String> getErrors() { return errors; }
-    
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
     private AccountMapper accountMapper;
+    
+    private DateUtil dateUtil;
     
     /**
      * TODO
@@ -54,12 +49,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void saveAccount(AccountDTO accountDTO){
         result = "";
-        
+        dateUtil = new DateUtil()
+;
         Account account = accountMapper.fromDtoToAccount(accountDTO);
         account.setTitle(processTitle(account.getTitle()));
         account.setRoleName(EnumRole.USER); // role is set USER by default.
         account.setPassword(encryptPassword(account.getPassword()));
-        account.setDateOfCreation(getCurrentDateTime());
+        account.setDateOfCreation(dateUtil.getCurrentDateTime());
         account.setDateOfUpdate(account.getDateOfCreation());
     
         accountRepository.save(account);
@@ -103,16 +99,6 @@ public class AccountServiceImpl implements AccountService {
         else
             return title;
         
-    }
-    
-    /**
-     * This method return the current date and time
-     * @return current date and time in a String
-     */
-    private String getCurrentDateTime() {
-        DateTime date = new DateTime();
-        DateTimeFormatter formatter = DateTimeFormat.forPattern( FORMAT_DATE );
-        return date.toString( formatter );
     }
     
     /**

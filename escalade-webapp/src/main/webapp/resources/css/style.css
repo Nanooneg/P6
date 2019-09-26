@@ -2,26 +2,18 @@
 body {
     margin: 0;
     padding: 0;
-    /*font-family: Times New Roman, Georgia, Quicksand,sans-serif;TODO change font police*/
+    font-family: sans-serif;
+    background: url(/resources/pictures/spot2.jpg) no-repeat fixed;
+    background-size: cover;
+    box-sizing: border-box;
 }
 
 label{
     margin-left: 2px;
 }
 
-h1 {
-    font-size: 40px;
-    font-weight: bold;
-}
-
 .wrapper{
-    background-image : url("../pictures/montagne_retouche2.png");
-    background-repeat: no-repeat;
-    min-height: 100%;
-    min-width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
+
 }
 
 /*=========== Header content ============*/*
@@ -35,24 +27,23 @@ h1 {
     padding: 6px 30px;
     box-sizing: border-box;
     transition: 0.3s;
-    background: rgba(255,255,255,0.8);
+    background-color: rgba(0,0,0,0.8);
+    border-bottom: none;
 }
 .custom-link{
-    color: #151515;
+    color: #ffffff;
     font-size: 25px;
-    /*font-weight: bold;*/
+    font-weight: bold;
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.3s;
 }
-.custom-link:focus{
-    outline: none;
-}
 
-.custom-link:hover{
-    background: #e1e1e1 !important;
+.custom-link:hover, .custom-link:focus{
+    background-color: rgba(255,255,255,0.7);
     color: #454545;
     border-radius: 3px;
+    outline: none;
 }
 
 /*=========== footer content ============*/
@@ -69,6 +60,7 @@ h1 {
 .error {
     font-style: italic !important;
     color: red !important;
+    font-size: 15px !important;
     margin-left: 5px !important;
 }
 
@@ -115,7 +107,7 @@ option:focus,option:hover{
 }
 
 ::placeholder {
-    color: #000000;
+    color: #ffffff;
     font-size: 15px;
 }
 

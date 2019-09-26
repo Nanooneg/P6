@@ -6,13 +6,8 @@
 <%@include file="common/header.jsp" %>
 
 <section class="container-fluid">
-    <div id="center-box">
-        <form:form>
-            <h1 class="text-center text-info">Topo</h1>
-            <div class="form-group">
-
-            </div>
-        </form:form>
+    <div id="message" class="form-box center-box">
+        <h1 class="text-center">Topo</h1>
     </div>
 </section>
 

@@ -3,6 +3,7 @@ package com.nanoo.webapp.controller;
 import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.model.enums.EnumTitle;
+import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
@@ -79,7 +79,7 @@ public class AccountController {
             model.addAttribute(ACCOUNT_SERV_ATT,accountService);
             return LOGIN_VIEW;
         }else{
-            model.addAttribute(MESSAGE_ATT,"L'enregistrement a échoué!");
+            model.addAttribute(MESSAGE_ATT,"L'enregistrement a échoué!"); //TODO use result variable
             model.addAttribute(TITLE_ATT,listTitle);
             return REGISTER_VIEW;
         }
@@ -92,8 +92,9 @@ public class AccountController {
         response.setHeader("Progma","no-cache");
         response.setDateHeader("Expires",0);
     
-        HttpSession session = request.getSession();
-        if (session.getAttribute(ACCOUNT_ATT) == null || session.getAttribute(ACCOUNT_ATT) == "") {
+        /* Check if user has access */
+        SessionHandling sessionHandling = new SessionHandling();
+        if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }

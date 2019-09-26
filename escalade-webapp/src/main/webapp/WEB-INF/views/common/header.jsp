@@ -13,6 +13,7 @@
     <%-- css --%>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.min.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style-box.css"/>">
 
 </head>
 <body>

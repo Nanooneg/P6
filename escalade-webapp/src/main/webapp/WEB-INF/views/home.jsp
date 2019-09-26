@@ -6,8 +6,8 @@
 <%@include file="common/header.jsp" %>
 
 <section class="container-fluid">
-    <div id="center-box">
-        <h1 class="text-center text-info">Page de bienvenue</h1>
+    <div id="message" class="form-box center-box">
+        <h1 class="text-center">Page de bienvenue</h1>
     </div>
 </section>
 

@@ -1,6 +1,6 @@
 package com.nanoo.webapp.controller;
 
-import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +23,12 @@ public class HomeController {
     
     @GetMapping(value = {"/","/home"})
     public String home(Model model, HttpServletRequest request){
-    
-        HttpSession session = request.getSession();
         
-        AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
-        if (accountDTO != null){
+        /* Check if user has session */
+        SessionHandling sessionHandling = new SessionHandling();
+        if (!sessionHandling.checkSession(request)){
             return USER_HOME_VIEW;
         }
-        
-        model.addAttribute(MESSAGE_ATT, "Test");
         
         return HOME_VIEW;
     }

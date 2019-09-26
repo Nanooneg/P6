@@ -1,4 +1,4 @@
-package com.nanoo.business.search;
+package com.nanoo.business.util;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

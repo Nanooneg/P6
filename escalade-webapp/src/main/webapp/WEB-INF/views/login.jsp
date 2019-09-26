@@ -6,30 +6,34 @@
 <%@include file="common/header.jsp" %>
 
 <section class="container-fluid">
-    <div id="center-box">
-        <form:form id="login-form" action="/user/user-area" method="post" modelAttribute="account">
-            <h1 class="text-center text-info">Je m'authentifie</h1>
-            <div class="form-group">
-                <c:if test="${empty registration.result}"><br/></c:if>
-                <h4 class="text-center text-info error">${registration.result}</h4>
+    <div id="login" class="form-box center-box">
+        <form:form action="/user/user-area" method="post" modelAttribute="account">
+            <div>
+                <h1 class="text-center">Login</h1>
             </div>
-            <div class="form-group">
-                <form:input path="mail" type="email" cssClass="form-control" placeholder="Adresse e-mail"/>
-                <c:if test="${!empty registration.errors}">
+            <div>
+                <c:if test="${empty registration.result}"><br/></c:if>
+                <h4 class="text-center error">${registration.result}</h4>
+            </div>
+            <div class="textbox">
+                <em class="fas fa-at"></em>
+                <form:input path="mail" type="email" placeholder="Adresse e-mail"/>
+                <c:if test="${!empty registration.errors['mail']}">
                     <span class="error">${registration.errors['mail']}</span>
                 </c:if>
             </div>
-            <div class="form-group">
-                <form:input path="password" type="password" cssClass="form-control" placeholder="Mot de passe"/>
-                <c:if test="${!empty registration.errors}">
+            <div class="textbox">
+                <em class="fas fa-lock"></em>
+                <form:input path="password" type="password" placeholder="Mot de passe"/>
+                <c:if test="${!empty registration.errors['password']}">
                     <span class="error">${registration.errors['password']}</span>
                 </c:if>
             </div>
-            <div class="form-group text-center">
-                <input type="submit" name="submit" class="btn btn-info btn-lg" value="C'est parti!">
+            <div>
+                <input type="submit" name="submit" class="btn-form text-center" value="C'est parti!">
             </div>
-            <div id="register-link" class="text-right">
-                <a href="<c:url value="/register"/>" class="text-info">Je crée un compte</a>
+            <div class="text-right">
+                <a href="<c:url value="/register"/>" class="text-info-link">Je crée un compte</a>
             </div>
         </form:form>
     </div>
