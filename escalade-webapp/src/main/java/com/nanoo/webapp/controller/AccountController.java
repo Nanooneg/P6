@@ -2,7 +2,7 @@ package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.serviceContract.AccountService;
-import com.nanoo.model.enums.EnumTitle;
+import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,7 +36,8 @@ public class AccountController {
     private static final String REGISTER_VIEW = "register";
     private static final String SIGNOUT_VIEW = "signout";
     
-    private List<EnumTitle> listTitle = Arrays.asList(EnumTitle.values());
+    private HandlingEnumValues enumValues = new HandlingEnumValues();
+    private List<String> listTitle = enumValues.getEnumTitleStringValues();
     
     @Autowired
     private AccountService accountService;

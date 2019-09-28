@@ -90,6 +90,17 @@ public class AccountServiceImpl implements AccountService {
     
     /**
      * TODO
+     * @param idAccount
+     * @return
+     */
+    @Override
+    public AccountDTO searchAccountLightById(Integer idAccount){
+        Account account = accountRepository.findFirstById(idAccount);
+        return accountMapper.fromAccountToDtoLight(account);
+    }
+    
+    /**
+     * TODO
      * @param title
      * @return
      */

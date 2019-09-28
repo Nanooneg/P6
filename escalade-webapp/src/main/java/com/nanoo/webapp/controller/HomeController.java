@@ -15,9 +15,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class HomeController {
     
-    private static final String MESSAGE_ATT = "message";
-    private static final String ACCOUNT_ATT = "account";
-    
     private static final String HOME_VIEW = "home";
     private static final String USER_HOME_VIEW = "user";
     

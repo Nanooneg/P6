@@ -30,6 +30,7 @@ public interface AccountMapper {
     
         accountDTO.setId( account.getId() );
         accountDTO.setFirstName( account.getFirstName() );
+        accountDTO.setLastName(account.getLastName());
     
         return accountDTO;
     }

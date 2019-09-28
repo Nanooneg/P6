@@ -10,7 +10,7 @@ public enum EnumTitle {
     
     private String abbreviation ;
     
-    private EnumTitle(String abbreviation) {
+    EnumTitle(String abbreviation) {
         this.abbreviation = abbreviation ;
     }
     

@@ -6,20 +6,29 @@ package com.nanoo.model.enums;
  */
 public enum EnumRegion {
     
-    AUVERGNE,
-    RHONE_ALPES,
-    BOURGOGNE,
-    FRANCH_COMPTE,
-    BRETAGNE,
-    CENTRE_VAL_DE_LOIRE,
-    CORSE,
-    GRAND_EST,
-    HAUTS_DE_FRANCE,
-    ILE_DE_FRANCE,
-    NORMANDIE,
-    NOUVELLE_AQUITAINE,
-    OCCITANIE,
-    PAYS_DE_LA_LOIRE,
-    PACA;
-
+    AUVERGNE("Auvergne"),
+    RHONE_ALPES("Rhône-Alpes"),
+    BOURGOGNE("Bourgogne"),
+    FRANCHE_COMPTE("Franche-compté"),
+    BRETAGNE("Bretagne"),
+    CENTRE_VAL_DE_LOIRE("Centre-Val-de-Loire"),
+    CORSE("Corse"),
+    GRAND_EST("Grand-Est"),
+    HAUTS_DE_FRANCE("Hauts-de-France"),
+    ILE_DE_FRANCE("Ile-de-France"),
+    NORMANDIE("Normandie"),
+    NOUVELLE_AQUITAINE("Nouvelle-Aquitaine"),
+    OCCITANIE("Occitanie"),
+    PAYS_DE_LA_LOIRE("Paye-de-la-Loire"),
+    PACA("Paca");
+    
+    private String abbreviation ;
+    
+    EnumRegion(String abbreviation) {
+        this.abbreviation = abbreviation ;
+    }
+    
+    public String getAbbreviation() {
+        return  this.abbreviation ;
+    }
 }

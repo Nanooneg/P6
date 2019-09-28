@@ -36,5 +36,4 @@ public class SiteDTO implements Serializable {
     private Integer idTopo;
     private String location;
     
-    
 }

@@ -2,22 +2,25 @@ package com.nanoo.business.serviceImpl;
 
 import com.nanoo.business.dto.SectorDTO;
 import com.nanoo.business.dto.SiteDTO;
+import com.nanoo.business.dto.WayDTO;
 import com.nanoo.business.mapper.SectorMapper;
 import com.nanoo.business.mapper.SiteMapper;
+import com.nanoo.business.mapper.WayMapper;
+import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.DateUtil;
 import com.nanoo.consumer.repository.SectorRepository;
 import com.nanoo.consumer.repository.SiteRepository;
+import com.nanoo.consumer.repository.WayRepository;
 import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
+import com.nanoo.model.entities.Way;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author nanoo
@@ -32,12 +35,15 @@ public class SpotServiceImpl implements SpotService {
     private Map<String,String> errors;
     
     private DateUtil dateUtil;
+    @Autowired AccountService accountService;
     
     @Autowired SiteRepository siteRepository;
     @Autowired SectorRepository sectorRepository;
+    @Autowired WayRepository wayRepository;
     
     @Autowired SiteMapper siteMapper;
     @Autowired SectorMapper sectorMapper;
+    @Autowired WayMapper wayMapper;
     
     /**
      * TODO
@@ -47,12 +53,30 @@ public class SpotServiceImpl implements SpotService {
     public List<SiteDTO> findAllSite(){
         Iterable<Site> siteIterable = siteRepository.findAll();
         List<SiteDTO> siteDTOList = new ArrayList<>();
-        
+    
         for (Site site : siteIterable){
             siteDTOList.add(siteMapper.fromSiteToDto(site));
         }
         
         return siteDTOList;
+    }
+    
+    
+    /**
+     * TODO
+     * @param siteId
+     * @return
+     */
+    @Override
+    public SiteDTO searchSiteById (int siteId){
+        Optional<Site> site = siteRepository.findById(siteId);
+        
+        if (site.isPresent()) {
+            Site existingSite = site.get();
+            return siteMapper.fromSiteToDto(existingSite);
+        }
+        
+        return null;
     }
     
     /**
@@ -78,6 +102,23 @@ public class SpotServiceImpl implements SpotService {
     }
     
     /**
+     * TODO
+     * @param siteId
+     * @return
+     */
+    @Override
+    public List<SectorDTO> searchSectorBySiteId(int siteId){
+        List<Sector> sectorList = sectorRepository.findAllByIdSite(siteId);
+        List<SectorDTO> sectorDTOList = new ArrayList<>();
+    
+        for (Sector sector : sectorList){
+            sectorDTOList.add(sectorMapper.fromSectorToDto(sector));
+        }
+    
+        return sectorDTOList;
+    }
+    
+    /**
      *
      * @param sectorDTO
      * @param accountId
@@ -97,4 +138,61 @@ public class SpotServiceImpl implements SpotService {
         result = "L'inscription est un succés !";
     }
     
+    /**
+     * TODO
+     * @param wayDTO
+     * @param sectorId
+     * @param accountId
+     */
+    @Override
+    public void saveWay(WayDTO wayDTO, String sectorId, int accountId){
+        result="";
+        dateUtil = new DateUtil();
+    
+        Way way = wayMapper.fromDtoToWay(wayDTO);
+        way.setIdSector(Integer.parseInt(sectorId));
+        way.setIdAccount(accountId);
+        way.setDateOfCreation(dateUtil.getCurrentDateTime());
+        way.setDateOfUpdate(way.getDateOfCreation());
+        
+        wayRepository.save(way);
+        result = "L'inscription est un succés !";
+    }
+    
+    /**
+     * @param sectorId
+     *
+     * @return
+     */
+    @Override
+    public int getSiteIdWithSectorId(String sectorId) {
+        
+        Sector sector = sectorRepository.findFirstById(Integer.parseInt(sectorId));
+        
+        return sector.getIdSite();
+    }
+    
+    /**
+     * @param sectorDTOList
+     *
+     * @return
+     */
+    @Override
+    public Map<Integer,List<WayDTO>> searchWayBySectorId(List<SectorDTO> sectorDTOList) {
+    
+        Map<Integer,List<WayDTO>> wayDtoListBySectorId = new HashMap<>();
+        
+        for (SectorDTO sectorDTO : sectorDTOList){
+            List<Way> wayList = wayRepository.findAllByIdSector(sectorDTO.getId());
+            List<WayDTO> wayDTOList = new ArrayList<>();
+            
+            for (Way way : wayList){
+               wayDTOList.add(wayMapper.fromWayToDto(way));
+            }
+            
+            wayDtoListBySectorId.put(sectorDTO.getId(),wayDTOList);
+        }
+        
+        return wayDtoListBySectorId;
+    }
 }

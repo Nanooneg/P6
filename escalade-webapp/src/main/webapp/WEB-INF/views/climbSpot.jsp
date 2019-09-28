@@ -74,18 +74,16 @@
                 <div class="col-md-2">
                     <img src="<c:url value="/resources/pictures/no-picture.jpg"/>" alt="pas d'image disponible">
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-10 contain-link">
                     <div>
                         <p class="title">${result.name} - ${result.region}</p>
                     </div>
                     <div>
                         <p class="description">${result.description}</p>
                     </div>
-                    <div class="button-display-bar">
-                        <div class="pull-right">
-                            <em class="fas fa-plus-circle"></em>
-                            <a href="<c:url value="/spotForm2/${result.id}"/>" class="text-info-link">Ajouter un secteur</a>
-                        </div>
+                    <div class="button-display-bar pull-right">
+                        <em class="fas fa-plus-circle"></em>
+                        <a href="<c:url value="/site/${result.id}"/>" class="text-info-link">Ouvrir</a>
                     </div>
                 </div>
             </div>

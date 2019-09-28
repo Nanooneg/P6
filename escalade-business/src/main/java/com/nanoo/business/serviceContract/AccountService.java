@@ -27,4 +27,11 @@ public interface AccountService {
      * @return true if the user is registered
      */
     AccountDTO searchRegisteredAccount(AccountDTO accountDTO);
+    
+    /**
+     * TODO
+     * @param idAccount
+     * @return
+     */
+    AccountDTO searchAccountLightById(Integer idAccount);
 }
