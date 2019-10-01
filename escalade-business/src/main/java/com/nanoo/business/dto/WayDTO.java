@@ -26,6 +26,7 @@ public class WayDTO implements Serializable {
     /* Way attributes */
     private Integer idSector;
     private String rating;
+    private int height;
     private int pitchNbr;
     private int anchorNbr;
 }

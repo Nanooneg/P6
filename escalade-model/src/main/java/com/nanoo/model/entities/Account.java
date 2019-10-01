@@ -1,6 +1,5 @@
 package com.nanoo.model.entities;
 
-import com.nanoo.model.enums.EnumRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +17,7 @@ public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     /* Required */
@@ -30,9 +29,8 @@ public class Account implements Serializable {
     private String firstName;
     @Column(length = 30, unique = true,nullable = false)
     private String mail;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role_name", length = 6, nullable = false)
-    private EnumRole roleName;
+    @Column(name = "role_name", length = 13, nullable = false)
+    private String roleName;
     @Column(length = 56, nullable = false)
     private String password;
     @Transient

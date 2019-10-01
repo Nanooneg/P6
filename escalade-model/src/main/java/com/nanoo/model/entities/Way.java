@@ -20,6 +20,8 @@ public class Way extends Publication {
     private Integer idSector;
     @Column(length = 20, nullable = false)
     private String rating;
+    @Column(nullable = false)
+    private int height;
     @Column(name = "pitch_nbr")
     private int pitchNbr;
     @Column(name = "anchor_nbr")

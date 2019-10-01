@@ -53,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
 ;
         Account account = accountMapper.fromDtoToAccount(accountDTO);
         account.setTitle(processTitle(account.getTitle()));
-        account.setRoleName(EnumRole.USER); // role is set USER by default.
+        account.setRoleName(EnumRole.USER.getAbbreviation()); // role is set USER by default.
         account.setPassword(encryptPassword(account.getPassword()));
         account.setDateOfCreation(dateUtil.getCurrentDateTime());
         account.setDateOfUpdate(account.getDateOfCreation());

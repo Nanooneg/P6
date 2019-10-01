@@ -72,4 +72,29 @@ public interface SpotService {
      * @return
      */
     Map<Integer,List<WayDTO>> searchWayBySectorId(List<SectorDTO> sectorDTOList);
+    
+    /**
+     *
+     * @param siteId
+     */
+    void deleteSiteWithId(int siteId);
+    
+    /**
+     *
+     * @param sectorId
+     */
+    void deleteSectorWithId(int sectorId);
+    
+    /**
+     *
+     * @param wayId
+     */
+    void deleteWayWithId(int wayId);
+    
+    /**
+     *
+     * @param siteId
+     */
+    void changeLabel(int siteId);
+    
 }

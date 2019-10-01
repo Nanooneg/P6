@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class TopoBooking implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     @Column(name = "id_account")
     private Integer idAccount;

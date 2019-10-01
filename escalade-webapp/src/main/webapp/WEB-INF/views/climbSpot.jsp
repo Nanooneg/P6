@@ -35,12 +35,14 @@
                     </form:select>
                 </div>
                 <div class="col-md-4 select-style-md">
-                    <label for="sectorNbr">Secteur par site :</label>
+                    <label for="sectorNbr">Secteur par site (minimum) :</label>
                     <form:select path="sectorNbr" id="sectorNbr">
                         <form:option value="">*****</form:option>
-                        <form:option value="3">moins de 3</form:option>
-                        <form:option value="5">entre 3 et 5</form:option>
-                        <form:option value="plus">plus de 5</form:option>
+                        <form:option value="2">2</form:option>
+                        <form:option value="3">3</form:option>
+                        <form:option value="4">4</form:option>
+                        <form:option value="5">5</form:option>
+                        <form:option value="0">Peu importe !!</form:option>
                     </form:select>
                 </div>
                 <div class="col-md-4 select-style-md">
@@ -60,7 +62,7 @@
             </div>
             <div class="pull-right">
                 <em class="fas fa-plus-circle"></em>
-                <a href="<c:url value="/spotForm1"/>" class="text-info-link">Créer un spot</a>
+                <a href="<c:url value="/spotForm1"/>" class="text-info-link">Ajouter un site</a>
             </div>
         </div>
         </form:form>
@@ -75,16 +77,18 @@
                     <img src="<c:url value="/resources/pictures/no-picture.jpg"/>" alt="pas d'image disponible">
                 </div>
                 <div class="col-md-10 contain-link">
-                    <div>
-                        <p class="title">${result.name} - ${result.region}</p>
+                    <div class="title-link">
+                        <a href="<c:url value="/site/${result.id}"/>" class="title-link">
+                            <p class="title">${result.name} - ${result.region}</p>
+                        </a>
                     </div>
                     <div>
-                        <p class="description">${result.description}</p>
+                        <p class="display-description">${result.description}</p>
                     </div>
-                    <div class="button-display-bar pull-right">
+                    <%--<div class="button-display-bar pull-right">
                         <em class="fas fa-plus-circle"></em>
                         <a href="<c:url value="/site/${result.id}"/>" class="text-info-link">Ouvrir</a>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </div>

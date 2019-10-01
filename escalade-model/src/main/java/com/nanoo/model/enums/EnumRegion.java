@@ -6,21 +6,21 @@ package com.nanoo.model.enums;
  */
 public enum EnumRegion {
     
-    AUVERGNE("Auvergne"),
-    RHONE_ALPES("Rhône-Alpes"),
-    BOURGOGNE("Bourgogne"),
-    FRANCHE_COMPTE("Franche-compté"),
+    AUVERGNE_RHONE_ALPES("Auvergne-Rhône-Alpes"),
+    BOURGOGNE_FRANCHE_COMPTE("Bourgogne-Franche-Comté"),
     BRETAGNE("Bretagne"),
     CENTRE_VAL_DE_LOIRE("Centre-Val-de-Loire"),
     CORSE("Corse"),
     GRAND_EST("Grand-Est"),
+    GUYANNE("Guyane"),
     HAUTS_DE_FRANCE("Hauts-de-France"),
     ILE_DE_FRANCE("Ile-de-France"),
     NORMANDIE("Normandie"),
     NOUVELLE_AQUITAINE("Nouvelle-Aquitaine"),
     OCCITANIE("Occitanie"),
     PAYS_DE_LA_LOIRE("Paye-de-la-Loire"),
-    PACA("Paca");
+    PACA("Paca"),
+    REUNION("Réunion");
     
     private String abbreviation ;
     

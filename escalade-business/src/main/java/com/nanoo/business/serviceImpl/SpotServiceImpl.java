@@ -102,6 +102,34 @@ public class SpotServiceImpl implements SpotService {
     }
     
     /**
+     * @param siteId
+     */
+    @Override
+    public void deleteSiteWithId(int siteId) {
+        siteRepository.deleteById(siteId);
+    }
+    
+    /**
+     * @param siteId
+     */
+    @Override
+    public void changeLabel(int siteId) {
+        Optional<Site> site = siteRepository.findById(siteId);
+        
+        if (site.isPresent()){
+            Site existingSite = site.get();
+    
+            if (existingSite.isOfficialLabel()){
+                existingSite.setOfficialLabel(false);
+                siteRepository.save(existingSite);
+            }else if(!existingSite.isOfficialLabel()) {
+                existingSite.setOfficialLabel(true);
+                siteRepository.save(existingSite);
+            }
+        }
+    }
+    
+    /**
      * TODO
      * @param siteId
      * @return
@@ -139,6 +167,16 @@ public class SpotServiceImpl implements SpotService {
     }
     
     /**
+     * @param sectorId
+     */
+    @Override
+    public void deleteSectorWithId(int sectorId) {
+        
+        sectorRepository.deleteById(sectorId);
+    
+    }
+    
+    /**
      * TODO
      * @param wayDTO
      * @param sectorId
@@ -157,6 +195,16 @@ public class SpotServiceImpl implements SpotService {
         
         wayRepository.save(way);
         result = "L'inscription est un succés !";
+    }
+    
+    /**
+     * @param wayId
+     */
+    @Override
+    public void deleteWayWithId(int wayId) {
+    
+        wayRepository.deleteById(wayId);
+        
     }
     
     /**

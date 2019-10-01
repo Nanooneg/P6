@@ -20,8 +20,6 @@ public class Site extends Publication{
     private Integer idTopo;
     @Column(length = 30, nullable = false)
     private String region;
-    @Column(length = 50)
-    private String location;
     @Column(name = "is_official_label", nullable = false)
     private boolean officialLabel;
     

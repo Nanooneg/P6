@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "id_account")
     private Integer idAccount;

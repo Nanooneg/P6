@@ -95,13 +95,21 @@ public class SpotController {
         AccountDTO accountDTO = accountService.searchAccountLightById(siteDTO.getIdAccount());
         List<SectorDTO> sectorDTOList = spotService.searchSectorBySiteId(Integer.parseInt(siteId));
         Map<Integer,List<WayDTO>> wayDTOList = spotService.searchWayBySectorId(sectorDTOList);
-        
+        System.out.println(wayDTOList);
         model.addAttribute(SITE_ATT, siteDTO);
         model.addAttribute(ACCOUNT_ATT,accountDTO);
         model.addAttribute(LIST_SECTOR_ATT,sectorDTOList);
         model.addAttribute(MAP_WAY_BY_SECTOR_ID_ATT,wayDTOList);
         
         return SITE_VIEW;
+    }
+    
+    @GetMapping("/changeLabel/{siteId}")
+    public String changeLabel(@PathVariable String siteId, Model model){
+        
+        spotService.changeLabel(Integer.parseInt(siteId));
+        
+        return displaySite(siteId,model);
     }
     
     @GetMapping("/spotForm1")
@@ -181,6 +189,21 @@ public class SpotController {
         return SPOT_VIEW;
     }
     
+    @GetMapping("/deleteSite/{siteId}")
+    public String deleteSite(@PathVariable String siteId, Model model, HttpServletRequest request){
+    
+        /* Check if user has access TODO change system to give acces to member and admin only*/
+        sessionHandling = new SessionHandling();
+        if (sessionHandling.checkSession(request)){
+            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
+            return LOGIN_VIEW;
+        }
+        
+        spotService.deleteSiteWithId(Integer.parseInt(siteId));
+        
+        return displaySpotPage(model);
+    }
+    
     @PostMapping("/saveSector/{siteId}")
     public String displaySpotAfterSaving(@Valid @ModelAttribute("sector") SectorDTO sectorDTO,
                                          BindingResult bResult, Model model, HttpServletRequest request,
@@ -200,6 +223,21 @@ public class SpotController {
         spotService.saveSector(sectorDTO,siteId,accountId);
         
         return displaySite(siteId,model);
+    }
+    
+    @GetMapping("/deleteSector/{siteId}/{sectorId}")
+    public String deleteSector(@PathVariable String sectorId, Model model, HttpServletRequest request, @PathVariable String siteId){
+        
+        /* Check if user has access TODO change system to give acces to member and admin only*/
+        sessionHandling = new SessionHandling();
+        if (sessionHandling.checkSession(request)){
+            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
+            return LOGIN_VIEW;
+        }
+        
+        spotService.deleteSectorWithId(Integer.parseInt(sectorId));
+        
+        return displaySite(siteId, model);
     }
     
     @PostMapping("/saveWay/{sectorId}")
@@ -223,6 +261,21 @@ public class SpotController {
         spotService.saveWay(wayDTO,sectorId,accountId);
         
         return displaySite(Integer.toString(siteId),model);
+    }
+    
+    @GetMapping("/deleteWay/{siteId}/{wayId}")
+    public String deleteWay(@PathVariable String wayId, Model model, HttpServletRequest request, @PathVariable String siteId){
+        
+        /* Check if user has access TODO change system to give acces to member and admin only*/
+        sessionHandling = new SessionHandling();
+        if (sessionHandling.checkSession(request)){
+            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
+            return LOGIN_VIEW;
+        }
+        
+        spotService.deleteWayWithId(Integer.parseInt(wayId));
+        
+        return displaySite(siteId,model);
     }
     
 }
