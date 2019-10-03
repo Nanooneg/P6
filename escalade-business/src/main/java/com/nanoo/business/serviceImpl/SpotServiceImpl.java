@@ -140,9 +140,9 @@ public class SpotServiceImpl implements SpotService {
         String fRegion = filter.getRegion();
         int fSectorNbrMin = Integer.parseInt(filter.getSectorNbrMin());
         boolean fOfficialLabel = filter.isOfficialLabel();
-        //String fRatingMin = filter.getRatingMin();
+        String fRating = filter.getRating();
         
-        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel);
+        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating);
         List<SiteDTO> siteDTOList = new ArrayList<>();
         
         for (Site site : siteList){

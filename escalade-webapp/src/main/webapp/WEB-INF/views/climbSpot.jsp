@@ -46,8 +46,8 @@
                     </form:select>
                 </div>
                 <div class="col-md-4 select-style-md">
-                    <label>Difficulté minimum:</label>
-                    <form:select path="ratingMin">
+                    <label>Cotation de voie:</label>
+                    <form:select path="rating">
                         <form:option value="all">*****</form:option>
                         <form:options items="${listRating}"/>
                     </form:select>
