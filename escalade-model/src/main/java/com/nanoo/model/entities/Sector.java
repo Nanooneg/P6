@@ -4,9 +4,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author nanoo
@@ -17,7 +20,10 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class Sector extends Publication implements Serializable {
     
-    @Column(name = "id_site", nullable = false)
-    private Integer idSite;
+    @ManyToOne
+    @JoinColumn(name = "id_site", nullable = false)
+    private Site site;
+    @OneToMany(mappedBy = "sector")
+    private Set<Way> ways;
     
 }

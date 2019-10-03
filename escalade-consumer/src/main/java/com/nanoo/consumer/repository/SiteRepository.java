@@ -21,7 +21,7 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
                    "AND (:isLabelOfficial = false OR s.is_official_label = :isLabelOfficial)",
            nativeQuery = true)
     List<Site> findAllByFilter (@Param("sectorNbrMin") int sectorNbrMin, @Param("region") String region,
-                                         @Param("isLabelOfficial") boolean isLabelOfficial);
+                                @Param("isLabelOfficial") boolean isLabelOfficial);
         
 }
 

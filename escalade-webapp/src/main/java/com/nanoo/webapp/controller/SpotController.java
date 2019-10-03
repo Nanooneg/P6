@@ -98,9 +98,9 @@ public class SpotController {
     
         SiteDTO siteDTO = spotService.searchSiteById(Integer.parseInt(siteId));
         AccountDTO accountDTO = accountService.searchAccountLightById(siteDTO.getIdAccount());
-        List<SectorDTO> sectorDTOList = spotService.searchSectorBySiteId(Integer.parseInt(siteId));
+        List<SectorDTO> sectorDTOList = spotService.searchSectorBySiteId(siteId);
         Map<Integer,List<WayDTO>> wayDTOList = spotService.searchWayBySectorId(sectorDTOList);
-        System.out.println(wayDTOList);
+        
         model.addAttribute(SITE_ATT, siteDTO);
         model.addAttribute(ACCOUNT_ATT,accountDTO);
         model.addAttribute(LIST_SECTOR_ATT,sectorDTOList);

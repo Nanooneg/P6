@@ -43,7 +43,7 @@ public interface SpotService {
      * @param siteId
      * @return
      */
-    List<SectorDTO> searchSectorBySiteId(int siteId);
+    List<SectorDTO> searchSectorBySiteId(String siteId);
     
     /**
      *

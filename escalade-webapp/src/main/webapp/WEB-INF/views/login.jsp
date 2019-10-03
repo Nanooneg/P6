@@ -13,7 +13,7 @@
             </div>
             <div>
                 <c:if test="${empty registration.result}"><br/></c:if>
-                <h4 class="text-center error">${registration.result}</h4>
+                <h4 class="text-center ${empty registration.errors ? 'success' : 'error'}">${registration.result}</h4>
             </div>
             <div class="textbox">
                 <em class="fas fa-at"></em>

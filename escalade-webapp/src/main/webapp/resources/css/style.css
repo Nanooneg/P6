@@ -63,6 +63,12 @@ label{
     font-size: 15px !important;
     margin-left: 5px !important;
 }
+.success {
+    font-style: italic !important;
+    color: #24ff1f !important;
+    font-size: 15px !important;
+    margin-left: 5px !important;
+}
 
 /*============== Login/Center box ==============*/
 #center-box {

@@ -1,6 +1,7 @@
 package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Sector;
+import com.nanoo.model.entities.Site;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Repository
 public interface SectorRepository extends CrudRepository<Sector,Integer> {
     
-    public List<Sector> findAllByIdSite (Integer idSite);
+    public List<Sector> findAllBySite(Site site);
     
     public Sector findFirstById (Integer id);
     

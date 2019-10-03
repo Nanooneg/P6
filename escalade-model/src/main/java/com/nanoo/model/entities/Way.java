@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -17,8 +19,9 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class Way extends Publication implements Serializable {
     
-    @Column(name = "id_sector", nullable = false)
-    private Integer idSector;
+    @ManyToOne
+    @JoinColumn(name = "id_sector", nullable = false)
+    private Sector sector;
     @Column(length = 20, nullable = false)
     private String rating;
     @Column(nullable = false)

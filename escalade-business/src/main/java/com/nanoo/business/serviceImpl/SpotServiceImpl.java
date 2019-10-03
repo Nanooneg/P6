@@ -159,8 +159,14 @@ public class SpotServiceImpl implements SpotService {
      * @return
      */
     @Override
-    public List<SectorDTO> searchSectorBySiteId(int siteId){
-        List<Sector> sectorList = sectorRepository.findAllByIdSite(siteId);
+    public List<SectorDTO> searchSectorBySiteId(String siteId){
+        Optional<Site> site = siteRepository.findById(Integer.parseInt(siteId));
+        Site existingSite = null;
+        if (site.isPresent()) {
+            existingSite = site.get();
+        }
+        
+        List<Sector> sectorList = sectorRepository.findAllBySite(existingSite);
         List<SectorDTO> sectorDTOList = new ArrayList<>();
     
         for (Sector sector : sectorList){
@@ -179,9 +185,11 @@ public class SpotServiceImpl implements SpotService {
     public void saveSector(SectorDTO sectorDTO, String siteId, int accountId){
         result="";
         dateUtil = new DateUtil();
-    
+        
+        
         Sector sector = sectorMapper.fromDtoToSector(sectorDTO);
-        sector.setIdSite(Integer.parseInt(siteId));
+        Optional<Site> site = siteRepository.findById(Integer.parseInt(siteId));
+        site.ifPresent(sector::setSite);
         sector.setIdAccount(accountId);
         sector.setDateOfCreation(dateUtil.getCurrentDateTime());
         sector.setDateOfUpdate(sector.getDateOfCreation());
@@ -212,7 +220,8 @@ public class SpotServiceImpl implements SpotService {
         dateUtil = new DateUtil();
     
         Way way = wayMapper.fromDtoToWay(wayDTO);
-        way.setIdSector(Integer.parseInt(sectorId));
+        Optional<Sector> sector = sectorRepository.findById(Integer.parseInt(sectorId));
+        sector.ifPresent(way::setSector);
         way.setIdAccount(accountId);
         way.setDateOfCreation(dateUtil.getCurrentDateTime());
         way.setDateOfUpdate(way.getDateOfCreation());
@@ -241,7 +250,7 @@ public class SpotServiceImpl implements SpotService {
         
         Sector sector = sectorRepository.findFirstById(Integer.parseInt(sectorId));
         
-        return sector.getIdSite();
+        return sector.getSite().getId();
     }
     
     /**
@@ -255,7 +264,13 @@ public class SpotServiceImpl implements SpotService {
         Map<Integer,List<WayDTO>> wayDtoListBySectorId = new HashMap<>();
         
         for (SectorDTO sectorDTO : sectorDTOList){
-            List<Way> wayList = wayRepository.findAllByIdSector(sectorDTO.getId());
+            Optional<Sector> sector = sectorRepository.findById(sectorDTO.getId());
+            Sector existingSector = null;
+            if (sector.isPresent()) {
+                existingSector = sector.get();
+            }
+            
+            List<Way> wayList = wayRepository.findAllBySector(existingSector);
             List<WayDTO> wayDTOList = new ArrayList<>();
             
             for (Way way : wayList){
