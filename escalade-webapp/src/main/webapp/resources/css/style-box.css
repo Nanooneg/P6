@@ -307,6 +307,11 @@ input[type=number]{
     color: white;
 }
 
+#label-icon-result{
+    height: 20px;
+    color: white;
+}
+
 .btn-search:hover, .btn-search:focus {
     background-color: #ffffff;
     color: #383838;

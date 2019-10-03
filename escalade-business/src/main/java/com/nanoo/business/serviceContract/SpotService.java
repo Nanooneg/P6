@@ -3,6 +3,7 @@ package com.nanoo.business.serviceContract;
 import com.nanoo.business.dto.SectorDTO;
 import com.nanoo.business.dto.SiteDTO;
 import com.nanoo.business.dto.WayDTO;
+import com.nanoo.business.util.SearchFilter;
 
 import java.util.List;
 import java.util.Map;
@@ -97,4 +98,9 @@ public interface SpotService {
      */
     void changeLabel(int siteId);
     
+    /**
+     *
+     * @return
+     */
+    List<SiteDTO> searchSiteByFilter(SearchFilter filter);
 }

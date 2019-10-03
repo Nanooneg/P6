@@ -9,6 +9,7 @@ import com.nanoo.business.mapper.WayMapper;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.DateUtil;
+import com.nanoo.business.util.SearchFilter;
 import com.nanoo.consumer.repository.SectorRepository;
 import com.nanoo.consumer.repository.SiteRepository;
 import com.nanoo.consumer.repository.WayRepository;
@@ -131,6 +132,29 @@ public class SpotServiceImpl implements SpotService {
     
     /**
      * TODO
+     * @param filter
+     * @return
+     */
+    @Override
+    public List<SiteDTO> searchSiteByFilter(SearchFilter filter) {
+        String fRegion = filter.getRegion();
+        int fSectorNbrMin = Integer.parseInt(filter.getSectorNbrMin());
+        boolean fOfficialLabel = filter.isOfficialLabel();
+        //String fRatingMin = filter.getRatingMin();
+        
+        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel);
+        List<SiteDTO> siteDTOList = new ArrayList<>();
+        
+        for (Site site : siteList){
+            SiteDTO siteDTO = siteMapper.fromSiteToDto(site);
+            siteDTOList.add(siteDTO);
+        }
+        
+        return siteDTOList;
+    }
+    
+    /**
+     * TODO
      * @param siteId
      * @return
      */
@@ -142,7 +166,7 @@ public class SpotServiceImpl implements SpotService {
         for (Sector sector : sectorList){
             sectorDTOList.add(sectorMapper.fromSectorToDto(sector));
         }
-    
+        
         return sectorDTOList;
     }
     

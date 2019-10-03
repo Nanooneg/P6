@@ -43,6 +43,7 @@ public class SpotController {
     private static final String REGION_ATT = "listRegion";
     private static final String SEARCH_ATT = "searchAttribut";
     private static final String SITE_ATT = "site";
+    private static final String RESULT_SITE_SEARCH_ATT = "listSiteSearchResult";
     private static final String SECTOR_ATT = "sector";
     private static final String SITE_ID_ATT = "siteId";
     private static final String SECTOR_ID_ATT = "sectorId";
@@ -83,7 +84,11 @@ public class SpotController {
     @PostMapping("/climbSpot")
     public String displaySpotPageWithResult (@ModelAttribute SearchFilter filter, Model model){
         
-        //TODO search result in spot
+        List<SiteDTO> siteDTOListResult = spotService.searchSiteByFilter(filter);
+        model.addAttribute(LIST_SITE_ATT,siteDTOListResult);
+        model.addAttribute(SEARCH_ATT, filter);
+        model.addAttribute(RATING_ATT,listRating);
+        model.addAttribute(REGION_ATT,listRegion);
         
         return SPOT_VIEW;
     }

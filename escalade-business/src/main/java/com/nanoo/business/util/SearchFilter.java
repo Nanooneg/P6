@@ -12,7 +12,7 @@ public class SearchFilter {
 
     private boolean officialLabel;
     private String region;
-    private String sectorNbr;
-    private String rating;
+    private String sectorNbrMin;
+    private String ratingMin;
 
 }

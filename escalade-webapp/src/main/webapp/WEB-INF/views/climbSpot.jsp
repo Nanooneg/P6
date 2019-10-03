@@ -30,25 +30,25 @@
                 <div class="col-md-4 select-style-md">
                     <label>Région :</label>
                     <form:select path="region">
-                        <form:option value="">*****</form:option>
+                        <form:option value="all">*****</form:option>
                         <form:options items="${listRegion}"/>
                     </form:select>
                 </div>
                 <div class="col-md-4 select-style-md">
                     <label for="sectorNbr">Secteur par site (minimum) :</label>
-                    <form:select path="sectorNbr" id="sectorNbr">
-                        <form:option value="">*****</form:option>
+                    <form:select path="sectorNbrMin" id="sectorNbr">
+                        <form:option value="0">*****</form:option>
+                        <form:option value="1">1</form:option>
                         <form:option value="2">2</form:option>
                         <form:option value="3">3</form:option>
                         <form:option value="4">4</form:option>
                         <form:option value="5">5</form:option>
-                        <form:option value="0">Peu importe !!</form:option>
                     </form:select>
                 </div>
                 <div class="col-md-4 select-style-md">
                     <label>Difficulté minimum:</label>
-                    <form:select path="rating">
-                        <form:option value="">*****</form:option>
+                    <form:select path="ratingMin">
+                        <form:option value="all">*****</form:option>
                         <form:options items="${listRating}"/>
                     </form:select>
                 </div>
@@ -79,16 +79,24 @@
                 <div class="col-md-10 contain-link">
                     <div class="title-link">
                         <a href="<c:url value="/site/${result.id}"/>" class="title-link">
-                            <p class="title">${result.name} - ${result.region}</p>
+                            <p class="title">
+                                ${result.name} - ${result.region}
+                                <span>
+                                    <c:if test="${result.officialLabel}">
+                                    <img id="label-icon-result" src="<c:url value="/resources/pictures/label-3-white.png"/>"
+                                         alt="label">
+                                    </c:if>
+                                </span>
+                            </p>
                         </a>
                     </div>
                     <div>
                         <p class="display-description">${result.description}</p>
                     </div>
-                    <%--<div class="button-display-bar pull-right">
-                        <em class="fas fa-plus-circle"></em>
-                        <a href="<c:url value="/site/${result.id}"/>" class="text-info-link">Ouvrir</a>
-                    </div>--%>
+                        <%--<div class="button-display-bar pull-right">
+                            <em class="fas fa-plus-circle"></em>
+                            <a href="<c:url value="/site/${result.id}"/>" class="text-info-link">Ouvrir</a>
+                        </div>--%>
                 </div>
             </div>
         </div>

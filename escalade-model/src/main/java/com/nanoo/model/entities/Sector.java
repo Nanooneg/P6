@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 /**
  * @author nanoo
@@ -14,7 +15,7 @@ import javax.persistence.Entity;
 @Entity
 @Data @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Sector extends Publication {
+public class Sector extends Publication implements Serializable {
     
     @Column(name = "id_site", nullable = false)
     private Integer idSite;
