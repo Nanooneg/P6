@@ -1,7 +1,9 @@
 package com.nanoo.business.dto;
 
+import com.nanoo.business.customValidation.ValidImage;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,6 +35,8 @@ public class SiteDTO implements Serializable {
     private boolean officialLabel; // Set by default (false)
     
     /* Not required */
-    private Integer idTopo;
+    private String picturePath;
+    @ValidImage(message = "Ce type d'image n'est pas pris en charge")
+    private MultipartFile picture;
     
 }

@@ -7,7 +7,7 @@
 
 <section>
     <div id="spot-form-3" class="center-box form-box">
-        <form:form action="/saveWay/${sectorId}" method="post" modelAttribute="way">
+        <form:form action="/saveWay/${sectorId}/${way.id}" method="post" modelAttribute="way">
             <h1 class="text-center">Création de Voie</h1>
             <div>
                 <br/>

@@ -28,6 +28,7 @@ public class AvailableValidator implements ConstraintValidator<IsAvailable,Strin
      *
      * @param constraintAnnotation annotation instance for a given constraint declaration
      */
+    @Override
     public void initialize(IsAvailable constraintAnnotation) {
         constraintAnnotation.message();
     }

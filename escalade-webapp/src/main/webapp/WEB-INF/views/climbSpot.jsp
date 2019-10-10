@@ -70,36 +70,40 @@
 </section>
 
 <section class="container-fluid">
-    <c:forEach items="${listSite}" var="result">
+    <c:forEach items="${listSite}" var="site">
+        <a href="<c:url value="/site/${site.id}"/>" class="title-link">
         <div class="display-box">
             <div class="row">
-                <div class="col-md-2">
-                    <img src="<c:url value="/resources/pictures/no-picture.jpg"/>" alt="pas d'image disponible">
+                <div class="col-md-2 image-small">
+                    <c:choose>
+                        <c:when test="${site.picturePath != null}">
+                            <img src="<c:url value="${site.picturePath}"/>" alt="photo du site">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="<c:url value="/resources/pictures/no-picture.jpg"/>" alt="pas d'image disponible">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="col-md-10 contain-link">
                     <div class="title-link">
-                        <a href="<c:url value="/site/${result.id}"/>" class="title-link">
-                            <p class="title">
-                                ${result.name} - ${result.region}
-                                <span>
-                                    <c:if test="${result.officialLabel}">
-                                    <img id="label-icon-result" src="<c:url value="/resources/pictures/label-3-white.png"/>"
-                                         alt="label">
-                                    </c:if>
-                                </span>
-                            </p>
-                        </a>
+                        <p class="title">
+                            ${site.name} - ${site.region}
+                            <span>
+                                <c:if test="${site.officialLabel}">
+                                <img id="label-icon-result"
+                                     src="<c:url value="/resources/pictures/label-3-white.png"/>"
+                                     alt="label">
+                                </c:if>
+                            </span>
+                        </p>
                     </div>
                     <div>
-                        <p class="display-description">${result.description}</p>
+                        <p class="display-description">${site.description}</p>
                     </div>
-                        <%--<div class="button-display-bar pull-right">
-                            <em class="fas fa-plus-circle"></em>
-                            <a href="<c:url value="/site/${result.id}"/>" class="text-info-link">Ouvrir</a>
-                        </div>--%>
                 </div>
             </div>
         </div>
+        </a>
     </c:forEach>
 </section>
 

@@ -14,10 +14,6 @@
     <import resource="classpath:com.nanoo.business/businessContext.xml"/>
     <import resource="classpath:com.nanoo.model/modelContext.xml"/>
 
-    <!-- add root directory for resources -->
-    <mvc:resources mapping="/resources/**" location="/resources/"
-                   cache-period="31556926"/>
-
     <mvc:annotation-driven/>
 
 </beans>

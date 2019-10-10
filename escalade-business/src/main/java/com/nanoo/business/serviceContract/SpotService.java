@@ -32,11 +32,30 @@ public interface SpotService {
     
     /**
      * TODO
-     * @param siteDTO
-     * @param accountId
+     * @param sectorID
      * @return
      */
-    void saveSite(SiteDTO siteDTO, int accountId);
+    SectorDTO searchSectorById(int sectorID);
+    
+    /**
+     * TODO
+     * @param wayID
+     * @return
+     */
+    WayDTO searchWayById(int wayID);
+    
+    /**
+     * TODO
+     * @param siteDTO
+     * @return
+     */
+    void saveSite(SiteDTO siteDTO);
+    
+    /**
+     *
+     * @return
+     */
+    List<SiteDTO> searchSiteByFilter(SearchFilter filter);
     
     /**
      * TODO
@@ -48,17 +67,14 @@ public interface SpotService {
     /**
      *
      * @param sectorDTO
-     * @param accountId
      */
-    void saveSector(SectorDTO sectorDTO, String siteId,  int accountId);
+    void saveSector(SectorDTO sectorDTO);
     
     /**
      *
      * @param wayDTO
-     * @param sectorId
-     * @param accountId
      */
-    void saveWay(WayDTO wayDTO, String sectorId, int accountId);
+    void saveWay(WayDTO wayDTO);
     
     /**
      *
@@ -97,10 +113,4 @@ public interface SpotService {
      * @param siteId
      */
     void changeLabel(int siteId);
-    
-    /**
-     *
-     * @return
-     */
-    List<SiteDTO> searchSiteByFilter(SearchFilter filter);
 }

@@ -15,9 +15,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class Message implements Serializable {
-
+    
+    private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(name = "id_account")
     private Integer idAccount;

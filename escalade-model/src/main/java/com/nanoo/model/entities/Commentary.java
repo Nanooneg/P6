@@ -14,19 +14,25 @@ import java.io.Serializable;
 @Data @NoArgsConstructor
 public class Commentary implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
+    /* Required */
     @Column(name = "id_account")
     private Integer idAccount;
     @Column(name = "id_type_of_comment")
     private Integer idTypeOfComment;
+    @Column(length = 30, nullable = false)
     private String title;
+    @Column(length = 300, nullable = false)
     private String text;
-    @Column(name = "like_nbr")
-    private int likeNbr;
-    @Column(name = "dislike_nbr")
-    private int dislikeNbr;
+    @Column(name = "date_of_creation",length = 30, nullable = false)
+    private String dateOfPublication;
+    @Column(name = "date_of_update",length = 30, nullable = false)
+    private String dateOfModification;
 
     
 }

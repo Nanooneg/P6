@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.io.Serializable;
 
 /**
  * @author nanoo
@@ -17,7 +16,7 @@ import java.io.Serializable;
 @Entity
 @Data @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Way extends Publication implements Serializable {
+public class Way extends Publication{
     
     @ManyToOne
     @JoinColumn(name = "id_sector", nullable = false)

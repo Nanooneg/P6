@@ -15,9 +15,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class TopoBooking implements Serializable {
-
+    
+    private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer Id;
     @Column(name = "id_account")
     private Integer idAccount;

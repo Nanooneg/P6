@@ -1,27 +1,27 @@
 <%--
-  @Date: 24/09/2019 - 10:41
+  @Date: 05/10/2019 - 12:27
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
 <section>
-    <div id="spot-form-2" class="center-box form-box">
-        <form:form action="/saveSector/${siteId}/${sector.id}" method="post" modelAttribute="sector">
-            <h1 class="text-center">Création de Secteur</h1>
+    <div id="commentary-form" class="center-box form-box">
+        <form:form action="/addComment/${publicationId}" method="post" modelAttribute="commentary">
+            <h1 class="text-center">Ajouter un commentaire</h1>
             <div>
                 <br/>
                     <%--<c:if test="${empty message}"><br/></c:if>
                     <h4 class="text-center error">${message}</h4> TODO display error message --%>
             </div>
             <div class="textbox">
-                <form:input path="name" placeholder="nom" required="true"/>
-                <form:errors path="name" cssClass="error"/>
+                <form:input path="title" placeholder="Titre" required="true"/>
+                <form:errors path="title" cssClass="error"/>
             </div>
             <div class="textbox">
-                <form:textarea path="description" placeholder="description" required="true"
+                <form:textarea path="text" placeholder="Commentaire" required="true"
                                rows="5" cols="35" maxlength="300"/>
-                <form:errors path="description" cssClass="error"/>
+                <form:errors path="text" cssClass="error"/>
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Enregistrer">

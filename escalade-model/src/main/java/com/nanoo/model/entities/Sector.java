@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -18,7 +17,7 @@ import java.util.Set;
 @Entity
 @Data @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Sector extends Publication implements Serializable {
+public class Sector extends Publication {
     
     @ManyToOne
     @JoinColumn(name = "id_site", nullable = false)

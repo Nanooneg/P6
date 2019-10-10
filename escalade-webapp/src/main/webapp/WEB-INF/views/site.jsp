@@ -7,32 +7,27 @@
 
 <section class="container-fluid">
     <div id="site-box">
-        <div id="site-header" class="row">
-            <div class="col-md-2 text-center">
-                <c:if test="${site.officialLabel}">
-                    <img id="label-icon" src="<c:url value="/resources/pictures/label-3-rouge.png"/>" alt="label">
-                </c:if>
-            </div>
-            <div class="col-md-8 text-center">
-                <h1 class="text-center">${site.name} - ${site.region} - par ${account.firstName}</h1>
-            </div>
-            <div class="col-md-2 text-center">
-                <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
-                    <a href="/changeLabel/${site.id}">
-                        <button id="label">${!site.officialLabel ? 'Ajouter label' : 'Enlever label'}</button>
-                    </a>
-                </c:if>
+        <div id="site-header">
+            <div>
+                <h1 class="text-center">${site.name}</h1>
             </div>
         </div>
         <div id="site-picture">
-                <img src="<c:url value="/resources/pictures/téléchargement.jpeg"/>" alt="image"/>
+            <c:choose>
+                <c:when test="${site.picturePath != null}">
+                    <img src="<c:url value="${site.picturePath}"/>" alt="photo du site">
+                </c:when>
+                <c:otherwise>
+                    <img src="<c:url value="/resources/pictures/téléchargement.jpeg"/>" alt="image"/>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div class="site-info">
-            <p class="title">Description du Site : </p>
+            <p class="title">Description du Site (${site.region}): </p>
             <p class="description">${site.description}</p>
             <div class="button-display-bar pull-right">
                 <em class="fas fa-comment"></em>
-                <a href="/addComment/${site.id}" class="text-info-link">${commentCount ? commentCount : 0} - Commenter</a>
+                <a href="/commentary/${site.id}" class="text-info-link">Commentaire</a>
                 <em class="fas fa-plus-circle"></em>
                 <a href="<c:url value="/spotForm2/${site.id}"/>" class="text-info-link">Ajouter un secteur</a>
                 <c:if test="${sessionScope.account.id == site.idAccount
@@ -41,7 +36,9 @@
                     <em class="fas fa-pen"></em>
                     <a href="<c:url value="/updateSite/${site.id}"/>" class="text-info-link">Modifier le site</a>
                 </c:if>
-                <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
+                <c:if test="${sessionScope.account.id == site.idAccount
+                            || sessionScope.account.roleName == 'Member'
+                            || sessionScope.account.roleName == 'Administrator'}">
                     <em class="fas fa-minus-circle"></em>
                     <a href="<c:url value="/deleteSite/${site.id}"/>" class="text-info-link">Supprimer ce site</a>
                 </c:if>
@@ -73,12 +70,12 @@
                                     <c:if test="${sessionScope.account.id == way.idAccount
                                                 || sessionScope.account.roleName == 'Member'
                                                 || sessionScope.account.roleName == 'Administrator'}">
-                                        <a id="way" href="<c:url value="/updateWay/${way.id}"/>" class="text-info-link">
+                                        <a id="way" href="<c:url value="/updateWay/${sector.id}/${way.id}"/>" class="text-info-link">
                                             <em class="fas fa-pen"></em>
                                         </a>
                                     </c:if>
-                                    <a href="/addComment/${way.id}" class="text-info-link">
-                                        <em class="fas fa-comment"></em>${commentCount ? commentCount : 0}
+                                    <a href="/commentary/${way.id}" class="text-info-link">
+                                        <em class="fas fa-comment"></em>
                                     </a>
                                      - voie n°${wayStatus.count} : ${way.name} - Hauteur : ${way.height} m - ${way.pitchNbr}
                                     longueurs et ${way.anchorNbr} points d'ancrage ( ${way.rating} )
@@ -88,14 +85,14 @@
                     </c:forEach>
                     <div class="button-display-bar pull-right">
                         <em class="fas fa-comment"></em>
-                        <a href="/addComment/${sector.id}" class="text-info-link">${commentCount ? commentCount : 0} - Commenter</a>
+                        <a href="/commentary/${sector.id}" class="text-info-link">Commentaire</a>
                         <em class="fas fa-plus-circle"></em>
                         <a href="<c:url value="/spotForm3/${sector.id}"/>" class="text-info-link">Ajouter une voie</a>
                         <c:if test="${sessionScope.account.id == sector.idAccount
                                     || sessionScope.account.roleName == 'Member'
                                     || sessionScope.account.roleName == 'Administrator'}">
                             <em class="fas fa-pen"></em>
-                            <a href="<c:url value="/updateSector/${sector.id}"/>" class="text-info-link">Modifier le sector</a>
+                            <a href="<c:url value="/updateSector/${site.id}/${sector.id}"/>" class="text-info-link">Modifier le sector</a>
                         </c:if>
                         <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
                             <em class="fas fa-minus-circle"></em>

@@ -43,7 +43,6 @@ public class SpotController {
     private static final String REGION_ATT = "listRegion";
     private static final String SEARCH_ATT = "searchAttribut";
     private static final String SITE_ATT = "site";
-    private static final String RESULT_SITE_SEARCH_ATT = "listSiteSearchResult";
     private static final String SECTOR_ATT = "sector";
     private static final String SITE_ID_ATT = "siteId";
     private static final String SECTOR_ID_ATT = "sectorId";
@@ -63,16 +62,14 @@ public class SpotController {
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         
-        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-        
-        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+        dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+        //dataBinder.registerCustomEditor(String.class, new StringMultipartFileEditor());
     }
     
     @GetMapping("/climbSpot")
     public String displaySpotPage (Model model){
         
         List<SiteDTO> siteDTOList = spotService.findAllSite();
-        
         model.addAttribute(SEARCH_ATT,new SearchFilter());
         model.addAttribute(RATING_ATT,listRating);
         model.addAttribute(REGION_ATT,listRegion);
@@ -114,7 +111,7 @@ public class SpotController {
         
         spotService.changeLabel(Integer.parseInt(siteId));
         
-        return displaySite(siteId,model);
+        return displaySite(siteId,model); //TODO delete this unused method
     }
     
     @GetMapping("/spotForm1")
@@ -130,6 +127,15 @@ public class SpotController {
         model.addAttribute(SITE_ATT,new SiteDTO());
         model.addAttribute(REGION_ATT,listRegion);
     
+        return SPOT_FORM_VIEW1;
+    }
+    
+    @GetMapping("/updateSite/{siteID}")
+    public String updateSite(@PathVariable String siteID, Model model){
+        
+        model.addAttribute(SITE_ATT,spotService.searchSiteById(Integer.parseInt(siteID)));
+        model.addAttribute(REGION_ATT,listRegion);
+        
         return SPOT_FORM_VIEW1;
     }
     
@@ -151,6 +157,15 @@ public class SpotController {
         return SPOT_FORM_VIEW2;
     }
     
+    @GetMapping("/updateSector/{siteId}/{sectorId}")
+    public String updateSector(@PathVariable String siteId, @PathVariable String sectorId, Model model){
+        
+        model.addAttribute(SECTOR_ATT,spotService.searchSectorById(Integer.parseInt(sectorId)));
+        model.addAttribute(SITE_ID_ATT, siteId);
+        
+        return SPOT_FORM_VIEW2;
+    }
+    
     @GetMapping("/spotForm3/{sectorId}")
     public String displaySpotFormWayStep(HttpServletRequest request, Model model, @PathVariable String sectorId){
     
@@ -168,10 +183,21 @@ public class SpotController {
         return SPOT_FORM_VIEW3;
     }
     
-    @PostMapping("/saveSite")
-    public String displaySpotAfterSaving (@Valid @ModelAttribute ("site")SiteDTO siteDTO,
-                                          BindingResult bResult, Model model, HttpServletRequest request){
+    @GetMapping("/updateWay/{sectorId}/{wayId}")
+    public String updateWay(@PathVariable String sectorId, @PathVariable String wayId, Model model){
+        
+        model.addAttribute(WAY_ATT,spotService.searchWayById(Integer.parseInt(wayId)));
+        model.addAttribute(RATING_ATT,listRating);
+        model.addAttribute(SITE_ID_ATT, sectorId);
+        
+        return SPOT_FORM_VIEW3;
+    }
     
+    @PostMapping({"/saveSite/","/saveSite/{siteID}"})
+    public String displaySpotAfterSaving(@Valid @ModelAttribute("site") SiteDTO siteDTO,
+                                         BindingResult bResult, Model model, HttpServletRequest request,
+                                         @PathVariable(required = false) String siteID){
+        
         if (bResult.hasErrors()) {
             model.addAttribute(SITE_ATT, siteDTO);
             model.addAttribute(REGION_ATT,listRegion);
@@ -179,12 +205,17 @@ public class SpotController {
             return SPOT_FORM_VIEW1;
         }
         
+        // TODO write methos to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
-        int accountId = accountDTO.getId();
     
-        spotService.saveSite(siteDTO,accountId);
-    
+        if (siteID != null)
+            siteDTO.setId(Integer.parseInt(siteID));
+        else
+            siteDTO.setIdAccount(accountDTO.getId());
+        
+        spotService.saveSite(siteDTO);
+        
         List<SiteDTO> siteDTOList = spotService.findAllSite();
         model.addAttribute(SEARCH_ATT,new SearchFilter());
         model.addAttribute(RATING_ATT,listRating);
@@ -196,7 +227,7 @@ public class SpotController {
     
     @GetMapping("/deleteSite/{siteId}")
     public String deleteSite(@PathVariable String siteId, Model model, HttpServletRequest request){
-    
+     
         /* Check if user has access TODO change system to give acces to member and admin only*/
         sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
@@ -209,10 +240,10 @@ public class SpotController {
         return displaySpotPage(model);
     }
     
-    @PostMapping("/saveSector/{siteId}")
-    public String displaySpotAfterSaving(@Valid @ModelAttribute("sector") SectorDTO sectorDTO,
-                                         BindingResult bResult, Model model, HttpServletRequest request,
-                                         @PathVariable String siteId){
+    @PostMapping({"/saveSector/{siteId}","/saveSector/{siteId}/{sectorId}"})
+    public String displaySiteAfterSaveSector(@Valid @ModelAttribute("sector") SectorDTO sectorDTO,
+                                             BindingResult bResult, Model model, HttpServletRequest request,
+                                             @PathVariable String siteId, @PathVariable (required = false) String sectorId){
         
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
@@ -220,12 +251,17 @@ public class SpotController {
             return SPOT_FORM_VIEW2;
         }
         
-        // TODO write methos to get accountId
+        // TODO write method to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
-        int accountId = accountDTO.getId();
         
-        spotService.saveSector(sectorDTO,siteId,accountId);
+        if (sectorId != null)
+            sectorDTO.setId(Integer.parseInt(sectorId));
+        else
+            sectorDTO.setIdAccount(accountDTO.getId());
+        
+        sectorDTO.setIdSite(Integer.parseInt(siteId));
+        spotService.saveSector(sectorDTO);
         
         return displaySite(siteId,model);
     }
@@ -245,10 +281,10 @@ public class SpotController {
         return displaySite(siteId, model);
     }
     
-    @PostMapping("/saveWay/{sectorId}")
-    public String displaySiteAfterSaveWay(@Valid@ModelAttribute("way") WayDTO wayDTO,
-                                          BindingResult bResult,Model model,HttpServletRequest request,
-                                          @PathVariable String sectorId){
+    @PostMapping({"/saveWay/{sectorId}","/saveWay/{sectorId}/{wayId}"})
+    public String displaySiteAfterSaveWay(@Valid @ModelAttribute("way") WayDTO wayDTO,
+                                          BindingResult bResult, Model model, HttpServletRequest request,
+                                          @PathVariable String sectorId, @PathVariable(required = false) String wayId){
     
         if (bResult.hasErrors()) {
             model.addAttribute(WAY_ATT, wayDTO);
@@ -259,11 +295,16 @@ public class SpotController {
         // TODO write methos to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
-        int accountId = accountDTO.getId();
+        
+        if (wayId != null)
+            wayDTO.setId(Integer.parseInt(wayId));
+        else
+            wayDTO.setIdAccount(accountDTO.getId());
+        
+        wayDTO.setIdSector(Integer.parseInt(sectorId));
+        spotService.saveWay(wayDTO);
         
         int siteId = spotService.getSiteIdWithSectorId(sectorId);
-        
-        spotService.saveWay(wayDTO,sectorId,accountId);
         
         return displaySite(Integer.toString(siteId),model);
     }

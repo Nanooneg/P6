@@ -87,7 +87,7 @@ public class JpaConfig {
         addProperties.setProperty("hibernate.cache.region.factory_class",properties.getProperty("spring.jpa.properties.hibernate.cache.region.factory_class"));
         addProperties.setProperty("hibernate.cache.provider_class",properties.getProperty("spring.jpa.properties.hibernate.cache.provider_class"));
         addProperties.setProperty("hibernate.use_sql_comments",properties.getProperty("spring.jpa.use_sql_comments"));
-        //addProperties.setProperty("",properties.getProperty("")); // TO DO : Add more properties later
+        //addProperties.setProperty("",properties.getProperty("")); // TODO : Add more properties later
         return addProperties;
     }
 }

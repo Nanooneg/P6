@@ -7,13 +7,19 @@
 
 <section>
     <div id="spot-form-1" class="center-box form-box">
-        <form:form action="/saveSite" method="post" modelAttribute="site">
+        <form:form action="/saveSite/${site.id}" method="post" modelAttribute="site" enctype="multipart/form-data">
             <h1 class="text-center">Création de Site</h1>
             <div>
                 <br/>
-                <%--<c:if test="${empty message}"><br/></c:if>
-                <h4 class="text-center error">${message}</h4> TODO display error message --%>
+                    <%--<c:if test="${empty message}"><br/></c:if>
+                    <h4 class="text-center error">${message}</h4> TODO display error message --%>
             </div>
+            <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
+                <div class="labelbox">
+                    <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
+                    <label>Label officiel</label>
+                </div>
+            </c:if>
             <div class="select-style">
                 <form:select path="region">
                     <form:option value="Région"/>
@@ -22,13 +28,17 @@
                 <form:errors path="region" cssClass="error"/>
             </div>
             <div class="textbox">
-            <form:input path="name" placeholder="nom" required="true"/>
-            <form:errors path="name" cssClass="error"/>
+                <form:input path="name" placeholder="nom" required="true"/>
+                <form:errors path="name" cssClass="error"/>
             </div>
             <div class="textbox">
-            <form:textarea path="description" placeholder="description" required="true"
-                           rows="5" cols="35" maxlength="300"/>
-            <form:errors path="description" cssClass="error"/>
+                <form:textarea path="description" placeholder="description" required="true"
+                               rows="5" cols="35" maxlength="300"/>
+                <form:errors path="description" cssClass="error"/>
+            </div>
+            <div class="textbox">
+                <form:input path="picture" type="file"/>
+                <form:errors path="picture" cssClass="error"/>
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Enregistrer">

@@ -1,6 +1,7 @@
 package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Site;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -25,5 +26,6 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
            nativeQuery = true)
     List<Site> findAllByFilter (@Param("sectorNbrMin") int sectorNbrMin, @Param("region") String region,
                                 @Param("isLabelOfficial") boolean isLabelOfficial, @Param("rating") String rating);
-        
+    
+    Iterable<Site> findAll(Sort sort);
 }

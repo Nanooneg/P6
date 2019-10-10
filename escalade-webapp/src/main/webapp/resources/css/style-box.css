@@ -8,7 +8,7 @@
     z-index: 2000;
 }
 
-#register, #spot-form-1, #spot-form-2, #spot-form-3{
+#register, #spot-form-1, #spot-form-2, #spot-form-3, #commentary-form{
     width: 500px;
     position: absolute;
 }
@@ -42,6 +42,50 @@
     color: white;
 }
 
+#commentary-box{
+    width: 80%;
+    position: relative;
+    min-height: 80vh;
+    margin: 130px auto 15px auto;
+    padding: 20px 20px 20px 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: white;
+    border-radius: 10px;
+    color: white;
+}
+
+.commentary{
+    color: #b9b9b9;
+    width: 100%;
+    margin: 15px auto 15px auto;
+    padding: 10px 10px 15px 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 3px;
+    background-color: rgba(255,255,255,0.3);
+}
+
+.commentary-header{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.commentary-text{
+    font-size: 20px;
+    padding-bottom: 15px;
+}
+
+.commentary-footer{
+    margin-top: 5px;
+    padding-right: 10px;
+    font-size: 15px;
+}
+
+.commentary-date{
+    font-style: italic;
+    font-weight: normal;
+    font-size: 15px;
+}
+
 .site-header{
     display: flex;
 }
@@ -50,6 +94,16 @@
 }
 
 #site-box h1{
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    padding-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+#commentary-box h1{
     font-size: 40px;
     font-weight: bold;
     color: white;
@@ -82,6 +136,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.image-small img{
+    width: 200px;
+    height: 153px;
 }
 
 #site-picture img{
@@ -157,10 +216,17 @@
     height: auto;
     margin: 15px auto 15px auto;
     padding: 20px 20px 20px 20px;
+    transition: 0.3s;
     background-color: rgba(0, 0, 0, 0.8);
     border: white;
     border-radius: 10px;
     color: white;
+}
+
+.display-box:hover, .display-box:focus {
+    transition: 0.3s;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #454545;
 }
 
 .title{
@@ -218,6 +284,10 @@
     text-align: center;
 }
 
+.labelbox{
+    margin-bottom: 15px;
+}
+
 .way-info em{
     width: 26px;
 }
@@ -258,6 +328,11 @@ input[type=number]{
     text-decoration: none;
     outline: none;
 }
+
+#commentary-box .text-info-link{
+    color: #b9b9b9;
+}
+
 
 /*************************************/
 /*****           Button          *****/
@@ -334,6 +409,10 @@ input[type=number]{
 
 .button-display-bar{
     margin-top: 20px;
+}
+
+#commentary-box .button-display-bar{
+    margin-top: -10px;
 }
 
 #way em{
