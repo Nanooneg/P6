@@ -10,8 +10,8 @@
         <form:form action="/saveSite/${site.id}" method="post" modelAttribute="site" enctype="multipart/form-data">
             <h1 class="text-center">Création de Site</h1>
             <div>
-                <c:if test="${empty message}"><br/></c:if>
-                <h4 class="text-center error">${message}</h4>
+                <c:if test="${empty saveSpot.result}"><br/></c:if>
+                <h4 class="text-center error">${saveSpot.result}</h4>
             </div>
             <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
                 <div class="labelbox">

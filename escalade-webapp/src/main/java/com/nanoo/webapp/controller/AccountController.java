@@ -36,11 +36,12 @@ public class AccountController {
     private static final String REGISTER_VIEW = "register";
     private static final String SIGNOUT_VIEW = "signout";
     
+    private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
+    
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listTitle = enumValues.getEnumTitleStringValues();
     
-    @Autowired
-    private AccountService accountService;
+    @Autowired AccountService accountService;
     
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -74,14 +75,14 @@ public class AccountController {
     
         model.addAttribute(ACCOUNT_ATT,accountDTO);
     
-        if (!bResult.hasErrors()) {
+        if (bResult.hasErrors()) {
+            model.addAttribute(MESSAGE_ATT,ERROR_REGISTER_MESSAGE);
+            model.addAttribute(TITLE_ATT,listTitle);
+            return REGISTER_VIEW;
+        }else{
             accountService.saveAccount(accountDTO);
             model.addAttribute(ACCOUNT_SERV_ATT,accountService);
             return LOGIN_VIEW;
-        }else{
-            model.addAttribute(MESSAGE_ATT,"L'enregistrement a échoué!"); //TODO use result variable
-            model.addAttribute(TITLE_ATT,listTitle);
-            return REGISTER_VIEW;
         }
     }
     

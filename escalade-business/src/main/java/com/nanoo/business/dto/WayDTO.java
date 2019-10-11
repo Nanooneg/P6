@@ -28,6 +28,7 @@ public class WayDTO implements Serializable {
     private Integer id; // Auto-generated
     private Integer idAccount; // Auto-set
     private Integer idSector; // Auto-set
+    private int ratingLevel; // Auto-set
     private String dateOfCreation; // Auto-set
     private String dateOfUpdate; // Auto-set
     

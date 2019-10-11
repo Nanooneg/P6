@@ -23,8 +23,8 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
      * @param sectorNbrMin minimum of sectors
      * @param region region of site
      * @param isLabelOfficial is the site tagged with the label "Officiel les amis de l'escalade"
-     * @param rating rating to found in ways contained in sites
-     * @return
+     * @param ratingLevel ratingLevel minimum to found in ways contained in sites
+     * @return a list of site who match with criteria
      */
     @Query(value = "SELECT distinct s.* FROM Site s " +
                    "INNER JOIN Sector sec ON s.id = sec.id_site " +
@@ -32,10 +32,10 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
                    "WHERE (SELECT COUNT(sec.id) FROM Sector sec WHERE sec.id_site = s.id) >= :sectorNbrMin " +
                    "AND (:region = 'all' OR s.region = :region) " +
                    "AND (:isLabelOfficial = false OR s.is_official_label = :isLabelOfficial) " +
-                   "AND (:rating = 'all' OR w.rating = :rating)",
+                   "AND (w.rating_level <= :ratingLevel)",
            nativeQuery = true)
     List<Site> findAllByFilter (@Param("sectorNbrMin") int sectorNbrMin, @Param("region") String region,
-                                @Param("isLabelOfficial") boolean isLabelOfficial, @Param("rating") String rating);
+                                @Param("isLabelOfficial") boolean isLabelOfficial, @Param("ratingLevel") int ratingLevel);
     
     /**
      * This method find all sites contained in DB and sort them

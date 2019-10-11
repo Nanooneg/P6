@@ -38,6 +38,7 @@ public class SpotController {
     private static final String LOGIN_VIEW = "login";
     
     private static final String ACCOUNT_ATT = "account";
+    private static final String SPOT_SERV_ATT = "saveSpot";
     private static final String LIST_SITE_ATT = "listSite";
     private static final String MESSAGE_ATT = "message";
     private static final String RATING_ATT = "listRating";
@@ -55,16 +56,14 @@ public class SpotController {
     private List<String> listRating = enumValues.getEnumRatingStringValues();
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
     
-    @Autowired private SpotService spotService;
-    @Autowired private AccountService accountService;
+    @Autowired SpotService spotService;
+    @Autowired AccountService accountService;
     
     private SessionHandling sessionHandling;
     
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
-        
         dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-        //dataBinder.registerCustomEditor(String.class, new StringMultipartFileEditor());
     }
     
     @GetMapping("/climbSpot")
@@ -83,10 +82,12 @@ public class SpotController {
     public String displaySpotPageWithResult (@ModelAttribute SearchFilter filter, Model model){
         
         List<SiteDTO> siteDTOListResult = spotService.searchSiteByFilter(filter);
-        model.addAttribute(LIST_SITE_ATT,siteDTOListResult);
+        
+        model.addAttribute(MESSAGE_ATT, spotService.getResult());
+        model.addAttribute(LIST_SITE_ATT, siteDTOListResult);
         model.addAttribute(SEARCH_ATT, filter);
-        model.addAttribute(RATING_ATT,listRating);
-        model.addAttribute(REGION_ATT,listRegion);
+        model.addAttribute(RATING_ATT, listRating);
+        model.addAttribute(REGION_ATT, listRegion);
         
         return SPOT_VIEW;
     }
@@ -134,8 +135,6 @@ public class SpotController {
     
     @GetMapping("/spotForm2/{siteId}")
     public String displaySpotFormSectorStep(HttpServletRequest request, Model model, @PathVariable String siteId){
-    
-        //TODO get back the siteId
         
         /* Check if user has access */
         sessionHandling = new SessionHandling();
@@ -193,12 +192,11 @@ public class SpotController {
         
         if (bResult.hasErrors()) {
             model.addAttribute(SITE_ATT, siteDTO);
-            model.addAttribute(REGION_ATT,listRegion);
-            model.addAttribute(MESSAGE_ATT, "L'enregistrement a échoué");
+            model.addAttribute(REGION_ATT, listRegion);
+            model.addAttribute(SPOT_SERV_ATT, spotService);
             return SPOT_FORM_VIEW1;
         }
         
-        // TODO write methos to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
     
@@ -221,7 +219,7 @@ public class SpotController {
     @GetMapping("/deleteSite/{siteId}")
     public String deleteSite(@PathVariable String siteId, Model model, HttpServletRequest request){
      
-        /* Check if user has access TODO change system to give acces to member and admin only*/
+        /* Check if user has access */
         sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
@@ -240,11 +238,10 @@ public class SpotController {
         
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
-            model.addAttribute(MESSAGE_ATT, "L'enregistrement a échoué");
+            model.addAttribute(SPOT_SERV_ATT, spotService);
             return SPOT_FORM_VIEW2;
         }
         
-        // TODO write method to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
         
@@ -262,7 +259,7 @@ public class SpotController {
     @GetMapping("/deleteSector/{siteId}/{sectorId}")
     public String deleteSector(@PathVariable String sectorId, Model model, HttpServletRequest request, @PathVariable String siteId){
         
-        /* Check if user has access TODO change system to give acces to member and admin only*/
+        /* Check if user has access */
         sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
@@ -281,12 +278,11 @@ public class SpotController {
     
         if (bResult.hasErrors()) {
             model.addAttribute(WAY_ATT, wayDTO);
-            model.addAttribute(RATING_ATT,listRating);
-            model.addAttribute(MESSAGE_ATT, "L'enregistrement a échoué");
+            model.addAttribute(RATING_ATT, listRating);
+            model.addAttribute(SPOT_SERV_ATT, spotService);
             return SPOT_FORM_VIEW3;
         }
     
-        // TODO write methos to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
         
@@ -306,7 +302,7 @@ public class SpotController {
     @GetMapping("/deleteWay/{siteId}/{wayId}")
     public String deleteWay(@PathVariable String wayId, Model model, HttpServletRequest request, @PathVariable String siteId){
         
-        /* Check if user has access TODO change system to give acces to member and admin only*/
+        /* Check if user has access */
         sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());

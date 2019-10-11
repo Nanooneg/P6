@@ -23,6 +23,8 @@ public class Way extends Publication{
     private Sector sector;
     @Column(length = 20, nullable = false)
     private String rating;
+    @Column(name = "rating_level", nullable = false)
+    private int ratingLevel;
     @Column(nullable = false)
     private int height;
     @Column(name = "pitch_nbr")

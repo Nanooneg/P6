@@ -1,5 +1,7 @@
 package com.nanoo.webapp.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -26,12 +28,14 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = {"com.nanoo.consumer"})
 public class JpaConfig {
     
+    private static final Logger log = LoggerFactory.getLogger(JpaConfig.class);
+    
     private Properties properties = new Properties();
     {
         try {
             properties.load(getClass().getResourceAsStream("/persistence/jdbc.properties"));
         } catch (IOException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
     
@@ -87,7 +91,7 @@ public class JpaConfig {
         addProperties.setProperty("hibernate.cache.region.factory_class",properties.getProperty("spring.jpa.properties.hibernate.cache.region.factory_class"));
         addProperties.setProperty("hibernate.cache.provider_class",properties.getProperty("spring.jpa.properties.hibernate.cache.provider_class"));
         addProperties.setProperty("hibernate.use_sql_comments",properties.getProperty("spring.jpa.use_sql_comments"));
-        //addProperties.setProperty("",properties.getProperty("")); // TODO : Add more properties later
+        
         return addProperties;
     }
 }

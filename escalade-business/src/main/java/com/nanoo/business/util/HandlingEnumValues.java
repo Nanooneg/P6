@@ -5,7 +5,9 @@ import com.nanoo.model.enums.EnumRegion;
 import com.nanoo.model.enums.EnumTitle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author nanoo
@@ -62,18 +64,25 @@ public class HandlingEnumValues {
     }
     
     /**
-     * This method return a list of Integer with all level contained in enum
+     * This method return the level value associated to the abbreviation in enum
      *
-     * @return a list of Integer
+     * @return the level value
      */
-    public List<Integer> getEnumRatingLevelValues (){
+    public int getEnumRatingLevelFromAbbreviationValue (String abbreviation){
         EnumRating[] listRating = EnumRating.values();
-        List<Integer> listRatingLevelValues = new ArrayList<>();
-    
+        Map<Integer,String> listRatingLevelAndAbbreviationValues = new HashMap<>();
+        
         for (EnumRating enumRating : listRating){
-            listRatingLevelValues.add(enumRating.getLevel());
+            listRatingLevelAndAbbreviationValues.put(enumRating.getLevel(),enumRating.getAbbreviation());
+        }
+        
+        for ( Map.Entry<Integer,String> entry : listRatingLevelAndAbbreviationValues.entrySet()){
+            if (entry.getValue().equals(abbreviation)){
+
+                return entry.getKey();
+            }
         }
     
-        return  listRatingLevelValues;
+        return 0;
     }
 }

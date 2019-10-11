@@ -2,7 +2,6 @@ package com.nanoo.webapp.controller;
 
 import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,7 @@ public class HomeController {
     private static final String USER_HOME_VIEW = "user";
     
     @GetMapping(value = {"/","/home"})
-    public String home(Model model, HttpServletRequest request){
+    public String home(HttpServletRequest request){
         
         /* Check if user has session */
         SessionHandling sessionHandling = new SessionHandling();

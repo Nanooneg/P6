@@ -62,7 +62,9 @@
                         <div class="way-info">
                             <div>
                                 <p>
-                                    <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
+                                    <c:if test="${sessionScope.account.id == way.idAccount
+                                                || sessionScope.account.roleName == 'Member'
+                                                || sessionScope.account.roleName == 'Administrator'}">
                                     <a href="<c:url value="/deleteWay/${site.id}/${way.id}"/>" class="text-info-link">
                                         <em class="fas fa-minus-circle"></em>
                                     </a>

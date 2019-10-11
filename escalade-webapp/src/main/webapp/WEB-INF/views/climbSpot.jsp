@@ -12,9 +12,8 @@
             <h1 class="text-center">Site de grimpe</h1>
         </div>
             <div>
-                <br/>
-                <%--<c:if test="${empty message}"><br/></c:if> TODO display error message when no result found --%>
-                <%--<h4 class="text-center error">${message}</h4>--%>
+                <c:if test="${empty message}"><br/></c:if>
+                <h4 class="text-center ${empty listSite ? 'error' : 'success'}">${message}</h4>
             </div>
         <div class="row">
             <div class="col-md-2 text-center">

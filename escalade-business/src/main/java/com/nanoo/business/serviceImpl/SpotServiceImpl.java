@@ -8,6 +8,7 @@ import com.nanoo.business.mapper.SiteMapper;
 import com.nanoo.business.mapper.WayMapper;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.DateUtil;
+import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
 import com.nanoo.consumer.repository.SectorRepository;
 import com.nanoo.consumer.repository.SiteRepository;
@@ -15,6 +16,7 @@ import com.nanoo.consumer.repository.WayRepository;
 import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
 import com.nanoo.model.entities.Way;
+import com.nanoo.model.enums.EnumRating;
 import lombok.Data;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -43,6 +45,8 @@ public class SpotServiceImpl implements SpotService {
     
     private String result;
     private DateUtil dateUtil;
+    private EnumRating enumRating;
+    private HandlingEnumValues enumValues;
     
     @Autowired SiteRepository siteRepository;
     @Autowired SectorRepository sectorRepository;
@@ -181,6 +185,7 @@ public class SpotServiceImpl implements SpotService {
         }
         
         sector.ifPresent(way::setSector);
+        way.setRatingLevel(getLevelOfRatingAbbreviation(way.getRating()));
         way.setDateOfUpdate(dateUtil.getCurrentDateTime());
         
         try {
@@ -246,11 +251,18 @@ public class SpotServiceImpl implements SpotService {
      */
     @Override
     public List<SiteDTO> searchSiteByFilter(SearchFilter filter) {
+        result = "";
+        enumValues = new HandlingEnumValues();
+        
         String fRegion = filter.getRegion();
         int fSectorNbrMin = Integer.parseInt(filter.getSectorNbrMin());
         boolean fOfficialLabel = filter.isOfficialLabel();
-        String fRating = filter.getRating();
-        
+        int fRating;
+        if (filter.getRating().equals("all"))
+            fRating = 20;
+        else
+            fRating = enumValues.getEnumRatingLevelFromAbbreviationValue(filter.getRating());
+
         List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating);
         List<SiteDTO> siteDTOList = new ArrayList<>();
         
@@ -259,6 +271,13 @@ public class SpotServiceImpl implements SpotService {
             siteDTOList.add(siteDTO);
         }
         
+        if (siteDTOList.isEmpty())
+            result = "Aucun site ne correspond à vos critères";
+        else if (siteDTOList.size() == 1)
+            result = siteDTOList.size() + " site correspond à vos critères";
+        else
+            result = siteDTOList.size() + " sites correspondent à vos critères";
+            
         return siteDTOList;
     }
     
@@ -412,5 +431,17 @@ public class SpotServiceImpl implements SpotService {
     private String formatString (String string)
     {
         return string.replace("/","_").replace(" ","_").replace(":","_");
+    }
+    
+    /**
+     * This method find the level value associated to the abbreviation in the EnumRating.
+     *
+     * @param rating abbreviation picked up in form
+     * @return level value associated
+     */
+    private int getLevelOfRatingAbbreviation(String rating) {
+        enumValues = new HandlingEnumValues();
+        
+        return enumValues.getEnumRatingLevelFromAbbreviationValue(rating);
     }
 }

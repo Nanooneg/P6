@@ -10,8 +10,8 @@
         <form:form action="/saveWay/${sectorId}/${way.id}" method="post" modelAttribute="way">
             <h1 class="text-center">Création de Voie</h1>
             <div>
-                <c:if test="${empty message}"><br/></c:if>
-                <h4 class="text-center error">${message}</h4>
+                <c:if test="${empty saveSpot.result}"><br/></c:if>
+                <h4 class="text-center error">${saveSpot.result}</h4>
             </div>
             <div class="textbox">
                 <label>Nom de la voie (optionnel) :</label>

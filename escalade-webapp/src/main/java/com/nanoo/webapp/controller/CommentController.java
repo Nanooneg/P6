@@ -35,10 +35,9 @@ public class CommentController {
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
     
-    @Autowired
-    CommentaryService commentaryService;
+    @Autowired CommentaryService commentaryService;
     
-    SessionHandling sessionHandling;
+    private SessionHandling sessionHandling;
     
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -96,7 +95,6 @@ public class CommentController {
             return COMMENTARY_FORM_VIEW;
         }
         
-        //TODO write method to get accountId
         HttpSession session = request.getSession();
         AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
     
