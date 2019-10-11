@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author nanoo
@@ -31,111 +32,126 @@ public class AccountServiceImpl implements AccountService {
     private static final String MAIL_FIELD = "mail";
     private static final String PASSWORD_FIELD = "password";
     
+    private static final String ERROR_LOG_MESSAGE = "La connection a échoué !";
+    private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
+    private static final String SUCCESS_LOG_MESSAGE = "Vous êtes connecté";
+    private static final String SUCCESS_REGISTER_MESSAGE = "Votre compte a bien été crée";
+    
     private String result;
     private Map<String,String> errors;
+    private DateUtil dateUtil;
     
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
     private AccountMapper accountMapper;
     
-    private DateUtil dateUtil;
     
     /**
-     * TODO
-     * @param accountDTO
-     * @return
+     * This method save an account in DB
+     *
+     * @param accountDTO account to save
      */
     @Override
-    public void saveAccount(AccountDTO accountDTO){
+    public void saveAccount(AccountDTO accountDTO) {
         result = "";
         dateUtil = new DateUtil()
 ;
         Account account = accountMapper.fromDtoToAccount(accountDTO);
-        account.setTitle(processTitle(account.getTitle()));
         account.setRoleName(EnumRole.USER.getAbbreviation()); // role is set USER by default.
         account.setPassword(encryptPassword(account.getPassword()));
         account.setDateOfCreation(dateUtil.getCurrentDateTime());
         account.setDateOfUpdate(account.getDateOfCreation());
     
-        accountRepository.save(account);
-        result = "L'inscription est un succés !";
+        try {
+            accountRepository.save(account);
+            result = SUCCESS_REGISTER_MESSAGE;
+        }catch (Exception e){
+            result = ERROR_REGISTER_MESSAGE;
+        }
+        
         
     }
     
     /**
-     * This method get Http request, take parameters values of it and call some methods for data process.
-     * Then call the consumer layer to check if the user is registered
-     * @param accountDTO TODO
-     * @return true if the user is registered
+     * This method looks for a match in DB
+     * It compare a mail/password couple
+     *
+     * @param accountDTO object who contain fields to compare
+     * @return true if the couple match with DB
      */
     @Override
     public AccountDTO searchRegisteredAccount(AccountDTO accountDTO){
         errors = new HashMap<>();
-        result = "La connection a échoué !";
+        result = "";
         
-        Account account = accountRepository.findFirstByMail(accountDTO.getMail());
+        Account account = accountRepository.findByMail(accountDTO.getMail());
         
         if (account == null) {
             setError(MAIL_FIELD, "Aucun compte ne correspond à votre adresse mail");
+            result = ERROR_LOG_MESSAGE;
+            
             return accountDTO;
         }else if (!checkPassword(accountDTO.getPassword(), account.getPassword())) {
             setError(PASSWORD_FIELD, "Le mot de passe renseigné n'est pas correct");
+            result = ERROR_LOG_MESSAGE;
+            
             return accountDTO;
         }else{
-            result = "";
+            result = SUCCESS_LOG_MESSAGE    ;
+            
             return accountMapper.fromAccountToDtoLight(account);
         }
     }
     
     /**
-     * TODO
-     * @param idAccount
-     * @return
+     * This method search an account in DB ans return only chosen parameters.
+     *
+     * @param idAccount id of account searched
+     * @return account with chosen parameters
      */
     @Override
     public AccountDTO searchAccountLightById(Integer idAccount){
-        Account account = accountRepository.findFirstById(idAccount);
-        return accountMapper.fromAccountToDtoLight(account);
-    }
-    
-    /**
-     * TODO
-     * @param title
-     * @return
-     */
-    private String processTitle(String title) {
-        if(title.equalsIgnoreCase("Civil"))
-            return "N/C";
-        else
-            return title;
+        Optional<Account> account = accountRepository.findById(idAccount);
+        Account existingAccount;
         
+        if (account.isPresent()){
+            existingAccount = account.get();
+            return accountMapper.fromAccountToDtoLight(existingAccount);
+        }
+        
+        return null;
     }
     
     /**
-     * using Jasypt library tu encrypt password effectively.
-     * I choose SHA-256 algorithm here, with by default a random salt
+     * using Jasypt library to encrypt password effectively
+     * with SHA-256 algorithm. By default a random salt
      * and a huge iteration number of the hash method.
+     *
      * @param password String to encrypt
-     * @return The string returned is lenght 56 and contains the hash is base64.
+     * @return string with a length of 56 who contains the hash in base64.
      */
     private String encryptPassword(String password) {
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
         passwordEncryptor.setAlgorithm(ENCRYPTION_ALGO);
         passwordEncryptor.setPlainDigest( false );
+        
         return passwordEncryptor.encryptPassword(password);
     }
     
     /**
-     * TODO
-     * @param plainPassword
-     * @param encryptedPassword
-     * @return
+     * using Jasypt library to compare password from login form
+     * with encrypted password in DB.
+     *
+     * @param plainPassword password not encrypted
+     * @param encryptedPassword password encrypted
+     * @return {@code false} if there is no match
      */
     private boolean checkPassword(String plainPassword, String encryptedPassword) {
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
         passwordEncryptor.setAlgorithm(ENCRYPTION_ALGO);
         passwordEncryptor.setPlainDigest( false );
+        
         return passwordEncryptor.checkPassword(plainPassword,encryptedPassword);
     }
     

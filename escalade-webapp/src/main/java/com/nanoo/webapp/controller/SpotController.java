@@ -39,6 +39,7 @@ public class SpotController {
     
     private static final String ACCOUNT_ATT = "account";
     private static final String LIST_SITE_ATT = "listSite";
+    private static final String MESSAGE_ATT = "message";
     private static final String RATING_ATT = "listRating";
     private static final String REGION_ATT = "listRegion";
     private static final String SEARCH_ATT = "searchAttribut";
@@ -104,14 +105,6 @@ public class SpotController {
         model.addAttribute(MAP_WAY_BY_SECTOR_ID_ATT,wayDTOList);
         
         return SITE_VIEW;
-    }
-    
-    @GetMapping("/changeLabel/{siteId}")
-    public String changeLabel(@PathVariable String siteId, Model model){
-        
-        spotService.changeLabel(Integer.parseInt(siteId));
-        
-        return displaySite(siteId,model); //TODO delete this unused method
     }
     
     @GetMapping("/spotForm1")
@@ -201,7 +194,7 @@ public class SpotController {
         if (bResult.hasErrors()) {
             model.addAttribute(SITE_ATT, siteDTO);
             model.addAttribute(REGION_ATT,listRegion);
-    
+            model.addAttribute(MESSAGE_ATT, "L'enregistrement a échoué");
             return SPOT_FORM_VIEW1;
         }
         
@@ -247,7 +240,7 @@ public class SpotController {
         
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
-            
+            model.addAttribute(MESSAGE_ATT, "L'enregistrement a échoué");
             return SPOT_FORM_VIEW2;
         }
         
@@ -288,7 +281,8 @@ public class SpotController {
     
         if (bResult.hasErrors()) {
             model.addAttribute(WAY_ATT, wayDTO);
-        
+            model.addAttribute(RATING_ATT,listRating);
+            model.addAttribute(MESSAGE_ATT, "L'enregistrement a échoué");
             return SPOT_FORM_VIEW3;
         }
     

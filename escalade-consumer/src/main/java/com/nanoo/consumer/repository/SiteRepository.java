@@ -16,6 +16,16 @@ import java.util.List;
 @Repository
 public interface SiteRepository extends CrudRepository<Site,Integer> {
     
+    /**
+     * This method find all sites in DB who match with criteria passed in parameter.
+     * It use a custom query request.
+     *
+     * @param sectorNbrMin minimum of sectors
+     * @param region region of site
+     * @param isLabelOfficial is the site tagged with the label "Officiel les amis de l'escalade"
+     * @param rating rating to found in ways contained in sites
+     * @return
+     */
     @Query(value = "SELECT distinct s.* FROM Site s " +
                    "INNER JOIN Sector sec ON s.id = sec.id_site " +
                    "INNER JOIN Way w ON sec.id = w.id_sector " +
@@ -27,5 +37,11 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
     List<Site> findAllByFilter (@Param("sectorNbrMin") int sectorNbrMin, @Param("region") String region,
                                 @Param("isLabelOfficial") boolean isLabelOfficial, @Param("rating") String rating);
     
+    /**
+     * This method find all sites contained in DB and sort them
+     *
+     * @param sort way to sort sites
+     * @return all sites contained in DB
+     */
     Iterable<Site> findAll(Sort sort);
 }

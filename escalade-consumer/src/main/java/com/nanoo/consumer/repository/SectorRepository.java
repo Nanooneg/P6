@@ -14,8 +14,12 @@ import java.util.List;
 @Repository
 public interface SectorRepository extends CrudRepository<Sector,Integer> {
     
-    public List<Sector> findAllBySite(Site site);
-    
-    public Sector findFirstById (Integer id);
+    /**
+     * This method find all sectors contained in particular {@code site}.
+     *
+     * @param site site we are looking sectors for
+     * @return a list of sector contained in {@code site} if exist
+     */
+    List<Sector> findAllBySite(Site site);
     
 }

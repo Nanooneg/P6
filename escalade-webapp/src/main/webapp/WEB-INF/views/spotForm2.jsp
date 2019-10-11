@@ -10,9 +10,8 @@
         <form:form action="/saveSector/${siteId}/${sector.id}" method="post" modelAttribute="sector">
             <h1 class="text-center">Création de Secteur</h1>
             <div>
-                <br/>
-                    <%--<c:if test="${empty message}"><br/></c:if>
-                    <h4 class="text-center error">${message}</h4> TODO display error message --%>
+                <c:if test="${empty message}"><br/></c:if>
+                <h4 class="text-center error">${message}</h4>
             </div>
             <div class="textbox">
                 <form:input path="name" placeholder="nom" required="true"/>

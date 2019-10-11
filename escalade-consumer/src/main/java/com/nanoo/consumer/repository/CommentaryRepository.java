@@ -1,6 +1,7 @@
 package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Commentary;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,13 @@ import java.util.List;
 @Repository
 public interface CommentaryRepository extends CrudRepository<Commentary,Integer> {
     
-    List<Commentary> findAllByIdTypeOfComment(Integer id);
+    /**
+     * This method find all commentaries associated to a particular publication.
+     *
+     * @param publicationId id of the publication we are looking commentaries for
+     * @param sort way to sort commentaries
+     * @return a list of commentaries if exist
+     */
+    List<Commentary> findAllByIdPublication(Integer publicationId, Sort sort);
     
 }

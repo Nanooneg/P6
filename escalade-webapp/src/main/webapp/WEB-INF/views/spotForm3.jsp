@@ -10,20 +10,14 @@
         <form:form action="/saveWay/${sectorId}/${way.id}" method="post" modelAttribute="way">
             <h1 class="text-center">Création de Voie</h1>
             <div>
-                <br/>
-                    <%--<c:if test="${empty message}"><br/></c:if>
-                    <h4 class="text-center error">${message}</h4> TODO display error message --%>
+                <c:if test="${empty message}"><br/></c:if>
+                <h4 class="text-center error">${message}</h4>
             </div>
             <div class="textbox">
                 <label>Nom de la voie (optionnel) :</label>
                 <form:input path="name" placeholder="nom"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
-            <%--<div class="textbox">
-                <form:textarea path="description" placeholder="description" required="true"
-                               rows="5" cols="35" maxlength="150"/>
-                <form:errors path="description" cssClass="error"/>
-            </div>--%>
             <label id="way-form">Cotations :</label>
             <div class="select-style">
                 <form:select path="rating">

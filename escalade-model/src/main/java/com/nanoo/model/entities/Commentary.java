@@ -24,7 +24,7 @@ public class Commentary implements Serializable {
     @Column(name = "id_account")
     private Integer idAccount;
     @Column(name = "id_type_of_comment")
-    private Integer idTypeOfComment;
+    private Integer idPublication;
     @Column(length = 30, nullable = false)
     private String title;
     @Column(length = 300, nullable = false)

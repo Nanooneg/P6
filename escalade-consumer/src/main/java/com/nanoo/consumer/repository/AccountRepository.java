@@ -11,7 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepository extends CrudRepository<Account,Integer> {
     
-    public Account findFirstByMail(String mail);
+    /**
+     * This method find an account in DB who contain value of {@code mail} in mail field
+     *
+     * @param mail mail to look for
+     * @return first account who contain {@code mail}
+     */
+    Account findByMail(String mail);
     
-    public Account findFirstById(Integer id);
 }

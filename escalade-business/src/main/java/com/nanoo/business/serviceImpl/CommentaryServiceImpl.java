@@ -10,12 +10,14 @@ import com.nanoo.consumer.repository.CommentaryRepository;
 import com.nanoo.model.entities.Commentary;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author nanoo
@@ -26,25 +28,25 @@ import java.util.Map;
 @Data
 public class CommentaryServiceImpl implements CommentaryService {
     
-    @Autowired
-    CommentaryRepository commentaryRepository;
-    
-    @Autowired
-    CommentaryMapper commentaryMapper;
-    
-    @Autowired
-    private AccountService accountService;
-    
     private DateUtil date;
     
+    @Autowired private CommentaryRepository commentaryRepository;
+    
+    @Autowired private CommentaryMapper commentaryMapper;
+    
+    @Autowired private AccountService accountService;
+    
+    
     /**
-     * @param id
+     * This method search all commentary associated with a particular publication.
      *
-     * @return
+     * @param publicationId id of the publication we are looking commentaries for
+     * @return a map with commentary in key and the account who publish it in value
      */
     @Override
-    public Map<CommentaryDTO, AccountDTO> findAllCommentaryOfPublicationId(String id) {
-        List<Commentary> commentariesList = commentaryRepository.findAllByIdTypeOfComment(Integer.parseInt(id));
+    public Map<CommentaryDTO, AccountDTO> findAllCommentaryOfPublicationId(String publicationId) {
+        List<Commentary> commentariesList =
+                commentaryRepository.findAllByIdPublication(Integer.parseInt(publicationId), Sort.by("dateOfPublication").descending());
         Map<CommentaryDTO, AccountDTO> commentariesAndAccountIdDtoList = new HashMap<>();
         
         for (Commentary commentary : commentariesList){
@@ -57,15 +59,58 @@ public class CommentaryServiceImpl implements CommentaryService {
     }
     
     /**
-     * @param commentaryDTO
+     * This method save a comment in DB
+     *
+     * @param commentaryDTO commentary to save
      */
     @Override
-    public void addComment(CommentaryDTO commentaryDTO) {
+    public void saveComment(CommentaryDTO commentaryDTO) {
         date = new DateUtil();
+        Commentary existingCommentary;
         
-        commentaryDTO.setDateOfPublication(date.getCurrentDateTime());
-        commentaryDTO.setDateOfModification(commentaryDTO.getDateOfPublication());
-        commentaryRepository.save(commentaryMapper.fromDtoToCommentary(commentaryDTO));
+        Commentary commentary = commentaryMapper.fromDtoToCommentary(commentaryDTO);
+    
+        if(commentary.getId() != null){
+            Optional<Commentary> oldCommentary = commentaryRepository.findById(commentary.getId());
+            if(oldCommentary.isPresent()){
+                existingCommentary = oldCommentary.get();
+                commentary.setDateOfPublication(existingCommentary.getDateOfPublication());
+                commentary.setIdAccount(existingCommentary.getIdAccount());
+            }
+        }else {
+            commentary.setDateOfPublication(date.getCurrentDateTime());
+        }
         
+        commentary.setDateOfModification(date.getCurrentDateTime());
+        
+        commentaryRepository.save(commentary);
+    }
+    
+    /**
+     * This method delete a comment from DB
+     *
+     * @param commentaryId id of the commentary to delete
+     */
+    @Override
+    public void deleteCommentById(int commentaryId) {
+        commentaryRepository.deleteById(commentaryId);
+    }
+    
+    /**
+     * This method search a distinct commentary in DB.
+     *
+     * @param commentaryId id of the commentary searched
+     * @return the commentary searched if exist
+     */
+    @Override
+    public CommentaryDTO searchCommentaryById(int commentaryId) {
+        Optional<Commentary> commentary = commentaryRepository.findById(commentaryId);
+    
+        if (commentary.isPresent()) {
+            Commentary existingCommentary = commentary.get();
+            return commentaryMapper.fromCommentaryToDto(existingCommentary);
+        }
+    
+        return null;
     }
 }

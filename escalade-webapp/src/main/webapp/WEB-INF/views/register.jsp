@@ -17,7 +17,7 @@
             </div>
             <div class="select-style">
                 <form:select path="title" >
-                    <form:option value="Civil" label="Civil"/>
+                    <form:option value="N/C" label="Civil"/>
                     <form:options items="${listTitle}"/>
                 </form:select>
             </div>

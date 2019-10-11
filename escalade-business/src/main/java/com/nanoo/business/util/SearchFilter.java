@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class SearchFilter {
 
+    /* criteria recover from site search form */
     private boolean officialLabel;
     private String region;
     private String sectorNbrMin;

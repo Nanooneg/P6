@@ -12,15 +12,32 @@ import java.util.Map;
 public interface CommentaryService {
     
     /**
+     * This method search all commentary associated with a particular publication.
      *
-     * @param id
-     * @return
+     * @param publicationId id of the publication we are looking commentaries for
+     * @return a map with commentary in key and the account who publish it in value
      */
-    Map<CommentaryDTO, AccountDTO> findAllCommentaryOfPublicationId(String id);
+    Map<CommentaryDTO, AccountDTO> findAllCommentaryOfPublicationId(String publicationId);
     
     /**
+     * This method save a comment in DB
      *
-     * @param commentaryDTO
+     * @param commentaryDTO commentary to save
      */
-    void addComment(CommentaryDTO commentaryDTO);
+    void saveComment(CommentaryDTO commentaryDTO);
+    
+    /**
+     * This method delete a comment from DB
+     *
+     * @param commentaryId id of the commentary to delete
+     */
+    void deleteCommentById (int commentaryId);
+    
+    /**
+     * This method search a distinct commentary in DB.
+     *
+     * @param commentaryId id of the commentary searched
+     * @return the commentary searched if exist
+     */
+    CommentaryDTO searchCommentaryById(int commentaryId);
 }

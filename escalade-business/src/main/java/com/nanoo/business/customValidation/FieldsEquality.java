@@ -19,10 +19,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = { FieldsEqualityValidator.class })
 public @interface FieldsEquality {
     
-    String message() default "{FieldsEquality.message}";
-    
+    String message() default "confirmation différente";
     Class<?>[] groups() default {};
-    
     Class<? extends Payload>[] payload() default {};
     
     /**

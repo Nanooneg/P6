@@ -20,7 +20,7 @@ public interface AccountMapper {
     @InheritInverseConfiguration
     AccountDTO fromAccountToDto (Account account);
     
-    /* Custom mapping with only Id , firstname, lastname and role */
+    /* Custom mapping with only Id , name and role */
     default AccountDTO fromAccountToDtoLight (Account account){
         if ( account == null ) {
             return null;

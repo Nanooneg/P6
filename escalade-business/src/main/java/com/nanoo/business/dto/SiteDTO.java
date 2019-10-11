@@ -19,7 +19,7 @@ public class SiteDTO implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    //* Required */
+    /* Required */
     @NotNull(message = "Ce champ est requis")
     private String name;
     @NotNull(message = "Ce champ est requis")

@@ -7,15 +7,14 @@
 
 <section>
     <div id="commentary-form" class="center-box form-box">
-        <form:form action="/addComment/${publicationId}" method="post" modelAttribute="commentary">
+        <form:form action="/saveComment/${publicationId}/${commentaryId}" method="post" modelAttribute="commentary">
             <h1 class="text-center">Ajouter un commentaire</h1>
             <div>
-                <br/>
-                    <%--<c:if test="${empty message}"><br/></c:if>
-                    <h4 class="text-center error">${message}</h4> TODO display error message --%>
+                <c:if test="${empty message}"><br/></c:if>
+                <h4 class="text-center error">${message}</h4>
             </div>
             <div class="textbox">
-                <form:input path="title" placeholder="Titre" required="true"/>
+                <form:input path="title" placeholder="Titre" required="true" maxlength="30"/>
                 <form:errors path="title" cssClass="error"/>
             </div>
             <div class="textbox">

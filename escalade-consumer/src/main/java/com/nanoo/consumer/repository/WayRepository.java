@@ -14,6 +14,12 @@ import java.util.List;
 @Repository
 public interface WayRepository extends CrudRepository<Way,Integer> {
     
-    public List<Way> findAllBySector(Sector sector);
+    /**
+     * This method find all ways contained in a particular {@code sector}
+     *
+     * @param sector sector we are looking ways for
+     * @return a list of ways contained in {@code sector} if exist
+     */
+    List<Way> findAllBySector(Sector sector);
     
 }

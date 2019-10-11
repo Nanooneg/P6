@@ -15,6 +15,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class CommentaryDTO implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
+    /* Required */
     @NotNull(message = "Ce champ est requis")
     @Size(max = 30)
     private String title;
@@ -22,10 +25,10 @@ public class CommentaryDTO implements Serializable {
     @Size(max = 300)
     private String text;
     
-    private Integer id;
-    private Integer idAccount;
-    private Integer idTypeOfComment;
-    private String dateOfPublication;
-    private String dateOfModification;
+    private Integer id; // Auto-generated
+    private Integer idAccount; // Auto-set
+    private Integer idPublication; // Auto-set
+    private String dateOfPublication; // Auto-set
+    private String dateOfModification; // Auto-set
     
 }

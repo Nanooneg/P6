@@ -14,8 +14,9 @@ import java.util.List;
 public class HandlingEnumValues {
     
     /**
+     * This method return a list of string with all abbreviation contained in enum
      *
-     * @return
+     * @return a list of string
      */
     public List<String> getEnumTitleStringValues (){
         EnumTitle[] listTitle = EnumTitle.values();
@@ -29,8 +30,9 @@ public class HandlingEnumValues {
     }
     
     /**
+     * This method return a list of string with all abbreviation contained in enum
      *
-     * @return
+     * @return a list of string
      */
     public List<String> getEnumRegionStringValues (){
         EnumRegion[] listRegion = EnumRegion.values();
@@ -44,8 +46,9 @@ public class HandlingEnumValues {
     }
     
     /**
+     * This method return a list of string with all abbreviation contained in enum
      *
-     * @return
+     * @return a list of string
      */
     public List<String> getEnumRatingStringValues (){
         EnumRating[] listRating = EnumRating.values();
@@ -58,4 +61,19 @@ public class HandlingEnumValues {
         return  listRatingStringValues;
     }
     
+    /**
+     * This method return a list of Integer with all level contained in enum
+     *
+     * @return a list of Integer
+     */
+    public List<Integer> getEnumRatingLevelValues (){
+        EnumRating[] listRating = EnumRating.values();
+        List<Integer> listRatingLevelValues = new ArrayList<>();
+    
+        for (EnumRating enumRating : listRating){
+            listRatingLevelValues.add(enumRating.getLevel());
+        }
+    
+        return  listRatingLevelValues;
+    }
 }

@@ -14,6 +14,7 @@ public class DateUtil {
     
     /**
      * This method return the current date and time
+     *
      * @return current date and time in a String
      */
     public String getCurrentDateTime() {
