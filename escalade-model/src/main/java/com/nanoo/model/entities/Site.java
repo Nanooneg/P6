@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -18,7 +19,9 @@ import java.util.Set;
 @Entity
 @Data @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Site extends Publication {
+public class Site extends Publication implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @Column(length = 30, nullable = false)
     private String region;

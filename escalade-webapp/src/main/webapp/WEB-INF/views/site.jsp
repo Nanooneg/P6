@@ -7,12 +7,10 @@
 
 <section class="container-fluid">
     <div id="site-box">
-        <div id="site-header">
-            <div>
-                <h1 class="text-center">${site.name}</h1>
-            </div>
+        <div class="site-header">
+            <h1 class="text-center">${site.name}</h1>
         </div>
-        <div id="site-picture">
+        <div id="topo-picture">
             <c:choose>
                 <c:when test="${site.picturePath != null}">
                     <img src="<c:url value="${site.picturePath}"/>" alt="photo du site">
@@ -23,7 +21,16 @@
             </c:choose>
         </div>
         <div class="site-info">
-            <p class="title">Description du Site (${site.region}): </p>
+            <p class="title">
+                <span>
+                    <c:if test="${site.officialLabel}">
+                                <img id="label-icon-result"
+                                     src="<c:url value="/resources/pictures/label-3-white.png"/>"
+                                     alt="label">
+                    </c:if>
+                </span>
+                Description du Site (${site.region}):
+            </p>
             <p class="description">${site.description}</p>
             <div class="button-display-bar pull-right">
                 <em class="fas fa-comment"></em>

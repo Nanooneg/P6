@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface SpotService {
     
-    String getResult(); //TODO add results in controller layer's code
+    String getResult();
     
     /**
      * This method save a site in DB

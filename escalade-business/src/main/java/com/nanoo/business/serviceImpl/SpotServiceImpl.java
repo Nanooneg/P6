@@ -10,6 +10,7 @@ import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.DateUtil;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
+import com.nanoo.business.util.UploadUtil;
 import com.nanoo.consumer.repository.SectorRepository;
 import com.nanoo.consumer.repository.SiteRepository;
 import com.nanoo.consumer.repository.WayRepository;
@@ -18,18 +19,13 @@ import com.nanoo.model.entities.Site;
 import com.nanoo.model.entities.Way;
 import com.nanoo.model.enums.EnumRating;
 import lombok.Data;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -45,8 +41,14 @@ public class SpotServiceImpl implements SpotService {
     
     private String result;
     private DateUtil dateUtil;
+    private UploadUtil uploadUtil;
     private EnumRating enumRating;
     private HandlingEnumValues enumValues;
+    
+    private static final String SUCCESS_MESS = "L'enregistrement est un succés !";
+    private static final String ERROR_MESS = "L'enregistrement est un échec !";
+    
+    private static final String SITE_ATT = "site";
     
     @Autowired SiteRepository siteRepository;
     @Autowired SectorRepository sectorRepository;
@@ -55,12 +57,6 @@ public class SpotServiceImpl implements SpotService {
     @Autowired SiteMapper siteMapper;
     @Autowired SectorMapper sectorMapper;
     @Autowired WayMapper wayMapper;
-    
-    private static final String SUCCESS_MESS = "L'enregistrement est un succés !";
-    private static final String ERROR_MESS = "L'enregistrement est un échec !";
-    
-    private static final String ABS_PATH = "/resources/";
-    private static final String REAL_PATH = "/home/nanoo/dev/static/picture/escalade-pictures/site-pictures/";
     
     
     /**
@@ -72,6 +68,7 @@ public class SpotServiceImpl implements SpotService {
     public void saveSite(SiteDTO siteDTO){
         result="";
         dateUtil = new DateUtil();
+        uploadUtil = new UploadUtil();
         Site existingSite;
         
         Site site = siteMapper.fromDtoToSite(siteDTO);
@@ -92,7 +89,7 @@ public class SpotServiceImpl implements SpotService {
         site.setDateOfUpdate(dateUtil.getCurrentDateTime());
         
         if ((!Objects.equals(site.getPicture().getOriginalFilename(), "")) && site.getPicture() != null){
-            site.setPicturePath(doUpload(site.getPicture(),site.getName(),site.getDateOfUpdate()));
+            site.setPicturePath(uploadUtil.doUpload(site.getPicture(),site.getName(),site.getDateOfUpdate(),SITE_ATT));
         }
     
         try {
@@ -393,45 +390,6 @@ public class SpotServiceImpl implements SpotService {
         return wayDtoListBySectorId;
     }
     
-    /**
-     * This method is use to upload pictures, write them on disk and return their paths.
-     *
-     * @param picture multipart file uploaded
-     * @param siteName siteName
-     * @param date current date
-     * @return file path
-     */
-    private String doUpload(MultipartFile picture, String siteName, String date) {
-
-        if(!new File(REAL_PATH).exists()){
-            new File(REAL_PATH).mkdirs();
-        }
-        
-        try{
-            InputStream in = picture.getInputStream();
-            
-            // server upload
-            File serverDestination = new File(REAL_PATH + formatString(date) + "_" + formatString(siteName) + ".jpg");
-            FileUtils.copyInputStreamToFile(in,serverDestination);
-            
-            in.close();
-        }catch (IOException e){
-            log.error(e.getMessage());
-        }
-
-        return ABS_PATH + formatString(date) + "_" + formatString(siteName) + ".jpg";
-    }
-    
-    /**
-     * This method remove some characters from a string
-     *
-     * @param string string to manipulate
-     * @return the string reformatted
-     */
-    private String formatString (String string)
-    {
-        return string.replace("/","_").replace(" ","_").replace(":","_");
-    }
     
     /**
      * This method find the level value associated to the abbreviation in the EnumRating.

@@ -3,6 +3,7 @@ package com.nanoo.business.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class SectorDTO implements Serializable {
     
     /* Required */
     @NotNull(message = "Ce champ est requis")
+    @Max(30)
     private String name;
     @NotNull(message = "Ce champ est requis")
     @Size(min = 10,max = 300,message = "10 caractères minimum, 300 maximum")

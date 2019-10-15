@@ -43,7 +43,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/","file:/home/nanoo/dev/static/picture/escalade-pictures/site-pictures/")
+                .addResourceLocations("/resources/","file:/home/nanoo/dev/static/picture/escalade-pictures/")
                 .setCachePeriod(31556926);
     }
 }

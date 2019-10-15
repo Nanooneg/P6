@@ -7,13 +7,13 @@
 
 <section class="container-fluid">
     <div id="search-box" class="form-box top-box">
-        <form:form action="/climbSpot" method="post" modelAttribute="searchAttribut">
+        <form:form action="/topoSpot" method="post" modelAttribute="searchAttribut">
         <div>
-            <h1 class="text-center">Site de grimpe</h1>
+            <h1 class="text-center">Topo de grimpe</h1>
         </div>
             <div>
                 <c:if test="${empty message}"><br/></c:if>
-                <h4 class="text-center ${empty listSite ? 'error' : 'success'}">${message}</h4>
+                <h4 class="text-center ${empty listTopo ? 'error' : 'success'}">${message}</h4>
             </div>
         <div class="row">
             <div class="col-md-2 text-center">
@@ -21,8 +21,8 @@
                     <label>Ajouter des filtres :</label>
                 </div>
                 <div class="col-md-12">
-                    <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
-                    <label>Label officiel</label>
+                    <form:checkbox path="lendable" value="true" cssClass="checkbox-boolean"/>
+                    <label>Disponible</label>
                 </div>
             </div>
             <div class="col-md-10">
@@ -34,34 +34,34 @@
                     </form:select>
                 </div>
                 <div class="col-md-4 select-style-md">
-                    <label for="sectorNbr">Secteur par site (minimum) :</label>
-                    <form:select path="sectorNbrMin" id="sectorNbr">
-                        <form:option value="0">*****</form:option>
-                        <form:option value="1">1</form:option>
-                        <form:option value="2">2</form:option>
-                        <form:option value="3">3</form:option>
-                        <form:option value="4">4</form:option>
-                        <form:option value="5">5</form:option>
+                    <label for="publication">Date de parution :</label>
+                    <form:select path="publication" id="publication">
+                        <form:option value="all">*****</form:option>
+                        <form:option value="HY">moins de 6 mois</form:option>
+                        <form:option value="1Y">moins de 1 an</form:option>
+                        <form:option value="2Y">moins de 2 ans</form:option>
+                        <form:option value="5Y">moins de 5 ans</form:option>
+                        <form:option value="10Y">moins de 10 ans</form:option>
                     </form:select>
                 </div>
-                <div class="col-md-4 select-style-md">
+                <%--<div class="col-md-4 select-style-md">
                     <label>Cotation de voie:</label>
                     <form:select path="rating">
                         <form:option value="all">*****</form:option>
                         <form:options items="${listRating}"/>
                     </form:select>
-                </div>
+                </div>--%>
             </div>
         </div>
         <br/>
         <div class="button-search-bar">
             <div class="pull-left">
                 <input type="submit" class="btn-search text-center" value="Rechercher"/>
-                <a href="<c:url value="/climbSpot"/>"><input type="button" class="btn-search text-center" value="Afficher tout"/></a>
+                <a href="<c:url value="/topoSpot"/>"><input type="button" class="btn-search text-center" value="Afficher tout"/></a>
             </div>
             <div class="pull-right">
                 <em class="fas fa-plus-circle"></em>
-                <a href="<c:url value="/spotForm1"/>" class="text-info-link">Ajouter un site</a>
+                <a href="<c:url value="/topoForm"/>" class="text-info-link">Ajouter un topo</a>
             </div>
         </div>
         </form:form>
@@ -69,14 +69,14 @@
 </section>
 
 <section class="container-fluid">
-    <c:forEach items="${listSite}" var="site">
-        <a href="<c:url value="/site/${site.id}"/>" class="title-link">
+    <c:forEach items="${listTopo}" var="topo">
+        <a href="<c:url value="/topo/${topo.id}"/>" class="title-link">
         <div class="display-box">
             <div class="row">
                 <div class="col-md-2 image-small">
                     <c:choose>
-                        <c:when test="${site.picturePath != null}">
-                            <img src="<c:url value="${site.picturePath}"/>" alt="photo du site">
+                        <c:when test="${topo.picturePath != null}">
+                            <img src="<c:url value="${topo.picturePath}"/>" alt="photo du topo">
                         </c:when>
                         <c:otherwise>
                             <img src="<c:url value="/resources/pictures/no-picture.jpg"/>" alt="pas d'image disponible">
@@ -86,18 +86,21 @@
                 <div class="col-md-10 contain-link">
                     <div class="title-link">
                         <p class="title">
-                            ${site.name} - ${site.region}
+                            ${topo.name} - ${topo.region}
                             <span>
-                                <c:if test="${site.officialLabel}">
-                                <img id="label-icon-result"
-                                     src="<c:url value="/resources/pictures/label-3-white.png"/>"
-                                     alt="label">
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${topo.lendable}">
+                                        <img id="lendable-icon-result" src="<c:url value="/resources/pictures/label-lendable-green.png"/>" alt="lendable"/>
+                                    </c:when>
+                                    <c:when test="${!topo.lendable}">
+                                        <img id="lendable-icon-result" src="<c:url value="/resources/pictures/label-lendable-red.png"/>" alt="lendable"/>
+                                    </c:when>
+                                </c:choose>
                             </span>
                         </p>
                     </div>
                     <div>
-                        <p class="display-description">${site.description}</p>
+                        <p class="display-description">${topo.description}</p>
                     </div>
                 </div>
             </div>

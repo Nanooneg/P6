@@ -8,7 +8,7 @@
     z-index: 2000;
 }
 
-#register, #spot-form-1, #spot-form-2, #spot-form-3, #commentary-form{
+#register, #spot-form-1, #spot-form-2, #spot-form-3, #topo-form, #commentary-form{
     width: 500px;
     position: absolute;
 }
@@ -30,7 +30,7 @@
     margin-bottom: 45px;
 }
 
-#site-box{
+#site-box, #topo-box{
     width: 80%;
     position: relative;
     height: auto;
@@ -86,14 +86,14 @@
     font-size: 15px;
 }
 
-.site-header{
+.site-header, .topo-header{
     display: flex;
 }
 .site-header button{
     justify-items: end;
 }
 
-#site-box h1{
+#site-box h1, #topo-box h1{
     font-size: 40px;
     font-weight: bold;
     color: white;
@@ -113,7 +113,7 @@
     width: max-content;
 }
 
-#site-box h2 {
+#site-box h2, #topo-box h2 {
     font-size: 30px;
     font-weight: bold;
     color: #454545;
@@ -126,7 +126,7 @@
     width: max-content;
 }
 
-#site-picture{
+#site-picture, #topo-picture{
     width: 75%;
     height: 650px;
     border: 1px solid white;
@@ -143,18 +143,20 @@
     height: 153px;
 }
 
-#site-picture img{
+#site-picture img, #topo-picture img{
     height: 90%;
 }
 
-.site-info, .sector-info{
+.site-info, .sector-info, .topo-info{
     padding-bottom: 25px;
     padding-right: 15px;
     padding-left: 25px;
     margin-bottom: 15px;
 }
 
-#site-header{
+.site-info img, .topo-info img{
+    width: 35px;
+    height: 25px;
 }
 
 .sector-info{
@@ -284,8 +286,11 @@
     text-align: center;
 }
 
-.labelbox{
+.labelbox {
     margin-bottom: 15px;
+}
+.lendablebox{
+    margin: 15px 0 15px;
 }
 
 .way-info em{
@@ -382,7 +387,7 @@ input[type=number]{
     color: white;
 }
 
-#label-icon-result{
+#label-icon-result, #lendable-icon-result{
     height: 20px;
     color: white;
 }

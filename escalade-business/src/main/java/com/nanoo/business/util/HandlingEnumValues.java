@@ -1,5 +1,6 @@
 package com.nanoo.business.util;
 
+import com.nanoo.model.enums.EnumCondition;
 import com.nanoo.model.enums.EnumRating;
 import com.nanoo.model.enums.EnumRegion;
 import com.nanoo.model.enums.EnumTitle;
@@ -84,5 +85,21 @@ public class HandlingEnumValues {
         }
     
         return 0;
+    }
+    
+    /**
+     * This method return a list of string with all abbreviation contained in enum
+     *
+     * @return a list of string
+     */
+    public List<String> getEnumConditionStringValues (){
+        EnumCondition[] listCondition = EnumCondition.values();
+        List<String> listConditionStringValues = new ArrayList<>();
+        
+        for (EnumCondition enumCondition : listCondition){
+            listConditionStringValues.add(enumCondition.getAbbreviation());
+        }
+        
+        return  listConditionStringValues;
     }
 }

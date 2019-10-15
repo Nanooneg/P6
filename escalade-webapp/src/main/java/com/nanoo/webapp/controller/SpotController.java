@@ -55,11 +55,11 @@ public class SpotController {
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listRating = enumValues.getEnumRatingStringValues();
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
+    private SessionHandling sessionHandling;
     
     @Autowired SpotService spotService;
     @Autowired AccountService accountService;
     
-    private SessionHandling sessionHandling;
     
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {

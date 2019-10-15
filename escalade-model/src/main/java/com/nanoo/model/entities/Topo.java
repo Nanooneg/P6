@@ -2,10 +2,11 @@ package com.nanoo.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -13,21 +14,24 @@ import java.io.Serializable;
  */
 @Entity
 @Data @NoArgsConstructor
-public class Topo implements Serializable{
+public class Topo extends Publication implements Serializable{
     
     private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    
-    @Column(name = "id_account", nullable = false)
-    private Integer idAccount;
+
     @Column(nullable = false)
     private String region;
-    @Column(name = "date_of_publication", nullable = false)
-    private DateTime dateOfPublication;
-    @Column(name = "is_lendable")
-    private boolean isLendable;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_of_publication", length = 30, nullable = false)
+    private Date dateOfPublication;
+    @Column(name = "is_lendable", nullable = false)
+    private boolean lendable;
+    @Column(length = 10, nullable = false)
+    private String condition;
+    @Column(name = "picture_path")
+    private String picturePath;
+    
+    
+    @Transient
+    private MultipartFile picture;
     
 }

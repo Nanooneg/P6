@@ -18,7 +18,7 @@ public enum EnumRegion {
     NORMANDIE("Normandie"),
     NOUVELLE_AQUITAINE("Nouvelle-Aquitaine"),
     OCCITANIE("Occitanie"),
-    PAYS_DE_LA_LOIRE("Paye-de-la-Loire"), //TODO mistake in name Pays de la Loire
+    PAYS_DE_LA_LOIRE("Pays-de-la-Loire"),
     PACA("Paca"),
     REUNION("Réunion");
     
