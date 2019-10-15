@@ -39,8 +39,8 @@ public class TopoDTO implements Serializable {
     
     private Integer id; // Auto-generated
     private Integer idAccount; // Auto-set
-    private String dateOfCreation; // Auto-set
-    private String dateOfUpdate; // Auto-set
+    private Date dateOfCreation; // Auto-set
+    private Date dateOfUpdate; // Auto-set
     
     /* Not required */
     private String picturePath;

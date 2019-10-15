@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
     
     private static final String HOME_VIEW = "home";
-    private static final String USER_HOME_VIEW = "user";
+    
     
     @GetMapping(value = {"/","/home"})
     public String home(HttpServletRequest request){
@@ -23,7 +23,7 @@ public class HomeController {
         /* Check if user has session */
         SessionHandling sessionHandling = new SessionHandling();
         if (!sessionHandling.checkSession(request)){
-            return USER_HOME_VIEW;
+            return "redirect:/user/user-area" ;
         }
         
         return HOME_VIEW;
@@ -35,7 +35,7 @@ public class HomeController {
         HttpSession session = request.getSession();
         session.invalidate();
         
-        return HOME_VIEW;
+        return home(request);
     }
     
 }

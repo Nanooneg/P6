@@ -35,9 +35,13 @@ public class CommentController {
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
     
-    @Autowired CommentaryService commentaryService;
+    private final CommentaryService commentaryService;
     
-    private SessionHandling sessionHandling;
+    @Autowired
+    public CommentController(CommentaryService commentaryService) {
+        this.commentaryService = commentaryService;
+    }
+    
     
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -59,7 +63,7 @@ public class CommentController {
     public String displayCommentForm(@PathVariable String publicationId, Model model, HttpServletRequest request){
     
         /* Check if user has access */
-        sessionHandling = new SessionHandling();
+        SessionHandling sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;

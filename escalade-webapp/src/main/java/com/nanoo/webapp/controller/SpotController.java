@@ -57,8 +57,14 @@ public class SpotController {
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
     private SessionHandling sessionHandling;
     
-    @Autowired SpotService spotService;
-    @Autowired AccountService accountService;
+    private final SpotService spotService;
+    private final AccountService accountService;
+    
+    @Autowired
+    public SpotController(SpotService spotService, AccountService accountService) {
+        this.spotService = spotService;
+        this.accountService = accountService;
+    }
     
     
     @InitBinder
@@ -198,12 +204,12 @@ public class SpotController {
         }
         
         HttpSession session = request.getSession();
-        AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
     
         if (siteID != null)
             siteDTO.setId(Integer.parseInt(siteID));
         else
-            siteDTO.setIdAccount(accountDTO.getId());
+            siteDTO.setIdAccount(accountDTOLight.getId());
         
         spotService.saveSite(siteDTO);
         
@@ -243,12 +249,12 @@ public class SpotController {
         }
         
         HttpSession session = request.getSession();
-        AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
         
         if (sectorId != null)
             sectorDTO.setId(Integer.parseInt(sectorId));
         else
-            sectorDTO.setIdAccount(accountDTO.getId());
+            sectorDTO.setIdAccount(accountDTOLight.getId());
         
         sectorDTO.setIdSite(Integer.parseInt(siteId));
         spotService.saveSector(sectorDTO);
@@ -284,12 +290,12 @@ public class SpotController {
         }
     
         HttpSession session = request.getSession();
-        AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
         
         if (wayId != null)
             wayDTO.setId(Integer.parseInt(wayId));
         else
-            wayDTO.setIdAccount(accountDTO.getId());
+            wayDTO.setIdAccount(accountDTOLight.getId());
         
         wayDTO.setIdSector(Integer.parseInt(sectorId));
         spotService.saveWay(wayDTO);

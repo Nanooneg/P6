@@ -39,7 +39,7 @@ public @interface FieldsEquality {
     
     @Target({ TYPE, ANNOTATION_TYPE })
     @Retention(RUNTIME)
-    public @interface List {
+    @interface List {
         FieldsEquality[] value();
     }
 }

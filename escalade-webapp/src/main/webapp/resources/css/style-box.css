@@ -23,10 +23,17 @@
     position: absolute;
 }
 
-#search-box {
+#search-box{
     width: 80%;
     position: relative;
     height: 310px;
+    margin-bottom: 45px;
+}
+
+#user-box{
+    width: 80%;
+    position: relative;
+    height: auto;
     margin-bottom: 45px;
 }
 
@@ -147,11 +154,15 @@
     height: 90%;
 }
 
-.site-info, .sector-info, .topo-info{
+.site-info, .sector-info, .topo-info, .account-info{
     padding-bottom: 25px;
     padding-right: 15px;
     padding-left: 25px;
     margin-bottom: 15px;
+}
+
+.account-info{
+    margin-top: 30px;
 }
 
 .site-info img, .topo-info img{

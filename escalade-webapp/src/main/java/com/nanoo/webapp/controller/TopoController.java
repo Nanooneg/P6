@@ -48,10 +48,16 @@ public class TopoController {
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
     private List<String> listCondition = enumValues.getEnumConditionStringValues();
-        private SessionHandling sessionHandling;
+    private SessionHandling sessionHandling;
     
-    @Autowired TopoService topoService;
-    @Autowired AccountService accountService;
+    private final TopoService topoService;
+    private final AccountService accountService;
+    
+    @Autowired
+    public TopoController(TopoService topoService, AccountService accountService) {
+        this.topoService = topoService;
+        this.accountService = accountService;
+    }
     
     
     @InitBinder
@@ -117,8 +123,6 @@ public class TopoController {
                            BindingResult bResult, HttpServletRequest request,
                            Model model, @PathVariable(required = false) String topoId){
         
-        //@DateTimeFormat(pattern = "dd/MM/yyyy")
-        
         if (bResult.hasErrors()){
             model.addAttribute(TOPO_ATT,topoDTO);
             model.addAttribute(REGION_ATT,listRegion);
@@ -129,12 +133,12 @@ public class TopoController {
         }
     
         HttpSession session = request.getSession();
-        AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
     
         if (topoId != null)
             topoDTO.setId(Integer.parseInt(topoId));
         else
-            topoDTO.setIdAccount(accountDTO.getId());
+            topoDTO.setIdAccount(accountDTOLight.getId());
         
         topoService.saveTopo(topoDTO);
         

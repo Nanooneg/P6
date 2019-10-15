@@ -3,10 +3,11 @@ package com.nanoo.business.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -20,7 +21,7 @@ public class WayDTO implements Serializable {
     
     /* Required */
     @NotNull(message = "Ce champ est requis")
-    @Max(30)
+    @Size(max = 30, message = "30 caractères maximum")
     private String name;
     @NotNull(message = "Ce champ est requis")
     private String rating;
@@ -31,8 +32,8 @@ public class WayDTO implements Serializable {
     private Integer idAccount; // Auto-set
     private Integer idSector; // Auto-set
     private int ratingLevel; // Auto-set
-    private String dateOfCreation; // Auto-set
-    private String dateOfUpdate; // Auto-set
+    private Date dateOfCreation; // Auto-set
+    private Date dateOfUpdate; // Auto-set
     
     /* Not required */
     private String description;

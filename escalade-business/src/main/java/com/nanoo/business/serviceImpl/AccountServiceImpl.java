@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -41,10 +42,15 @@ public class AccountServiceImpl implements AccountService {
     private Map<String,String> errors;
     private DateUtil dateUtil;
     
+    private final AccountRepository accountRepository;
+    
+    private final AccountMapper accountMapper;
+    
     @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private AccountMapper accountMapper;
+    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
+        this.accountRepository = accountRepository;
+        this.accountMapper = accountMapper;
+    }
     
     
     /**
@@ -60,8 +66,8 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountMapper.fromDtoToAccount(accountDTO);
         account.setRoleName(EnumRole.USER.getAbbreviation()); // role is set USER by default.
         account.setPassword(encryptPassword(account.getPassword()));
-        account.setDateOfCreation(dateUtil.getCurrentDateTime());
-        account.setDateOfUpdate(account.getDateOfCreation());
+        account.setDateOfCreation(new Date());
+        account.setDateOfUpdate(new Date());
     
         try {
             accountRepository.save(account);

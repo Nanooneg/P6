@@ -21,7 +21,6 @@ import com.nanoo.model.enums.EnumRating;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,24 +38,33 @@ public class SpotServiceImpl implements SpotService {
     
     private static final Logger log = LoggerFactory.getLogger(SpotServiceImpl.class);
     
+    private static final String SUCCESS_MESS = "L'enregistrement est un succés !";
+    private static final String ERROR_MESS = "L'enregistrement est un échec !";
+    
+    private static final String SITE_ATT = "site";
+    
     private String result;
     private DateUtil dateUtil;
     private UploadUtil uploadUtil;
     private EnumRating enumRating;
     private HandlingEnumValues enumValues;
     
-    private static final String SUCCESS_MESS = "L'enregistrement est un succés !";
-    private static final String ERROR_MESS = "L'enregistrement est un échec !";
+    private final SiteRepository siteRepository;
+    private final SectorRepository sectorRepository;
+    private final WayRepository wayRepository;
     
-    private static final String SITE_ATT = "site";
+    private final SiteMapper siteMapper;
+    private final SectorMapper sectorMapper;
+    private final WayMapper wayMapper;
     
-    @Autowired SiteRepository siteRepository;
-    @Autowired SectorRepository sectorRepository;
-    @Autowired WayRepository wayRepository;
-    
-    @Autowired SiteMapper siteMapper;
-    @Autowired SectorMapper sectorMapper;
-    @Autowired WayMapper wayMapper;
+    public SpotServiceImpl(SiteRepository siteRepository, SectorRepository sectorRepository, WayRepository wayRepository, SiteMapper siteMapper, SectorMapper sectorMapper, WayMapper wayMapper) {
+        this.siteRepository = siteRepository;
+        this.sectorRepository = sectorRepository;
+        this.wayRepository = wayRepository;
+        this.siteMapper = siteMapper;
+        this.sectorMapper = sectorMapper;
+        this.wayMapper = wayMapper;
+    }
     
     
     /**
@@ -83,13 +91,13 @@ public class SpotServiceImpl implements SpotService {
             }
         }else{
             site.setOfficialLabel(false); // label is set false by default.
-            site.setDateOfCreation(dateUtil.getCurrentDateTime());
+            site.setDateOfCreation(new Date());
         }
         
-        site.setDateOfUpdate(dateUtil.getCurrentDateTime());
+        site.setDateOfUpdate(new Date());
         
         if ((!Objects.equals(site.getPicture().getOriginalFilename(), "")) && site.getPicture() != null){
-            site.setPicturePath(uploadUtil.doUpload(site.getPicture(),site.getName(),site.getDateOfUpdate(),SITE_ATT));
+            site.setPicturePath(uploadUtil.doUpload(site.getPicture(),site.getName(),site.getDateOfUpdate().toString(),SITE_ATT));
         }
     
         try {
@@ -132,11 +140,11 @@ public class SpotServiceImpl implements SpotService {
                 sector.setIdAccount(existingSector.getIdAccount());
             }
         }else{
-            sector.setDateOfCreation(dateUtil.getCurrentDateTime());
+            sector.setDateOfCreation(new Date());
         }
         
         site.ifPresent(sector::setSite);
-        sector.setDateOfUpdate(dateUtil.getCurrentDateTime());
+        sector.setDateOfUpdate(new Date());
         
         try {
             sectorRepository.save(sector);
@@ -178,12 +186,12 @@ public class SpotServiceImpl implements SpotService {
                 way.setIdAccount(existingWay.getIdAccount());
             }
         }else{
-            way.setDateOfCreation(dateUtil.getCurrentDateTime());
+            way.setDateOfCreation(new Date());
         }
         
         sector.ifPresent(way::setSector);
         way.setRatingLevel(getLevelOfRatingAbbreviation(way.getRating()));
-        way.setDateOfUpdate(dateUtil.getCurrentDateTime());
+        way.setDateOfUpdate(new Date());
         
         try {
             wayRepository.save(way);
@@ -220,6 +228,23 @@ public class SpotServiceImpl implements SpotService {
         return siteDTOList;
     }
     
+    /**
+     * This method search site posted by a particular user
+     *
+     * @param accountId of the user
+     * @return a list of site if exist
+     */
+    @Override
+    public List<SiteDTO> searchSiteByAccountId(Integer accountId) {
+        Iterable<Site> siteIterable = siteRepository.findAllByIdAccount(accountId, Sort.by("dateOfCreation"));
+        List<SiteDTO> siteDTOList = new ArrayList<>();
+    
+        for (Site site : siteIterable){
+            siteDTOList.add(siteMapper.fromSiteToDto(site));
+        }
+    
+        return siteDTOList;
+    }
     
     /**
      * This method search a distinct site in DB

@@ -41,7 +41,12 @@ public class AccountController {
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listTitle = enumValues.getEnumTitleStringValues();
     
-    @Autowired AccountService accountService;
+    final AccountService accountService;
+    
+    @Autowired
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
     
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {

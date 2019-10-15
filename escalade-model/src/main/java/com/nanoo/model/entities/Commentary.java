@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -30,9 +31,9 @@ public class Commentary implements Serializable {
     @Column(length = 300, nullable = false)
     private String text;
     @Column(name = "date_of_creation",length = 30, nullable = false)
-    private String dateOfPublication;
+    private Date dateOfPublication;
     @Column(name = "date_of_update",length = 30, nullable = false)
-    private String dateOfModification;
+    private Date dateOfModification;
 
     
 }

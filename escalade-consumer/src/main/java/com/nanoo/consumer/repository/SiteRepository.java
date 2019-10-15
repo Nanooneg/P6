@@ -44,4 +44,13 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
      * @return all sites contained in DB
      */
     Iterable<Site> findAll(Sort sort);
+    
+    /**
+     * This method find all sites posted by a particular userId.
+     *
+     * @param accountID id of user
+     * @param sort way to sort sites
+     * @return a list of sites if exist
+     */
+    List<Site> findAllByIdAccount (Integer accountID, Sort sort);
 }

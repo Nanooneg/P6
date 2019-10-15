@@ -14,10 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author nanoo
@@ -30,11 +27,17 @@ public class CommentaryServiceImpl implements CommentaryService {
     
     private DateUtil date;
     
-    @Autowired private CommentaryRepository commentaryRepository;
+    private final CommentaryRepository commentaryRepository;
+    private final AccountService accountService;
     
-    @Autowired private CommentaryMapper commentaryMapper;
+    private final CommentaryMapper commentaryMapper;
     
-    @Autowired private AccountService accountService;
+    @Autowired
+    public CommentaryServiceImpl(CommentaryRepository commentaryRepository, CommentaryMapper commentaryMapper, AccountService accountService) {
+        this.commentaryRepository = commentaryRepository;
+        this.commentaryMapper = commentaryMapper;
+        this.accountService = accountService;
+    }
     
     
     /**
@@ -78,10 +81,10 @@ public class CommentaryServiceImpl implements CommentaryService {
                 commentary.setIdAccount(existingCommentary.getIdAccount());
             }
         }else {
-            commentary.setDateOfPublication(date.getCurrentDateTime());
+            commentary.setDateOfPublication(new Date());
         }
         
-        commentary.setDateOfModification(date.getCurrentDateTime());
+        commentary.setDateOfModification(new Date());
         
         commentaryRepository.save(commentary);
     }

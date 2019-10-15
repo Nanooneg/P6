@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -26,8 +27,8 @@ public class Publication implements Serializable {
     @Column(length = 300)
     private String description;
     @Column(name = "date_of_creation",length = 30, nullable = false)
-    private String dateOfCreation;
+    private Date dateOfCreation;
     @Column(name = "date_of_update",length = 30, nullable = false)
-    private String dateOfUpdate;
+    private Date dateOfUpdate;
     
 }

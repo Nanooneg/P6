@@ -124,4 +124,11 @@ public interface SpotService {
      */
     Map<Integer,List<WayDTO>> searchWayBySectorId(List<SectorDTO> sectorDTOList);
     
+    /**
+     * This method search site posted by a particular user
+     *
+     * @param accountId of the user
+     * @return a list of site if exist
+     */
+    List<SiteDTO> searchSiteByAccountId(Integer accountId);
 }

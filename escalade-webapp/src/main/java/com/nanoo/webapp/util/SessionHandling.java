@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionHandling {
     
-    //TODO make a filter to limit acces with url
+    //TODO make a filter to limit acces with url ??
     
     private static final String ACCOUNT_ATT = "account";
     

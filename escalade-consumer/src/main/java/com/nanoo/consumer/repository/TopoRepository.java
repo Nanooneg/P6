@@ -40,4 +40,13 @@ public interface TopoRepository extends CrudRepository<Topo,Integer> {
      * @return all topos contained in DB
      */
     Iterable<Topo> findAll(Sort sort);
+    
+    /**
+     * This method find all topos posted by a particular userId.
+     *
+     * @param accountID id of user
+     * @param sort way to sort topos
+     * @return a list of topos if exist
+     */
+    List<Topo> findAllByIdAccount (Integer accountID, Sort sort);
 }

@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -22,7 +22,7 @@ public class SiteDTO implements Serializable {
     
     /* Required */
     @NotNull(message = "Ce champ est requis")
-    @Max(30)
+    @Size(max = 30, message = "30 caractères maximum")
     private String name;
     @NotNull(message = "Ce champ est requis")
     @Size(min = 10,max = 300,message = "10 caractères minimum, 300 maximum")
@@ -32,8 +32,8 @@ public class SiteDTO implements Serializable {
     
     private Integer id; // Auto-generated
     private Integer idAccount; // Auto-set
-    private String dateOfCreation; // Auto-set
-    private String dateOfUpdate; // Auto-set
+    private Date dateOfCreation; // Auto-set
+    private Date dateOfUpdate; // Auto-set
     private boolean officialLabel; // Set by default (false)
     
     /* Not required */

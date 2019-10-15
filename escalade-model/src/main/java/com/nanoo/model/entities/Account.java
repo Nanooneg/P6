@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -27,7 +28,7 @@ public class Account implements Serializable {
     private String lastName;
     @Column(length = 30, nullable = false)
     private String firstName;
-    @Column(length = 30, unique = true,nullable = false)
+    @Column(length = 30, unique = true, nullable = false)
     private String mail;
     @Column(name = "role_name", length = 13, nullable = false)
     private String roleName;
@@ -36,9 +37,9 @@ public class Account implements Serializable {
     @Transient
     private String confirmation;
     @Column(name = "date_of_creation",length = 30, nullable = false)
-    private String dateOfCreation;
+    private Date dateOfCreation;
     @Column(name = "date_of_update",length = 30, nullable = false)
-    private String dateOfUpdate;
+    private Date dateOfUpdate;
     
     /* Not required */
     @Column(name = "street_name", length = 30)

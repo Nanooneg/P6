@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -42,8 +43,8 @@ public class AccountDTO implements Serializable {
     
     private Integer id; // Auto-generated
     private String roleName; // Set by default (USER)
-    private String dateOfCreation; // Auto-set
-    private String dateOfUpdate; // Auto-set
+    private Date dateOfCreation; // Auto-set
+    private Date dateOfUpdate; // Auto-set
     
     /* Not required */
     private String streetName;

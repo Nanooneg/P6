@@ -30,19 +30,25 @@ public class TopoServiceImpl implements TopoService {
     
     private static final Logger log = LoggerFactory.getLogger(TopoServiceImpl.class);
     
-    private String result;
-    private DateUtil dateUtil;
-    private UploadUtil uploadUtil;
-    private HandlingEnumValues enumValues;
-    
     private static final String SUCCESS_MESS = "L'enregistrement est un succés !";
     private static final String ERROR_MESS = "L'enregistrement est un échec !";
     
     private static final String TOPO_ATT = "topo";
     
-    @Autowired TopoRepository topoRepository;
+    private String result;
+    private DateUtil dateUtil;
+    private UploadUtil uploadUtil;
+    private HandlingEnumValues enumValues;
     
-    @Autowired TopoMapper topoMapper;
+    private final TopoRepository topoRepository;
+    
+    private final TopoMapper topoMapper;
+    
+    @Autowired
+    public TopoServiceImpl(TopoRepository topoRepository, TopoMapper topoMapper) {
+        this.topoRepository = topoRepository;
+        this.topoMapper = topoMapper;
+    }
     
     
     /**
@@ -68,13 +74,13 @@ public class TopoServiceImpl implements TopoService {
                 topo.setPicturePath(existingTopo.getPicturePath());
             }
         }else{
-            topo.setDateOfCreation(dateUtil.getCurrentDateTime());
+            topo.setDateOfCreation(new Date());
         }
     
-        topo.setDateOfUpdate(dateUtil.getCurrentDateTime());
+        topo.setDateOfUpdate(new Date());
     
         if ((!Objects.equals(topo.getPicture().getOriginalFilename(), "")) && topo.getPicture() != null){
-            topo.setPicturePath(uploadUtil.doUpload(topo.getPicture(),topo.getName(),topo.getDateOfUpdate(),TOPO_ATT));
+            topo.setPicturePath(uploadUtil.doUpload(topo.getPicture(),topo.getName(),topo.getDateOfUpdate().toString(),TOPO_ATT));
         }
     
         try {
@@ -162,6 +168,24 @@ public class TopoServiceImpl implements TopoService {
         else
             result = topoDTOList.size() + " sites correspondent à vos critères";
         
+        return topoDTOList;
+    }
+    
+    /**
+     * This method search topo posted by a particular user
+     *
+     * @param accountId of the user
+     * @return a list of topo if exist
+     */
+    @Override
+    public List<TopoDTO> searchTopoByAccountId(Integer accountId) {
+        Iterable<Topo> topoIterable = topoRepository.findAllByIdAccount(accountId, Sort.by("dateOfCreation"));
+        List<TopoDTO> topoDTOList = new ArrayList<>();
+    
+        for (Topo topo : topoIterable){
+            topoDTOList.add(topoMapper.fromTopoToDto(topo));
+        }
+    
         return topoDTOList;
     }
 }

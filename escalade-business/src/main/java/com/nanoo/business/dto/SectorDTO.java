@@ -3,10 +3,10 @@ package com.nanoo.business.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -20,7 +20,7 @@ public class SectorDTO implements Serializable {
     
     /* Required */
     @NotNull(message = "Ce champ est requis")
-    @Max(30)
+    @Size(max = 30, message = "30 caractères maximum")
     private String name;
     @NotNull(message = "Ce champ est requis")
     @Size(min = 10,max = 300,message = "10 caractères minimum, 300 maximum")
@@ -29,7 +29,7 @@ public class SectorDTO implements Serializable {
     private Integer id; // Auto-generated
     private Integer idSite; // Auto-set
     private Integer idAccount; // Auto-set
-    private String dateOfCreation; // Auto-set
-    private String dateOfUpdate; // Auto-set
+    private Date dateOfCreation; // Auto-set
+    private Date dateOfUpdate; // Auto-set
     
 }

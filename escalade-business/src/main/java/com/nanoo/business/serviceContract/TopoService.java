@@ -50,4 +50,12 @@ public interface TopoService {
      * @return a list of topos who match with criteria if exist
      */
     List<TopoDTO> searchTopoByFilter(SearchFilter filter);
+    
+    /**
+     * This method search topo posted by a particular user
+     *
+     * @param accountId of the user
+     * @return a list of topo if exist
+     */
+    List<TopoDTO> searchTopoByAccountId(Integer accountId);
 }
