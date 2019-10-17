@@ -15,7 +15,6 @@ public interface TopoMapper {
     
     TopoMapper MAPPER = Mappers.getMapper(TopoMapper.class);
     
-    //@Mapping(source = "dateOfPublication", target = "dateOfPublication", dateFormat = "dd/MM/yyyy")
     Topo fromDtoToTopo (TopoDTO topoDTO);
     
     @InheritInverseConfiguration

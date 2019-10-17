@@ -1,6 +1,7 @@
 package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.dto.TopoBookingDTO;
 import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.TopoService;
@@ -34,7 +35,11 @@ public class TopoController {
     private static final String TOPO_SEARCH_VIEW = "topoSpot";
     private static final String TOPO_VIEW = "topo";
     private static final String TOPO_FORM_VIEW = "topoForm";
+    private static final String TOPOBOOKING_ATT = "topoBooking";
     private static final String LOGIN_VIEW = "login";
+    private static final String ASK_FOR_LENDING_VIEW = "askForLending";
+    private static final String LENDING_REQUEST_RECEIVED = "lendingRequestReceived";
+    private static final String LENDING_REQUEST_SENT = "lendingRequestSent";
     
     private static final String ACCOUNT_ATT = "account";
     private static final String MESSAGE_ATT = "message";
@@ -48,7 +53,6 @@ public class TopoController {
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
     private List<String> listCondition = enumValues.getEnumConditionStringValues();
-    private SessionHandling sessionHandling;
     
     private final TopoService topoService;
     private final AccountService accountService;
@@ -93,7 +97,7 @@ public class TopoController {
     public String displayTopoForm (HttpServletRequest request, Model model){
     
         /* Check if user has access */
-        sessionHandling = new SessionHandling();
+        SessionHandling sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
@@ -161,6 +165,57 @@ public class TopoController {
         topoService.deleteTopo(Integer.parseInt(topoId));
         
         return displayTopoPage(model);
+    }
+    
+    @GetMapping("/askForLending/{topoId}")
+    public String askForLending(HttpServletRequest request, Model model, @PathVariable String topoId){
+    
+        /* Check if user has access */
+        SessionHandling sessionHandling = new SessionHandling();
+        if (sessionHandling.checkSession(request)){
+            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
+            return LOGIN_VIEW;
+        }
+        
+        model.addAttribute(TOPO_ATT,topoService.searchTopoById(Integer.parseInt(topoId)));
+        
+        return ASK_FOR_LENDING_VIEW;
+    }
+    
+    @GetMapping("/validAskForLending/{accountId}/{topoId}")
+    public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId){
+        
+        topoService.saveTopoBooking(Integer.parseInt(accountId),Integer.parseInt(topoId));
+        
+        return displayTopo(topoId,model);
+    }
+    
+    @GetMapping("/lendingRequestReceived/{userId}")
+    public String displayLendingRequestReceived(@PathVariable String userId, Model model){
+    
+        List<TopoBookingDTO> topoBookingDTOList = topoService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
+    
+        model.addAttribute(TOPOBOOKING_ATT, topoBookingDTOList);
+        
+        return LENDING_REQUEST_RECEIVED;
+    }
+    
+    @GetMapping("/lendingRequestSent/{userId}")
+    public String displayLendingRequestSent(@PathVariable String userId, Model model){
+        
+        List<TopoBookingDTO> topoBookingDTOList = topoService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));
+        
+        model.addAttribute(TOPOBOOKING_ATT, topoBookingDTOList);
+        
+        return LENDING_REQUEST_SENT;
+    }
+    
+    @GetMapping("/validLendingRequest/{userId}/{topoBookingId}/{answer}")
+    public String giveAnswerToLendingRequest(@PathVariable String topoBookingId, @PathVariable String answer, Model model, @PathVariable String userId){
+        
+        topoService.changeStatus(userId,topoBookingId,answer);
+        
+        return displayLendingRequestReceived(userId,model);
     }
     
 }

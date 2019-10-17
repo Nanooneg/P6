@@ -70,6 +70,18 @@ label{
     margin-left: 5px !important;
 }
 
+.accepted{
+    color: #00bc00;
+}
+
+.refused{
+    color: #ec0815;
+}
+
+.pending{
+    color: #a9a6a6;
+}
+
 /*============== Login/Center box ==============*/
 #center-box {
     margin-left: auto;

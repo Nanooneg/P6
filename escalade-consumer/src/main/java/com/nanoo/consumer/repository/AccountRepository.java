@@ -1,7 +1,9 @@
 package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Account;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,5 +20,14 @@ public interface AccountRepository extends CrudRepository<Account,Integer> {
      * @return first account who contain {@code mail}
      */
     Account findByMail(String mail);
+    
+    /**
+     * This method return the mail of an account
+     *
+     * @param id id of the account
+     * @return the mail
+     */
+    @Query(value = "SELECT a.mail FROM account a WHERE a.id = :id", nativeQuery = true)
+    String findMailById (@Param("id") Integer id);
     
 }

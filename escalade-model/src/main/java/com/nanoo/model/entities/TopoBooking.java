@@ -2,10 +2,10 @@ package com.nanoo.model.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author nanoo
@@ -20,14 +20,20 @@ public class TopoBooking implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
-    @Column(name = "id_account")
-    private Integer idAccount;
-    @Column(name = "id_topo")
+    private Integer id;
+    @Column(name = "id_account_borrower", nullable = false)
+    private Integer idAccountBorrower;
+    @Column(name = "id_topo", nullable = false)
     private Integer idTopo;
-    @Column(name = "date_of_begin")
-    private DateTime dateOfBegin;
-    @Column(name = "date_of_end")
-    private DateTime dateOfEnd;
+    @Column(name = "status", length = 10, nullable = false)
+    private String status;
+    @Column(name = "owner_mail", length = 30)
+    private String ownerMail;
+    @Column(name = "date_of_creation",length = 30, nullable = false)
+    private Date dateOfCreation;
+    @Column(name = "date_of_update",length = 30, nullable = false)
+    private Date dateOfUpdate;
+    @Column(name = "date_of_expiry",length = 30, nullable = false)
+    private Date dateOfExpiry;
     
 }

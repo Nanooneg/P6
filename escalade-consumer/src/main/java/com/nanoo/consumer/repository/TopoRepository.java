@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author nanoo
@@ -49,4 +50,23 @@ public interface TopoRepository extends CrudRepository<Topo,Integer> {
      * @return a list of topos if exist
      */
     List<Topo> findAllByIdAccount (Integer accountID, Sort sort);
+    
+    /**
+     * This method find all topos posted by a particular userId.
+     *
+     * @param accountId id of user
+     * @return a list of topos if exist
+     */
+    List<Topo> findAllByIdAccount(Integer accountId);
+    
+    /**
+     * This method find all id from topos posted by a particular user.
+     *
+     * @param accountId id of user
+     * @return a list of Integer is topos exist
+     */
+    @Query(value = "SELECT t.id FROM topo t " +
+            "WHERE t.id_account = :accountId",
+            nativeQuery = true)
+    Set<Integer> getTopoIdByAccountId(@Param("accountId") Integer accountId);
 }

@@ -1,9 +1,6 @@
 package com.nanoo.business.util;
 
-import com.nanoo.model.enums.EnumCondition;
-import com.nanoo.model.enums.EnumRating;
-import com.nanoo.model.enums.EnumRegion;
-import com.nanoo.model.enums.EnumTitle;
+import com.nanoo.model.enums.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;

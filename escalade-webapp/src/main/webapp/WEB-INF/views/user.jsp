@@ -12,10 +12,15 @@
         </div>
         <div class="account-info">
             <p class="title">
-                Mes demandes de prêt :
-                <span><a href="<c:url value="#"/>"><input type="button" class="btn-search text-center" value="Nombre"/></a></span>
+                Mes demandes de prêt recue :
+                <span><a href="<c:url value="/lendingRequestReceived/${sessionScope.account.id }"/>">
+                    <input type="button" class="btn-search text-center" value="${topoBookingReceived}"/></a></span>
             </p>
-            <p class="title"></p>
+            <p class="title">
+                Mes demandes de prêt envoyé :
+                <span><a href="<c:url value="/lendingRequestSent/${sessionScope.account.id }"/>">
+                    <input type="button" class="btn-search text-center" value="${topoBookingSent}"/></a></span>
+            </p>
         </div>
     </div>
 </section>

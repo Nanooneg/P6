@@ -31,12 +31,19 @@ public class AccountController {
     private static final String ACCOUNT_SERV_ATT = "registration";
     private static final String ACCOUNT_ATT = "account";
     private static final String MESSAGE_ATT = "message";
+    private static final String MESSAGE_YES_ATT = "yes";
+    private static final String MESSAGE_NO_ATT = "no";
     
     private static final String LOGIN_VIEW = "login";
     private static final String REGISTER_VIEW = "register";
     private static final String SIGNOUT_VIEW = "signout";
     
     private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
+    private static final String LOGOUT1_MESSAGE = "vous nous quittez déjà?";
+    private static final String LOGOUT2_MESSAGE = "vous devez vous déconnecter pour faire ceci !";
+    private static final String YES1_MESSAGE = "Oui, je dois partir";
+    private static final String YES2_MESSAGE = "Ok, je me déconnecte";
+    private static final String NO_MESSAGE = "Non je reste encore un peu";
     
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listTitle = enumValues.getEnumTitleStringValues();
@@ -57,7 +64,16 @@ public class AccountController {
     }
     
     @GetMapping("/register")
-    public String displayAccountRegistrationForm(Model model){
+    public String displayAccountRegistrationForm(HttpServletRequest request, Model model){
+    
+        /* Check if user has access */
+        SessionHandling sessionHandling = new SessionHandling();
+        if (!sessionHandling.checkSession(request)){
+            model.addAttribute(MESSAGE_ATT,LOGOUT2_MESSAGE);
+            model.addAttribute(MESSAGE_YES_ATT,YES2_MESSAGE);
+            model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
+            return SIGNOUT_VIEW;
+        }
         
         model.addAttribute(ACCOUNT_ATT,new AccountDTO());
         model.addAttribute(TITLE_ATT,listTitle);
@@ -104,6 +120,10 @@ public class AccountController {
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
+        
+        model.addAttribute(MESSAGE_ATT,LOGOUT1_MESSAGE);
+        model.addAttribute(MESSAGE_YES_ATT,YES1_MESSAGE);
+        model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
         
         return SIGNOUT_VIEW;
     }

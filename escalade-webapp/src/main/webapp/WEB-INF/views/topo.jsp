@@ -39,21 +39,28 @@
             <p class="description">Le ${topo.dateOfPublication.day} ${topo.dateOfPublication.month} ${topo.dateOfPublication.year}</p>
             <p class="title">Etat général :</p>
             <p class="description">${topo.condition}</p>
-            <div class="button-display-bar pull-right">
-                <em class="fas fa-comment"></em>
-                <a href="/commentary/${topo.id}" class="text-info-link">Commentaire</a>
-                <c:if test="${sessionScope.account.id == topo.idAccount
+            <div>
+                <div class="pull-left">
+                    <c:if test="${topo.lendable && topo.idAccount != sessionScope.account.id}">
+                        <a href="<c:url value="/askForLending/${topo.id}"/>"><input type="button" class="btn-topo text-center" value="Demander"/></a>
+                    </c:if>
+                </div>
+                <div class="button-display-bar pull-right">
+                    <em class="fas fa-comment"></em>
+                    <a href="/commentary/${topo.id}" class="text-info-link">Commentaire</a>
+                    <c:if test="${sessionScope.account.id == topo.idAccount
                             || sessionScope.account.roleName == 'Member'
                             || sessionScope.account.roleName == 'Administrator'}">
-                    <em class="fas fa-pen"></em>
-                    <a href="<c:url value="/updateTopo/${topo.id}"/>" class="text-info-link">Modifier le topo</a>
-                </c:if>
-                <c:if test="${sessionScope.account.id == topo.idAccount
+                        <em class="fas fa-pen"></em>
+                        <a href="<c:url value="/updateTopo/${topo.id}"/>" class="text-info-link">Modifier le topo</a>
+                    </c:if>
+                    <c:if test="${sessionScope.account.id == topo.idAccount
                             || sessionScope.account.roleName == 'Member'
                             || sessionScope.account.roleName == 'Administrator'}">
-                    <em class="fas fa-minus-circle"></em>
-                    <a href="<c:url value="/deleteTopo/${topo.id}"/>" class="text-info-link">Supprimer ce topo</a>
-                </c:if>
+                        <em class="fas fa-minus-circle"></em>
+                        <a href="<c:url value="/deleteTopo/${topo.id}"/>" class="text-info-link">Supprimer ce topo</a>
+                    </c:if>
+                </div>
             </div>
         </div>
     </div>

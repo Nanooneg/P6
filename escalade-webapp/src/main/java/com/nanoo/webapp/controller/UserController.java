@@ -2,6 +2,7 @@ package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.dto.SiteDTO;
+import com.nanoo.business.dto.TopoBookingDTO;
 import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
@@ -30,6 +31,8 @@ public class UserController {
     private static final String ACCOUNT_ATT = "account";
     private static final String LIST_SITE_ATT = "listSite";
     private static final String LIST_TOPO_ATT = "listTopo";
+    private static final String TOPOBOOKING_R_ATT = "topoBookingReceived";
+    private static final String TOPOBOOKING_S_ATT = "topoBookingSent";
     
     private static final String LOGIN_VIEW = "login";
     private static final String USER_HOME_VIEW = "user";
@@ -70,9 +73,13 @@ public class UserController {
     
         List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountDTOLight.getId());
         List<SiteDTO> siteDTOList = spotService.searchSiteByAccountId(accountDTOLight.getId());
+        List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountId(accountDTOLight.getId());
+        List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(accountDTOLight.getId());
         
         model.addAttribute(LIST_TOPO_ATT, topoDTOList);
         model.addAttribute(LIST_SITE_ATT, siteDTOList);
+        model.addAttribute(TOPOBOOKING_R_ATT, topoBookingReceivedDTOList.size());
+        model.addAttribute(TOPOBOOKING_S_ATT, topoBookingSentDTOList.size());
         
         return USER_HOME_VIEW;
     }

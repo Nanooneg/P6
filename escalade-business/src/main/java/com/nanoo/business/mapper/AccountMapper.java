@@ -32,6 +32,7 @@ public interface AccountMapper {
         accountDTO.setFirstName( account.getFirstName() );
         accountDTO.setLastName( account.getLastName() );
         accountDTO.setRoleName( account.getRoleName() );
+        accountDTO.setMail( account.getMail() );
     
         return accountDTO;
     }

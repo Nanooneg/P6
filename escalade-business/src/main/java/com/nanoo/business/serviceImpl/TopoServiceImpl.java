@@ -1,14 +1,20 @@
 package com.nanoo.business.serviceImpl;
 
+import com.nanoo.business.dto.TopoBookingDTO;
 import com.nanoo.business.dto.TopoDTO;
+import com.nanoo.business.mapper.TopoBookingMapper;
 import com.nanoo.business.mapper.TopoMapper;
 import com.nanoo.business.serviceContract.TopoService;
 import com.nanoo.business.util.DateUtil;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
 import com.nanoo.business.util.UploadUtil;
+import com.nanoo.consumer.repository.AccountRepository;
+import com.nanoo.consumer.repository.TopoBookingRepository;
 import com.nanoo.consumer.repository.TopoRepository;
 import com.nanoo.model.entities.Topo;
+import com.nanoo.model.entities.TopoBooking;
+import com.nanoo.model.enums.EnumStatus;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,15 +45,23 @@ public class TopoServiceImpl implements TopoService {
     private DateUtil dateUtil;
     private UploadUtil uploadUtil;
     private HandlingEnumValues enumValues;
+    private Calendar calendar;
+    
     
     private final TopoRepository topoRepository;
+    private final TopoBookingRepository topoBookingRepository;
+    private final AccountRepository accountRepository;
     
     private final TopoMapper topoMapper;
+    private final TopoBookingMapper topoBookingMapper;
     
     @Autowired
-    public TopoServiceImpl(TopoRepository topoRepository, TopoMapper topoMapper) {
+    public TopoServiceImpl(TopoRepository topoRepository, TopoBookingRepository topoBookingRepository, AccountRepository accountRepository, TopoMapper topoMapper, TopoBookingMapper topoBookingMapper) {
         this.topoRepository = topoRepository;
+        this.topoBookingRepository = topoBookingRepository;
+        this.accountRepository = accountRepository;
         this.topoMapper = topoMapper;
+        this.topoBookingMapper = topoBookingMapper;
     }
     
     
@@ -187,5 +201,110 @@ public class TopoServiceImpl implements TopoService {
         }
     
         return topoDTOList;
+    }
+    
+    /**
+     * This method save a topoBooking in DB.
+     *
+     * @param accountId id of borrower
+     * @param topoId id of topo who's lended
+     */
+    @Override
+    public void saveTopoBooking(Integer accountId, Integer topoId){
+        
+        TopoBooking tBooking = new TopoBooking();
+        calendar = Calendar.getInstance();
+        //calendar.add(Calendar.DAY_OF_WEEK,2);
+        calendar.add(Calendar.MINUTE,5);
+        
+        tBooking.setIdTopo(topoId);
+        tBooking.setIdAccountBorrower(accountId);
+        tBooking.setStatus(EnumStatus.PENDING.getAbbreviation());
+        tBooking.setDateOfCreation(new Date());
+        tBooking.setDateOfUpdate(new Date());
+        tBooking.setDateOfExpiry(calendar.getTime());
+        
+        topoBookingRepository.save(tBooking);
+    }
+    
+    /**
+     * This method search all topobooking who concern particular Topo owner user.
+     *
+     * @param accountId id of user concerned
+     * @return list of topobooking if exist
+     */
+    @Override
+    public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountId(Integer accountId){
+        
+        Set<Integer> topoIdList = topoRepository.getTopoIdByAccountId(accountId);
+        List<TopoBooking> topoBookingList = topoBookingRepository.findAllTopoBookingByIdTopo(topoIdList);
+        List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
+        
+        for (TopoBooking topoBooking : topoBookingList){
+            topoBookingDTOList.add(topoBookingMapper.fromTopoBookingToDto(topoBooking));
+        }
+        
+        return topoBookingDTOList;
+    }
+    
+    /**
+     * This method search all topobooking who concern particular user.
+     *
+     * @param accountId id of user
+     * @return list of topoBooking if exist
+     */
+    @Override
+    public List<TopoBookingDTO> searchAllTopoBookingByAccountId(int accountId) {
+    
+        List<TopoBooking> topoBookingList = topoBookingRepository.findAllByIdAccountBorrower(accountId);
+        List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
+    
+        for (TopoBooking topoBooking : topoBookingList){
+            topoBookingDTOList.add(topoBookingMapper.fromTopoBookingToDto(topoBooking));
+        }
+    
+        return topoBookingDTOList;
+    }
+    
+    /**
+     * This method change topobooking status and if needed topo Lendable status too.
+     *
+     * @param userId        id of user who answer the request
+     * @param topoBookingId id of topobooking the status will be changed
+     * @param answer        answer of user
+     */
+    @Override
+    public void changeStatus(String userId, String topoBookingId, String answer) {
+    
+        Optional<TopoBooking> topoBooking = topoBookingRepository.findById(Integer.parseInt(topoBookingId));
+        TopoBooking existingTopoBooking;
+        calendar = Calendar.getInstance();
+        //calendar.add(Calendar.DAY_OF_WEEK,2);
+        calendar.add(Calendar.MINUTE,5);
+        
+        if(topoBooking.isPresent()){
+            existingTopoBooking = topoBooking.get();
+            if (answer.equals("acceptance")) {
+                String ownerMail = accountRepository.findMailById(Integer.parseInt(userId));
+                Optional<Topo> topo = topoRepository.findById(existingTopoBooking.getIdTopo());
+                Topo existingTopo;
+                
+                existingTopoBooking.setStatus(EnumStatus.ACCEPTED.getAbbreviation());
+                existingTopoBooking.setOwnerMail(ownerMail);
+                existingTopoBooking.setDateOfUpdate(new Date());
+                existingTopoBooking.setDateOfExpiry(calendar.getTime());
+                
+                topoBookingRepository.save(existingTopoBooking);
+                
+                if (topo.isPresent()){
+                    existingTopo = topo.get();
+                    existingTopo.setLendable(false);
+                    topoRepository.save(existingTopo);
+                }
+            }else if (answer.equals("refusal")){
+                existingTopoBooking.setStatus(EnumStatus.REFUSED.getAbbreviation());
+                topoBookingRepository.save(existingTopoBooking);
+            }
+        }
     }
 }
