@@ -35,8 +35,7 @@ public class AccountController {
     private static final String MAIL_FIELD = "mail";
     
     private static final String LOGIN_VIEW = "login";
-    private static final String REGISTER_VIEW = "register";
-    private static final String UPDATE_VIEW = "updateAccount";
+    private static final String ACCOUNT_FORM_VIEW = "accountForm";
     private static final String SIGNOUT_VIEW = "signout";
     
     private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
@@ -49,7 +48,7 @@ public class AccountController {
     
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listTitle = enumValues.getEnumTitleStringValues();
-    SessionHandling sessionHandling;
+    private SessionHandling sessionHandling;
     
     private final AccountService accountService;
     
@@ -81,7 +80,7 @@ public class AccountController {
         model.addAttribute(ACCOUNT_ATT,new AccountDTO());
         model.addAttribute(TITLE_ATT,listTitle);
         
-        return REGISTER_VIEW;
+        return ACCOUNT_FORM_VIEW;
     }
     
     @GetMapping("/updateAccount/{accountId}")
@@ -93,7 +92,7 @@ public class AccountController {
         model.addAttribute(ACCOUNT_ATT, accountDTO);
         model.addAttribute(TITLE_ATT, listTitle);
         
-        return UPDATE_VIEW;
+        return ACCOUNT_FORM_VIEW;
     }
     
     @PostMapping("/updateAccount/{accountId}")
@@ -110,7 +109,7 @@ public class AccountController {
             model.addAttribute(TITLE_ATT,listTitle);
             if (!mailAvailability)
                 bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
-            return UPDATE_VIEW;
+            return ACCOUNT_FORM_VIEW;
         }
     
         accountDTO.setId(Integer.parseInt(accountId));
@@ -132,7 +131,7 @@ public class AccountController {
     }
     
     
-    @PostMapping("/login")
+    @PostMapping("/saveAccount")
     public String displayLoginFormAfterRegisterAccount(
             @Valid @ModelAttribute("account")AccountDTO accountDTO, BindingResult bResult, Model model){
     
@@ -144,7 +143,7 @@ public class AccountController {
             model.addAttribute(TITLE_ATT,listTitle);
             if (!mailAvailability)
                 bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
-            return REGISTER_VIEW;
+            return ACCOUNT_FORM_VIEW;
         }
         
         accountService.saveAccount(accountDTO);

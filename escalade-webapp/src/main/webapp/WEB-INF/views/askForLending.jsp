@@ -21,6 +21,11 @@
                 <p>Vous pourrez voir l'avancée de votre demande dans votre espace personnel.</p>
             </div>
         </div>
+        <c:if test="${!empty message}">
+            <div>
+                <p class="error">${message}</p>
+            </div>
+        </c:if>
         <div class="text-center">
             <a href="<c:url value="/validAskForLending/${sessionScope.account.id}/${topo.id}"/>">
                 <input type="button" class="btn-search text-center" value="Oui, j'ai compris"/></a>

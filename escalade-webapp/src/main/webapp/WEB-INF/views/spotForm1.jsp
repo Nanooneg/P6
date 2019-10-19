@@ -8,7 +8,12 @@
 <section>
     <div id="spot-form-1" class="center-box form-box">
         <form:form action="/saveSite/${site.id}" method="post" modelAttribute="site" enctype="multipart/form-data">
-            <h1 class="text-center">Création de Site</h1>
+            <h1 class="text-center">
+                <c:choose>
+                    <c:when test="${empty site.id}">Création de Site</c:when>
+                    <c:otherwise>Update du Site</c:otherwise>
+                </c:choose>
+            </h1>
             <div>
                 <c:if test="${empty saveSpot.result}"><br/></c:if>
                 <h4 class="text-center error">${saveSpot.result}</h4>

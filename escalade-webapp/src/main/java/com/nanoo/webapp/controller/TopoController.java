@@ -49,6 +49,9 @@ public class TopoController {
     private static final String SPOT_SERV_ATT = "saveTopo";
     private static final String LIST_TOPO_ATT = "listTopo";
     
+    private static final String ALREADY_ASK_MESS = "Vous avez déjà une demande en attente pour ce topo. Si vous souaitez" +
+                                    " en faire une nouvelle, supprimer d'abord l'ancienne depuis votre espace utilisateur";
+    
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
     private List<String> listCondition = enumValues.getEnumConditionStringValues();
@@ -184,8 +187,12 @@ public class TopoController {
     }
     
     @GetMapping("/validAskForLending/{accountId}/{topoId}")
-    public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId){
+    public String createTopoBooking(HttpServletRequest request, Model model, @PathVariable String accountId, @PathVariable String topoId){
         
+        if (!topoService.checkTopoBookingAskRequest(accountId,topoId)) {
+            model.addAttribute(MESSAGE_ATT,ALREADY_ASK_MESS);
+            return askForLending(request,model,topoId);
+        }
         topoService.saveTopoBooking(Integer.parseInt(accountId),Integer.parseInt(topoId));
         
         return displayTopo(topoId,model);

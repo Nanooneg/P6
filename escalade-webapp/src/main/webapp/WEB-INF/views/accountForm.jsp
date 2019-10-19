@@ -5,11 +5,19 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
+<s:url value="/saveAccount" var="save"/>
+<s:url value="/updateAccount/${account.id}" var="update"/>
+
 <section class="container-fluid">
     <div id="register" class="form-box center-box">
-        <form:form action="/login" method="post" modelAttribute="account">
+        <form:form action="${empty account.id ? save : update}" method="post" modelAttribute="account">
             <div>
-                <h1 class="text-center">Register</h1>
+                <h1 class="text-center">
+                    <c:choose>
+                        <c:when test="${empty account.id}">Register</c:when>
+                        <c:otherwise>Update du Compte</c:otherwise>
+                    </c:choose>
+                </h1>
             </div>
             <div>
                 <c:if test="${empty message}"><br/></c:if>
@@ -62,9 +70,11 @@
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Je m'inscris!">
             </div>
-            <div class="text-right">
-                <a href="<c:url value="/login"/>" class="text-info-link">J'ai déjà un compte</a>
-            </div>
+            <c:if test="${empty account.id}">
+                <div class="text-right">
+                    <a href="<c:url value="/login"/>" class="text-info-link">J'ai déjà un compte</a>
+                </div>
+            </c:if>
         </form:form>
     </div>
 </section>

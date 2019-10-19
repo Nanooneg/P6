@@ -107,4 +107,13 @@ public interface TopoService {
      * @param topoBookingId id of topobooking to delete
      */
     void deleteTopoBooking(int topoBookingId);
+    
+    /**
+     * This method search if a topoBooking exist in db
+     *
+     * @param accountId id of user
+     * @param topoId id of topo
+     * @return true if exist
+     */
+    boolean checkTopoBookingAskRequest(String accountId, String topoId);
 }

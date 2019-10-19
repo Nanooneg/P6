@@ -342,6 +342,18 @@ public class TopoServiceImpl implements TopoService {
     public void deleteTopoBooking(int topoBookingId) {
         
         topoBookingRepository.deleteById(topoBookingId);
+    }
     
+    /**
+     * This method search if a topoBooking exist in db
+     *
+     * @param accountId id of user
+     * @param topoId    id of topo
+     * @return true if exist
+     */
+    @Override
+    public boolean checkTopoBookingAskRequest(String accountId, String topoId) {
+        
+        return topoBookingRepository.findByIdAccountBorrowerAndIdTopo(Integer.parseInt(accountId), Integer.parseInt(topoId)) == null;
     }
 }

@@ -8,7 +8,12 @@
 <section>
     <div id="spot-form-2" class="center-box form-box">
         <form:form action="/saveSector/${siteId}/${sector.id}" method="post" modelAttribute="sector">
-            <h1 class="text-center">Création de Secteur</h1>
+            <h1 class="text-center">
+                <c:choose>
+                    <c:when test="${empty sector.id}">Création de Secteur</c:when>
+                    <c:otherwise>Update du Secteur</c:otherwise>
+                </c:choose>
+            </h1>
             <div>
                 <c:if test="${empty saveSpot.result}"><br/></c:if>
                 <h4 class="text-center error">${saveSpot.result}</h4>

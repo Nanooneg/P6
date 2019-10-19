@@ -44,4 +44,13 @@ public interface TopoBookingRepository extends CrudRepository<TopoBooking,Intege
     @Modifying
     @Query(value = "DELETE FROM topobooking tb WHERE tb.date_of_expiry < :currentDate",nativeQuery = true)
     void deleteAllOldTopoBooking(@Param("currentDate") Date currentDate);
+    
+    /**
+     * This method search a topobooking in DB with a particular couple user/topo
+     *
+     * @param accountId id of user
+     * @param topoId id of topo
+     * @return topobooking if exist
+     */
+    TopoBooking findByIdAccountBorrowerAndIdTopo (Integer accountId, Integer topoId);
 }

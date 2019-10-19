@@ -37,6 +37,9 @@
 </section>
 
 <section class="container-fluid">
+    <div class="user-title text-center">
+        <h1>Mes topos</h1>
+    </div>
     <c:forEach items="${listTopo}" var="topo">
         <a href="<c:url value="/topo/${topo.id}"/>" class="title-link">
             <div class="display-box">
@@ -77,9 +80,12 @@
     </c:forEach>
 </section>
 
-<br/>
+<br/><br/>
 
 <section class="container-fluid">
+    <div class="user-title text-center">
+        <h1>Mes sites publiés</h1>
+    </div>
     <c:forEach items="${listSite}" var="site">
         <a href="<c:url value="/site/${site.id}"/>" class="title-link">
             <div class="display-box">
