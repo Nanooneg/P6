@@ -11,13 +11,13 @@ import java.util.Date;
 
 /**
  * @author nanoo
- * @create 14/09/2019 - 14:43
+ * @create 18/10/2019 - 16:51
  */
 @Data
 @NoArgsConstructor
 @FieldsEquality(firstFieldName = "password", secondFieldName = "confirmation",
         message = "Le mot de passe et la confirmation ne sont pas identiques")
-public class AccountDTO implements Serializable {
+public class AccountUpdateDTO implements Serializable {
     
     private static final long serialVersionUID = 1L;
     

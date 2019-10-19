@@ -76,6 +76,7 @@ public class TopoServiceImpl implements TopoService {
         dateUtil = new DateUtil();
         uploadUtil = new UploadUtil();
         Topo existingTopo;
+        String oldPicturePath = null;
     
         Topo topo = topoMapper.fromDtoToTopo(topoDTO);
     
@@ -86,6 +87,7 @@ public class TopoServiceImpl implements TopoService {
                 topo.setDateOfCreation(existingTopo.getDateOfCreation());
                 topo.setIdAccount(existingTopo.getIdAccount());
                 topo.setPicturePath(existingTopo.getPicturePath());
+                oldPicturePath = topo.getPicturePath();
             }
         }else{
             topo.setDateOfCreation(new Date());
@@ -95,6 +97,9 @@ public class TopoServiceImpl implements TopoService {
     
         if ((!Objects.equals(topo.getPicture().getOriginalFilename(), "")) && topo.getPicture() != null){
             topo.setPicturePath(uploadUtil.doUpload(topo.getPicture(),topo.getName(),topo.getDateOfUpdate().toString(),TOPO_ATT));
+            if (!Objects.equals(oldPicturePath, topo.getPicturePath()) && oldPicturePath != null) {
+                    uploadUtil.eraseOldPicture(oldPicturePath);
+            }
         }
     
         try {
@@ -237,7 +242,7 @@ public class TopoServiceImpl implements TopoService {
     public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountId(Integer accountId){
         
         Set<Integer> topoIdList = topoRepository.getTopoIdByAccountId(accountId);
-        List<TopoBooking> topoBookingList = topoBookingRepository.findAllTopoBookingByIdTopo(topoIdList);
+        List<TopoBooking> topoBookingList = topoBookingRepository.findAllTopoBookingByIdTopo(topoIdList,Sort.by("status","dateOfExpiry"));
         List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
         
         for (TopoBooking topoBooking : topoBookingList){
@@ -245,6 +250,26 @@ public class TopoServiceImpl implements TopoService {
         }
         
         return topoBookingDTOList;
+    }
+    
+    /**
+     * This method search all topobooking who concern particular Topo owner user but return only pending status topobooking.
+     *
+     * @param accountId id of user concerned
+     * @return list of topobooking with pending status if exist
+     */
+    @Override
+    public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountIdWithPendingStatus(Integer accountId){
+        List<TopoBookingDTO> topoBookingDTOList = searchAllTopoBookingByTopoAccountId(accountId);
+        List<TopoBookingDTO> topoBookingPendingDTOList = new ArrayList<>();
+        
+        for (TopoBookingDTO topoBookingDTO : topoBookingDTOList){
+            if(topoBookingDTO.getStatus().equals("En attente")){
+                topoBookingPendingDTOList.add(topoBookingDTO);
+            }
+        }
+        
+        return topoBookingPendingDTOList;
     }
     
     /**
@@ -306,5 +331,17 @@ public class TopoServiceImpl implements TopoService {
                 topoBookingRepository.save(existingTopoBooking);
             }
         }
+    }
+    
+    /**
+     * This method delete a topoBooking in DB
+     *
+     * @param topoBookingId id of topobooking to delete
+     */
+    @Override
+    public void deleteTopoBooking(int topoBookingId) {
+        
+        topoBookingRepository.deleteById(topoBookingId);
+    
     }
 }

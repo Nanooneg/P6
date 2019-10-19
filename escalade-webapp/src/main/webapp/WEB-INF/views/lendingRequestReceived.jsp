@@ -17,27 +17,25 @@
             </div>
         </c:if>
         <c:forEach items="${topoBooking}" var="tBooking">
-            <c:if test="${tBooking.status == 'En attente'}">
-                <div class="topo-booking-answer row test">
-                    <div class="message-text col-md-12">
-                        <h2>Au sujet du topo "${tBooking.idTopo}" - Statut : <span class="
-                            <c:choose>
-                                <c:when test="${tBooking.status == 'Accepté'}">accepted</c:when>
-                                <c:when test="${tBooking.status == 'Refusé'}">refused</c:when>
-                                <c:otherwise>pending</c:otherwise>
-                            </c:choose>
-                   ">${tBooking.status}</span>
-                    </div>
-                    <c:if test="${tBooking.status == 'En attente'}">
-                        <div class="message-validation col-md-12">
-                            <a href="<c:url value="/validLendingRequest/${sessionScope.account.id}/${tBooking.id}/acceptance"/>">
-                                <input type="button" class="btn-search text-center" value="j'accepte"/></a>
-                            <a href="<c:url value="/validLendingRequest/${sessionScope.account.id}/${tBooking.id}/refusal"/>">
-                                <input type="button" class="btn-search text-center" value="Je refuse"/></a>
-                        </div>
-                    </c:if>
+            <div class="topo-booking-answer row test">
+                <div class="message-text col-md-12">
+                    <h2>Au sujet du topo "${tBooking.idTopo}" - Statut : <span class="
+                        <c:choose>
+                            <c:when test="${tBooking.status == 'Accepté'}">accepted</c:when>
+                            <c:when test="${tBooking.status == 'Refusé'}">refused</c:when>
+                            <c:otherwise>pending</c:otherwise>
+                        </c:choose>
+               ">${tBooking.status}</span>
                 </div>
-            </c:if>
+                <c:if test="${tBooking.status == 'En attente'}">
+                    <div class="message-validation col-md-12">
+                        <a href="<c:url value="/validLendingRequest/${sessionScope.account.id}/${tBooking.id}/acceptance"/>">
+                            <input type="button" class="btn-search text-center" value="j'accepte"/></a>
+                        <a href="<c:url value="/validLendingRequest/${sessionScope.account.id}/${tBooking.id}/refusal"/>">
+                            <input type="button" class="btn-search text-center" value="Je refuse"/></a>
+                    </div>
+                </c:if>
+            </div>
         </c:forEach>
         <div class="message-text">
             <p>Nous vous rappelons qu'après le retour d'un topo, vous devez changer vous-même son

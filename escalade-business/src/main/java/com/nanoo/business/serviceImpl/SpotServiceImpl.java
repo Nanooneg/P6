@@ -78,6 +78,7 @@ public class SpotServiceImpl implements SpotService {
         dateUtil = new DateUtil();
         uploadUtil = new UploadUtil();
         Site existingSite;
+        String oldPicturePath = null;
         
         Site site = siteMapper.fromDtoToSite(siteDTO);
         
@@ -88,6 +89,7 @@ public class SpotServiceImpl implements SpotService {
                 site.setDateOfCreation(existingSite.getDateOfCreation());
                 site.setIdAccount(existingSite.getIdAccount());
                 site.setPicturePath(existingSite.getPicturePath());
+                oldPicturePath = site.getPicturePath();
             }
         }else{
             site.setOfficialLabel(false); // label is set false by default.
@@ -98,6 +100,9 @@ public class SpotServiceImpl implements SpotService {
         
         if ((!Objects.equals(site.getPicture().getOriginalFilename(), "")) && site.getPicture() != null){
             site.setPicturePath(uploadUtil.doUpload(site.getPicture(),site.getName(),site.getDateOfUpdate().toString(),SITE_ATT));
+            if (!Objects.equals(oldPicturePath, site.getPicturePath()) && oldPicturePath != null) {
+                    uploadUtil.eraseOldPicture(oldPicturePath);
+            }
         }
     
         try {

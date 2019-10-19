@@ -13,7 +13,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -92,6 +91,8 @@ public class CommentController {
                                                      BindingResult br, Model model, HttpServletRequest request,
                                                      @PathVariable String publicationId,
                                                      @PathVariable (required = false) String commentaryId){
+    
+        SessionHandling sessionHandling = new SessionHandling();
         
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);
@@ -99,8 +100,7 @@ public class CommentController {
             return COMMENTARY_FORM_VIEW;
         }
         
-        HttpSession session = request.getSession();
-        AccountDTO accountDTO = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTO = sessionHandling.getSessionAttribute(request);
     
         if (commentaryId != null)
             commentaryDTO.setId(Integer.parseInt(commentaryId));

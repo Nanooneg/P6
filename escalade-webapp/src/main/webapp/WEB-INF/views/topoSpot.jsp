@@ -11,10 +11,10 @@
         <div>
             <h1 class="text-center">Topo de grimpe</h1>
         </div>
-            <div>
-                <c:if test="${empty message}"><br/></c:if>
-                <h4 class="text-center ${empty listTopo ? 'error' : 'success'}">${message}</h4>
-            </div>
+        <div>
+            <c:if test="${empty message}"><br/></c:if>
+            <h4 class="text-center ${empty listTopo ? 'error' : 'success'}">${message}</h4>
+        </div>
         <div class="row">
             <div class="col-md-2 text-center">
                 <div class="col-md-12">

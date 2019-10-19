@@ -35,4 +35,28 @@ public interface AccountService {
      * @return account with chosen parameters if exist
      */
     AccountDTO searchAccountLightById(Integer idAccount);
+    
+    /**
+     * This method search an account in DB.
+     *
+     * @param idAccount id of account to search
+     * @return account if exist
+     */
+    AccountDTO searchAccountById(int idAccount);
+    
+    /**
+     * This method search in DB if mail is available
+     *
+     * @param mail mail to compare with DB
+     * @return false if mail is already use for another account
+     */
+    boolean checkMailAvailability(String mail);
+    
+    /**
+     * This method search in DB if mail is available for update
+     *
+     * @param mail mail to compare with DB
+     * @return false if mail is already use for another account
+     */
+    boolean checkMailAvailabilityForUpdate(String mail, Integer userId);
 }

@@ -9,11 +9,9 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +32,15 @@ public class AccountController {
     private static final String MESSAGE_YES_ATT = "yes";
     private static final String MESSAGE_NO_ATT = "no";
     
+    private static final String MAIL_FIELD = "mail";
+    
     private static final String LOGIN_VIEW = "login";
     private static final String REGISTER_VIEW = "register";
+    private static final String UPDATE_VIEW = "updateAccount";
     private static final String SIGNOUT_VIEW = "signout";
     
     private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
+    private static final String ERROR_MAIL_MESSAGE = "Cette adresse mail est déjà utilisée";
     private static final String LOGOUT1_MESSAGE = "vous nous quittez déjà?";
     private static final String LOGOUT2_MESSAGE = "vous devez vous déconnecter pour faire ceci !";
     private static final String YES1_MESSAGE = "Oui, je dois partir";
@@ -47,8 +49,9 @@ public class AccountController {
     
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listTitle = enumValues.getEnumTitleStringValues();
+    SessionHandling sessionHandling;
     
-    final AccountService accountService;
+    private final AccountService accountService;
     
     @Autowired
     public AccountController(AccountService accountService) {
@@ -67,7 +70,7 @@ public class AccountController {
     public String displayAccountRegistrationForm(HttpServletRequest request, Model model){
     
         /* Check if user has access */
-        SessionHandling sessionHandling = new SessionHandling();
+        sessionHandling = new SessionHandling();
         if (!sessionHandling.checkSession(request)){
             model.addAttribute(MESSAGE_ATT,LOGOUT2_MESSAGE);
             model.addAttribute(MESSAGE_YES_ATT,YES2_MESSAGE);
@@ -79,6 +82,45 @@ public class AccountController {
         model.addAttribute(TITLE_ATT,listTitle);
         
         return REGISTER_VIEW;
+    }
+    
+    @GetMapping("/updateAccount/{accountId}")
+    public String updateAccount(@PathVariable String accountId, Model model){
+        AccountDTO accountDTO = accountService.searchAccountById(Integer.parseInt(accountId));
+        if (accountDTO.getPostalCode().equals("0"))
+            accountDTO.setPostalCode(null);
+        
+        model.addAttribute(ACCOUNT_ATT, accountDTO);
+        model.addAttribute(TITLE_ATT, listTitle);
+        
+        return UPDATE_VIEW;
+    }
+    
+    @PostMapping("/updateAccount/{accountId}")
+    public String saveUpdatedAccount(@PathVariable("accountId") String accountId,
+                                     @Valid @ModelAttribute("account") AccountDTO accountDTO,
+                                     BindingResult bResult, Model model, HttpServletRequest request){
+    
+        sessionHandling = new SessionHandling();
+        boolean mailAvailability = accountService.checkMailAvailabilityForUpdate(accountDTO.getMail(), Integer.parseInt(accountId));
+        
+        if (bResult.hasErrors() || !mailAvailability ) {
+            model.addAttribute(ACCOUNT_ATT,accountDTO);
+            model.addAttribute(MESSAGE_ATT,ERROR_REGISTER_MESSAGE);
+            model.addAttribute(TITLE_ATT,listTitle);
+            if (!mailAvailability)
+                bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
+            return UPDATE_VIEW;
+        }
+    
+        accountDTO.setId(Integer.parseInt(accountId));
+        accountService.saveAccount(accountDTO);
+        
+        model.addAttribute(ACCOUNT_SERV_ATT,accountService);
+        sessionHandling.setSessionAttribute(request,accountDTO);
+    
+        return "redirect:/user/user-area";
+        
     }
     
     @GetMapping("/login")
@@ -95,27 +137,30 @@ public class AccountController {
             @Valid @ModelAttribute("account")AccountDTO accountDTO, BindingResult bResult, Model model){
     
         model.addAttribute(ACCOUNT_ATT,accountDTO);
-    
-        if (bResult.hasErrors()) {
+        boolean mailAvailability = accountService.checkMailAvailability(accountDTO.getMail());
+        
+        if (bResult.hasErrors() || !mailAvailability) {
             model.addAttribute(MESSAGE_ATT,ERROR_REGISTER_MESSAGE);
             model.addAttribute(TITLE_ATT,listTitle);
+            if (!mailAvailability)
+                bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
             return REGISTER_VIEW;
-        }else{
-            accountService.saveAccount(accountDTO);
-            model.addAttribute(ACCOUNT_SERV_ATT,accountService);
-            return LOGIN_VIEW;
         }
+        
+        accountService.saveAccount(accountDTO);
+        model.addAttribute(ACCOUNT_SERV_ATT,accountService);
+        
+        return LOGIN_VIEW;
+        
     }
     
     @GetMapping("/signout")
     public String confirmLogout(HttpServletResponse response, HttpServletRequest request, Model model){
-        
-        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
-        response.setHeader("Progma","no-cache");
-        response.setDateHeader("Expires",0);
+        sessionHandling = new SessionHandling();
+    
+        sessionHandling.clearCache(response);
     
         /* Check if user has access */
-        SessionHandling sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;

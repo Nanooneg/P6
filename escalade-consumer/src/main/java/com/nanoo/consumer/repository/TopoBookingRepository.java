@@ -1,6 +1,7 @@
 package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.TopoBooking;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -22,9 +23,10 @@ public interface TopoBookingRepository extends CrudRepository<TopoBooking,Intege
      * This method find all topobooking in DB who concern some topos
      *
      * @param topoIdList if of topos concerned
+     * @param sort way to sort result
      * @return a list of topobooking if exist
      */
-    List<TopoBooking> findAllTopoBookingByIdTopo (Set<Integer> topoIdList);
+    List<TopoBooking> findAllTopoBookingByIdTopo (Set<Integer> topoIdList, Sort sort);
     
     /**
      * This method find all topobooking in DB for a particular user

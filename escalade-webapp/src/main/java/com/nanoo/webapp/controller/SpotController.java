@@ -242,14 +242,15 @@ public class SpotController {
                                              BindingResult bResult, Model model, HttpServletRequest request,
                                              @PathVariable String siteId, @PathVariable (required = false) String sectorId){
         
+        sessionHandling = new SessionHandling();
+        
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
             model.addAttribute(SPOT_SERV_ATT, spotService);
             return SPOT_FORM_VIEW2;
         }
         
-        HttpSession session = request.getSession();
-        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
         
         if (sectorId != null)
             sectorDTO.setId(Integer.parseInt(sectorId));
@@ -282,6 +283,8 @@ public class SpotController {
                                           BindingResult bResult, Model model, HttpServletRequest request,
                                           @PathVariable String sectorId, @PathVariable(required = false) String wayId){
     
+        sessionHandling = new SessionHandling();
+        
         if (bResult.hasErrors()) {
             model.addAttribute(WAY_ATT, wayDTO);
             model.addAttribute(RATING_ATT, listRating);
@@ -289,8 +292,7 @@ public class SpotController {
             return SPOT_FORM_VIEW3;
         }
     
-        HttpSession session = request.getSession();
-        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
         
         if (wayId != null)
             wayDTO.setId(Integer.parseInt(wayId));

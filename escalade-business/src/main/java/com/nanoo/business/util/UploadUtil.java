@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author nanoo
@@ -61,5 +63,18 @@ public class UploadUtil {
         return string.replace("/","_").replace(" ","_").replace(":","_");
     }
     
-    
+    /**
+     * This method erase old picture when publication is updated
+     *
+     * @param oldPicturePath old picture path
+     */
+    public void eraseOldPicture(String oldPicturePath){
+        
+        try{
+            String realPicturePath = oldPicturePath.replace(ABS_PATH,REAL_PATH);
+            Files.delete(Paths.get(realPicturePath));
+        }catch (IOException e){
+            log.error(e.getMessage());
+        }
+    }
 }

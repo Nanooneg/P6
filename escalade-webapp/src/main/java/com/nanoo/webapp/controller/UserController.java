@@ -7,6 +7,7 @@ import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.serviceContract.TopoService;
+import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -37,6 +37,8 @@ public class UserController {
     private static final String LOGIN_VIEW = "login";
     private static final String USER_HOME_VIEW = "user";
     
+    private SessionHandling sessionHandling;
+    
     private final AccountService accountService;
     private final SpotService spotService;
     private final TopoService topoService;
@@ -52,11 +54,11 @@ public class UserController {
     public String loginValidation(@ModelAttribute("account") AccountDTO accountDTO,
                                   Model model, HttpServletRequest request) {
         
+        sessionHandling = new SessionHandling();
         accountDTO = accountService.searchRegisteredAccount(accountDTO);
         
         if (accountService.getErrors().isEmpty()) {
-            HttpSession session = request.getSession();
-            session.setAttribute(ACCOUNT_ATT,accountDTO);
+            sessionHandling.setSessionAttribute(request, accountDTO);
             return getUserHomeView(request, model);
         }else{
             model.addAttribute(ACCOUNT_ATT,accountDTO);
@@ -68,12 +70,12 @@ public class UserController {
     @GetMapping("/user-area")
     public String getUserHomeView(HttpServletRequest request, Model model){
     
-        HttpSession session = request.getSession();
-        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        sessionHandling = new SessionHandling();
+        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
     
         List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountDTOLight.getId());
         List<SiteDTO> siteDTOList = spotService.searchSiteByAccountId(accountDTOLight.getId());
-        List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountId(accountDTOLight.getId());
+        List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountIdWithPendingStatus(accountDTOLight.getId());
         List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(accountDTOLight.getId());
         
         model.addAttribute(LIST_TOPO_ATT, topoDTOList);

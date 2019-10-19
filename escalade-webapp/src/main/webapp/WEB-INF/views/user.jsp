@@ -10,17 +10,28 @@
         <div>
             <h1 class="text-center">Bienvenue ${sessionScope.account.firstName} ${sessionScope.account.lastName}</h1>
         </div>
+        <div>
+            <c:if test="${empty registration.result}"><br/></c:if>
+            <h4 class="text-center ${empty registration.errors ? 'success' : 'error'}">${registration.result}</h4>
+        </div>
         <div class="account-info">
-            <p class="title">
-                Mes demandes de prêt recue :
-                <span><a href="<c:url value="/lendingRequestReceived/${sessionScope.account.id }"/>">
+            <div>
+                <p class="title">
+                    Demandes de prêt recue :
+                    <span><a href="<c:url value="/lendingRequestReceived/${sessionScope.account.id }"/>">
                     <input type="button" class="btn-search text-center" value="${topoBookingReceived}"/></a></span>
-            </p>
-            <p class="title">
-                Mes demandes de prêt envoyé :
-                <span><a href="<c:url value="/lendingRequestSent/${sessionScope.account.id }"/>">
+                </p>
+                <p class="title">
+                    Demande de prêt envoyée :
+                    <span><a href="<c:url value="/lendingRequestSent/${sessionScope.account.id }"/>">
                     <input type="button" class="btn-search text-center" value="${topoBookingSent}"/></a></span>
-            </p>
+                </p>
+            </div>
+            <div class="pull-right">
+                <em class="fas fa-pen"></em>
+                <a href="<c:url value="/updateAccount/${sessionScope.account.id}"/>" class="text-info-link">Modifier mon
+                    compte</a>
+            </div>
         </div>
     </div>
 </section>

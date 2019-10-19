@@ -77,6 +77,14 @@ public interface TopoService {
     List<TopoBookingDTO> searchAllTopoBookingByTopoAccountId(Integer accountId);
     
     /**
+     * This method search all topobooking who concern particular Topo owner user but return only pending status topobooking.
+     *
+     * @param accountId id of user concerned
+     * @return list of topobooking with pending status if exist
+     */
+    List<TopoBookingDTO> searchAllTopoBookingByTopoAccountIdWithPendingStatus(Integer accountId);
+    
+    /**
      * This method search all topobooking who concern particular vuser.
      *
      * @param accountId id of user
@@ -92,4 +100,11 @@ public interface TopoService {
      * @param answer answer of user
      */
     void changeStatus(String userId, String topoBookingId, String answer);
+    
+    /**
+     * This method delete a topoBooking in DB
+     *
+     * @param topoBookingId id of topobooking to delete
+     */
+    void deleteTopoBooking(int topoBookingId);
 }

@@ -19,16 +19,24 @@
         </c:if>
         <c:forEach items="${topoBooking}" var="tBooking">
             <div class="topo-booking-answer row test">
-               <div class="message-text col-md-12">
-                   <h2>Au sujet du topo "${tBooking.idTopo}" - Statut : <span class="
+                <div class="message-text col-md-12">
+                    <h2>Au sujet du topo "${tBooking.idTopo}" - Statut : <span class="
                             <c:choose>
                                 <c:when test="${tBooking.status == 'Accepté'}">accepted</c:when>
                                 <c:when test="${tBooking.status == 'Refusé'}">refused</c:when>
                                 <c:otherwise>pending</c:otherwise>
                             </c:choose>
-                   ">${tBooking.status}</span>
-                   <c:if test="${tBooking.status == 'Accepté'}">- ${tBooking.ownerMail}</c:if> </h2>
-               </div>
+                    ">${tBooking.status}</span>
+                    <c:if test="${tBooking.status == 'Accepté'}">- ${tBooking.ownerMail}</c:if> </h2>
+                </div>
+                <div class="button-display-bar pull-right">
+                    <c:if test="${sessionScope.account.id == tBooking.idAccountBorrower}">
+                        <em class="fas fa-minus-circle"></em>
+                        <a href="<c:url value="/deleteTopoBooking/${tBooking.idAccountBorrower}/${tBooking.id}"/>" class="text-info-link">
+                            Supprimer la demande
+                        </a>
+                    </c:if>
+                </div>
             </div>
         </c:forEach>
         <div class="message-text">

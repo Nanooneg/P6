@@ -19,7 +19,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -53,6 +52,7 @@ public class TopoController {
     private HandlingEnumValues enumValues = new HandlingEnumValues();
     private List<String> listRegion = enumValues.getEnumRegionStringValues();
     private List<String> listCondition = enumValues.getEnumConditionStringValues();
+    private SessionHandling sessionHandling;
     
     private final TopoService topoService;
     private final AccountService accountService;
@@ -97,7 +97,7 @@ public class TopoController {
     public String displayTopoForm (HttpServletRequest request, Model model){
     
         /* Check if user has access */
-        SessionHandling sessionHandling = new SessionHandling();
+        sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
@@ -127,6 +127,8 @@ public class TopoController {
                            BindingResult bResult, HttpServletRequest request,
                            Model model, @PathVariable(required = false) String topoId){
         
+        sessionHandling = new SessionHandling();
+        
         if (bResult.hasErrors()){
             model.addAttribute(TOPO_ATT,topoDTO);
             model.addAttribute(REGION_ATT,listRegion);
@@ -136,8 +138,7 @@ public class TopoController {
             return TOPO_FORM_VIEW;
         }
     
-        HttpSession session = request.getSession();
-        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
+        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
     
         if (topoId != null)
             topoDTO.setId(Integer.parseInt(topoId));
@@ -171,7 +172,7 @@ public class TopoController {
     public String askForLending(HttpServletRequest request, Model model, @PathVariable String topoId){
     
         /* Check if user has access */
-        SessionHandling sessionHandling = new SessionHandling();
+        sessionHandling = new SessionHandling();
         if (sessionHandling.checkSession(request)){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
@@ -216,6 +217,14 @@ public class TopoController {
         topoService.changeStatus(userId,topoBookingId,answer);
         
         return displayLendingRequestReceived(userId,model);
+    }
+    
+    @GetMapping("/deleteTopoBooking/{userId}/{topoBookingId}")
+    public String deleteTopoBooking(@PathVariable String userId, @PathVariable String topoBookingId, Model model){
+        
+        topoService.deleteTopoBooking(Integer.parseInt(topoBookingId));
+        
+        return displayLendingRequestSent(userId, model);
     }
     
 }

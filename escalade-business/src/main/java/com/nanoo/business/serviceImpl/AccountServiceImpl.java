@@ -61,14 +61,27 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void saveAccount(AccountDTO accountDTO) {
         result = "";
-        dateUtil = new DateUtil()
-;
+        dateUtil = new DateUtil();
+        Account existingAccount;
+        
         Account account = accountMapper.fromDtoToAccount(accountDTO);
-        account.setRoleName(EnumRole.USER.getAbbreviation()); // role is set USER by default.
+        
+        if (accountDTO.getId() != null){
+            Optional<Account> oldAccount = accountRepository.findById(accountDTO.getId());
+            if (oldAccount.isPresent()){
+                existingAccount = oldAccount.get();
+                account.setDateOfCreation(existingAccount.getDateOfCreation());
+                account.setRoleName(existingAccount.getRoleName());
+            }
+        }else {
+            account.setDateOfCreation(new Date());
+            account.setRoleName(EnumRole.USER.getAbbreviation()); // role is set USER by default.
+        }
+    
         account.setPassword(encryptPassword(account.getPassword()));
-        account.setDateOfCreation(new Date());
         account.setDateOfUpdate(new Date());
     
+        
         try {
             accountRepository.save(account);
             result = SUCCESS_REGISTER_MESSAGE;
@@ -127,6 +140,52 @@ public class AccountServiceImpl implements AccountService {
         }
         
         return null;
+    }
+    
+    /**
+     * This method search an account in DB.
+     *
+     * @param idAccount id of account to search
+     * @return account if exist
+     */
+    @Override
+    public AccountDTO searchAccountById(int idAccount) {
+        Optional<Account> account = accountRepository.findById(idAccount);
+        Account existingAccount;
+    
+        if (account.isPresent()){
+            existingAccount = account.get();
+            return accountMapper.fromAccountToDto(existingAccount);
+        }
+    
+        return null;
+    }
+    
+    /**
+     * This method search in DB if mail is available
+     *
+     * @param mail mail to compare with DB
+     * @return false if mail is already use for another account
+     */
+    @Override
+    public boolean checkMailAvailability(String mail) {
+        return accountRepository.findByMail(mail) == null;
+    }
+    
+    /**
+     * This method search in DB if mail is available for update
+     *
+     * @param mail mail to compare with DB
+     * @return false if mail is already use for another account
+     */
+    @Override
+    public boolean checkMailAvailabilityForUpdate(String mail, Integer userId) {
+        
+        Account account = accountRepository.findByMail(mail);
+        
+        if (account == null)
+            return true;
+        else return account.getId().equals(userId);
     }
     
     /**
