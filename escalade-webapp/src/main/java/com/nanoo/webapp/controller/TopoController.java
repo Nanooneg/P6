@@ -34,11 +34,11 @@ public class TopoController {
     private static final String TOPO_SEARCH_VIEW = "topoSpot";
     private static final String TOPO_VIEW = "topo";
     private static final String TOPO_FORM_VIEW = "topoForm";
-    private static final String TOPOBOOKING_ATT = "topoBooking";
+    private static final String TOPOBOOKING_RECEIVED_ATT = "topoBookingReceived";
+    private static final String TOPOBOOKING_SENT_ATT = "topoBookingSent";
     private static final String LOGIN_VIEW = "login";
     private static final String ASK_FOR_LENDING_VIEW = "askForLending";
-    private static final String LENDING_REQUEST_RECEIVED = "lendingRequestReceived";
-    private static final String LENDING_REQUEST_SENT = "lendingRequestSent";
+    private static final String LENDING_REQUEST = "lendingRequest";
     
     private static final String ACCOUNT_ATT = "account";
     private static final String MESSAGE_ATT = "message";
@@ -201,21 +201,13 @@ public class TopoController {
     @GetMapping("/lendingRequestReceived/{userId}")
     public String displayLendingRequestReceived(@PathVariable String userId, Model model){
     
-        List<TopoBookingDTO> topoBookingDTOList = topoService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
+        List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
+        List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));
     
-        model.addAttribute(TOPOBOOKING_ATT, topoBookingDTOList);
+        model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
+        model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);
         
-        return LENDING_REQUEST_RECEIVED;
-    }
-    
-    @GetMapping("/lendingRequestSent/{userId}")
-    public String displayLendingRequestSent(@PathVariable String userId, Model model){
-        
-        List<TopoBookingDTO> topoBookingDTOList = topoService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));
-        
-        model.addAttribute(TOPOBOOKING_ATT, topoBookingDTOList);
-        
-        return LENDING_REQUEST_SENT;
+        return LENDING_REQUEST;
     }
     
     @GetMapping("/validLendingRequest/{userId}/{topoBookingId}/{answer}")
@@ -231,7 +223,7 @@ public class TopoController {
         
         topoService.deleteTopoBooking(Integer.parseInt(topoBookingId));
         
-        return displayLendingRequestSent(userId, model);
+        return displayLendingRequestReceived(userId, model);
     }
     
 }

@@ -17,14 +17,9 @@
         <div class="account-info">
             <div>
                 <p class="title">
-                    Demandes de prêt recue :
+                    Demandes de prêt :
                     <span><a href="<c:url value="/lendingRequestReceived/${sessionScope.account.id }"/>">
                     <input type="button" class="btn-search text-center" value="${topoBookingReceived}"/></a></span>
-                </p>
-                <p class="title">
-                    Demande de prêt envoyée :
-                    <span><a href="<c:url value="/lendingRequestSent/${sessionScope.account.id }"/>">
-                    <input type="button" class="btn-search text-center" value="${topoBookingSent}"/></a></span>
                 </p>
             </div>
             <div class="pull-right">
