@@ -252,18 +252,33 @@ public class SpotServiceImpl implements SpotService {
     }
     
     /**
-     * This method search a distinct site in DB
+     * This method search a distinct site in DB, or a sector/way contained in a particular site
      *
-     * @param siteId id of site searched
+     * @param spotId id of site searched or id of spot contained in site search
      * @return the site searched if exist
      */
     @Override
-    public SiteDTO searchSiteById (int siteId){
-        Optional<Site> site = siteRepository.findById(siteId);
+    public SiteDTO searchSiteById (int spotId){
+        Optional<Site> site = siteRepository.findById(spotId);
         
         if (site.isPresent()) {
             Site existingSite = site.get();
             return siteMapper.fromSiteToDto(existingSite);
+        }
+        
+        Optional<Sector> sector = sectorRepository.findById(spotId);
+        
+        if (sector.isPresent()){
+            Site site1 = siteRepository.findBySectors(sector.get());
+            return siteMapper.fromSiteToDto(site1);
+        }
+        
+        Optional<Way> way = wayRepository.findById(spotId);
+        
+        if (way.isPresent()){
+            Sector sector1 = sectorRepository.findByWays(way.get());
+            Site site2 = siteRepository.findBySectors(sector1);
+            return siteMapper.fromSiteToDto(site2);
         }
         
         return null;
@@ -353,8 +368,8 @@ public class SpotServiceImpl implements SpotService {
      * @return a list of sector contained in the site if exist
      */
     @Override
-    public List<SectorDTO> searchSectorBySiteId(String siteId){
-        Optional<Site> site = siteRepository.findById(Integer.parseInt(siteId));
+    public List<SectorDTO> searchSectorBySiteId(Integer siteId){
+        Optional<Site> site = siteRepository.findById(siteId);
         Site existingSite = null;
         if (site.isPresent()) {
             existingSite = site.get();

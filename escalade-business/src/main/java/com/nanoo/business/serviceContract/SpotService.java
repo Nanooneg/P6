@@ -66,7 +66,7 @@ public interface SpotService {
     List<SiteDTO> findAllSite();
     
     /**
-     * This method search a distinct site in DB
+     * This method search a distinct site in DB, or a sector/way contained in a particular site
      *
      * @param siteId id of site searched
      * @return the site searched if exist
@@ -105,7 +105,7 @@ public interface SpotService {
      * @param siteId id of the site in that we are looking for sectors.
      * @return a list of sector contained in the site if exist
      */
-    List<SectorDTO> searchSectorBySiteId(String siteId);
+    List<SectorDTO> searchSectorBySiteId(Integer siteId);
     
     /**
      * This method search a distinct way in DB

@@ -7,7 +7,7 @@
 
 <section>
     <div id="commentary-form" class="center-box form-box">
-        <form:form action="/saveComment/${publicationId}/${commentaryId}" method="post" modelAttribute="commentary">
+        <form:form action="/saveComment/${publicationType}/${publicationId}/${commentaryId}" method="post" modelAttribute="commentary">
             <h1 class="text-center">Ajouter un commentaire</h1>
             <div>
                 <c:if test="${empty message}"><br/></c:if>

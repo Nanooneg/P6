@@ -1,5 +1,6 @@
 package com.nanoo.consumer.repository;
 
+import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
@@ -53,4 +54,12 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
      * @return a list of sites if exist
      */
     List<Site> findAllByIdAccount (Integer accountID, Sort sort);
+    
+    /**
+     * This method return a site who contain a particular sector
+     *
+     * @param sector sector contained in the search site
+     * @return the site if exist
+     */
+    Site findBySectors (Sector sector);
 }

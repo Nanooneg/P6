@@ -30,11 +30,16 @@
                     </c:if>
                 </span>
                 Description du Site (${site.region}):
+                <span class="pull-right">
+                    <a href="<c:out value="javascript:history.go(-1)"/>">
+                        <input type="button" class="btn-search text-center" value="Revenir à la liste">
+                    </a>
+                </span>
             </p>
             <p class="description">${site.description}</p>
             <div class="button-display-bar pull-right">
                 <em class="fas fa-comment"></em>
-                <a href="/commentary/${site.id}" class="text-info-link">Commentaire</a>
+                <a href="/commentary/spot/${site.id}" class="text-info-link">Commentaire</a>
                 <em class="fas fa-plus-circle"></em>
                 <a href="<c:url value="/spotForm2/${site.id}"/>" class="text-info-link">Ajouter un secteur</a>
                 <c:if test="${sessionScope.account.id == site.idAccount
@@ -83,7 +88,7 @@
                                             <em class="fas fa-pen"></em>
                                         </a>
                                     </c:if>
-                                    <a href="/commentary/${way.id}" class="text-info-link">
+                                    <a href="/commentary/spot/${way.id}" class="text-info-link">
                                         <em class="fas fa-comment"></em>
                                     </a>
                                      - voie n°${wayStatus.count} : ${way.name} - Hauteur : ${way.height} m - ${way.pitchNbr}
@@ -94,7 +99,7 @@
                     </c:forEach>
                     <div class="button-display-bar pull-right">
                         <em class="fas fa-comment"></em>
-                        <a href="/commentary/${sector.id}" class="text-info-link">Commentaire</a>
+                        <a href="/commentary/spot/${sector.id}" class="text-info-link">Commentaire</a>
                         <em class="fas fa-plus-circle"></em>
                         <a href="<c:url value="/spotForm3/${sector.id}"/>" class="text-info-link">Ajouter une voie</a>
                         <c:if test="${sessionScope.account.id == sector.idAccount

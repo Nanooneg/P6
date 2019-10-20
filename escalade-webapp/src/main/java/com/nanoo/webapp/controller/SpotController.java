@@ -98,12 +98,12 @@ public class SpotController {
         return SPOT_VIEW;
     }
     
-    @GetMapping("/site/{siteId}")
-    public String displaySite (@PathVariable String siteId, Model model){
+    @GetMapping("/site/{spotId}")
+    public String displaySite (@PathVariable String spotId, Model model){
     
-        SiteDTO siteDTO = spotService.searchSiteById(Integer.parseInt(siteId));
+        SiteDTO siteDTO = spotService.searchSiteById(Integer.parseInt(spotId));
         AccountDTO accountDTO = accountService.searchAccountLightById(siteDTO.getIdAccount());
-        List<SectorDTO> sectorDTOList = spotService.searchSectorBySiteId(siteId);
+        List<SectorDTO> sectorDTOList = spotService.searchSectorBySiteId(siteDTO.getId());
         Map<Integer,List<WayDTO>> wayDTOList = spotService.searchWayBySectorId(sectorDTOList);
         
         model.addAttribute(SITE_ATT, siteDTO);

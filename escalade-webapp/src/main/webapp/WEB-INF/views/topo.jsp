@@ -33,10 +33,14 @@
                     </c:choose>
                 </span>
                 Description du Topo (${topo.region}):
+                <span class="pull-right">
+                    <a href="<c:out value="javascript:history.go(-1)"/>">
+                        <input type="button" class="btn-search text-center" value="Revenir à la liste">
+                    </a>
+                </span>
             </p>
             <p class="description">${topo.description}</p>
             <p class="title">Date de parution :</p>
-            <%--<p class="description">Le ${topo.dateOfPublication.day} ${topo.dateOfPublication.month} ${topo.dateOfPublication.year}</p>--%>
             <p class="description"><fmt:formatDate value="${topo.dateOfPublication}" pattern="dd/MM/yyyy"/></p>
             <p class="title">Etat général :</p>
             <p class="description">${topo.condition}</p>
@@ -48,7 +52,7 @@
                 </div>
                 <div class="button-display-bar pull-right">
                     <em class="fas fa-comment"></em>
-                    <a href="/commentary/${topo.id}" class="text-info-link">Commentaire</a>
+                    <a href="/commentary/topo/${topo.id}" class="text-info-link">Commentaire</a>
                     <c:if test="${sessionScope.account.id == topo.idAccount
                             || sessionScope.account.roleName == 'Member'
                             || sessionScope.account.roleName == 'Administrator'}">

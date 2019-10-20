@@ -2,6 +2,7 @@ package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
+import com.nanoo.model.entities.Way;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +22,13 @@ public interface SectorRepository extends CrudRepository<Sector,Integer> {
      * @return a list of sector contained in {@code site} if exist
      */
     List<Sector> findAllBySite(Site site);
+    
+    /**
+     * This method return a sector who contain a particular way
+     *
+     * @param way way contained in the search site
+     * @return the sector if exist
+     */
+    Sector findByWays (Way way);
     
 }

@@ -5,14 +5,20 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
+<s:url value="/topo" var="topo"/>
+<s:url value="/site" var="spot"/>
+
 <section class="container-fluid">
     <div id="commentary-box">
         <div>
             <h1 class="text-center">Espace commentaire</h1>
         </div>
         <div>
-            <a href="<c:url value="/addComment/${publicationId}"/>">
+            <a href="<c:url value="/addComment/${publicationType}/${publicationId}"/>">
                 <input type="button" class="btn-search text-center" value="Ajouter un commentaire">
+            </a>
+            <a href="<c:url value="${publicationType.equals('topo') ? topo : spot}/${publicationId}"/>">
+                <input type="button" class="btn-search text-center" value="Revenir au site">
             </a>
         </div>
         <div>
@@ -34,13 +40,13 @@
                                     || sessionScope.account.roleName == 'Member'
                                     || sessionScope.account.roleName == 'Administrator'}">
                             <em class="fas fa-pen"></em>
-                            <a href="<c:url value="/updateCommentary/${publicationId}/${commentary.key.id}"/>" class="text-info-link">Modifier le commentaire</a>
+                            <a href="<c:url value="/updateCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">Modifier le commentaire</a>
                         </c:if>
                         <c:if test="${sessionScope.account.id == commentary.key.idAccount
                                     || sessionScope.account.roleName == 'Member'
                                     || sessionScope.account.roleName == 'Administrator'}">
                             <em class="fas fa-minus-circle"></em>
-                            <a href="<c:url value="/deleteCommentary/${publicationId}/${commentary.key.id}"/>" class="text-info-link">Supprimer le commentaire</a>
+                            <a href="<c:url value="/deleteCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">Supprimer le commentaire</a>
                         </c:if>
                     </div>
                 </div>

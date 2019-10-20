@@ -30,6 +30,7 @@ public class CommentController {
     private static final String ACCOUNT_ATT = "account";
     private static final String MESSAGE_ATT = "message";
     private static final String PUBLICATION_ID_ATT = "publicationId";
+    private static final String PUBLICATION_TYPE_ATT = "publicationType";
     private static final String COMMENTARY_ID_ATT = "commentaryId";
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
@@ -48,18 +49,20 @@ public class CommentController {
         dataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
     
-    @GetMapping("/commentary/{publicationId}")
-    public String displayCommentaryView(@PathVariable String publicationId, Model model){
+    @GetMapping("/commentary/{publicationType}/{publicationId}")
+    public String displayCommentaryView(@PathVariable String publicationId, Model model, @PathVariable String publicationType){
     
         Map<CommentaryDTO,AccountDTO> commentariedDTOList = commentaryService.findAllCommentaryOfPublicationId(publicationId);
         model.addAttribute(COMMENTARY_LIST_ATT,commentariedDTOList);
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
+        model.addAttribute(PUBLICATION_TYPE_ATT, publicationType);
         
         return COMMENTARY_VIEW;
     }
     
-    @GetMapping("/addComment/{publicationId}")
-    public String displayCommentForm(@PathVariable String publicationId, Model model, HttpServletRequest request){
+    @GetMapping("/addComment/{publicationType}/{publicationId}")
+    public String displayCommentForm(@PathVariable String publicationId, Model model, HttpServletRequest request,
+                                     @PathVariable String publicationType){
     
         /* Check if user has access */
         SessionHandling sessionHandling = new SessionHandling();
@@ -70,27 +73,31 @@ public class CommentController {
         
         model.addAttribute(COMMENTARY_ATT, new CommentaryDTO());
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
+        model.addAttribute(PUBLICATION_TYPE_ATT, publicationType);
     
         return COMMENTARY_FORM_VIEW;
     }
     
-    @GetMapping("/updateCommentary/{publicationId}/{commentaryId}")
-    public String updateCommentary(@PathVariable String commentaryId, Model model, @PathVariable String publicationId){
+    @GetMapping("/updateCommentary/{publicationType}/{publicationId}/{commentaryId}")
+    public String updateCommentary(@PathVariable String commentaryId, Model model,
+                                   @PathVariable String publicationId, @PathVariable String publicationType){
         
         CommentaryDTO commentaryDTO = commentaryService.searchCommentaryById(Integer.parseInt(commentaryId));
         
         model.addAttribute(COMMENTARY_ATT, commentaryDTO);
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
+        model.addAttribute(PUBLICATION_TYPE_ATT, publicationType);
         model.addAttribute(COMMENTARY_ID_ATT, commentaryId);
         
         return COMMENTARY_FORM_VIEW;
     }
     
-    @PostMapping({"/saveComment/{publicationId}/","/saveComment/{publicationId}/{commentaryId}"})
+    @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
     public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute("commentary") CommentaryDTO commentaryDTO,
                                                      BindingResult br, Model model, HttpServletRequest request,
                                                      @PathVariable String publicationId,
-                                                     @PathVariable (required = false) String commentaryId){
+                                                     @PathVariable(required = false) String commentaryId,
+                                                     @PathVariable String publicationType){
     
         SessionHandling sessionHandling = new SessionHandling();
         
@@ -110,15 +117,15 @@ public class CommentController {
         commentaryDTO.setIdPublication(Integer.parseInt(publicationId));
         commentaryService.saveComment(commentaryDTO);
         
-        return displayCommentaryView(publicationId, model);
+        return displayCommentaryView(publicationId, model, publicationType);
     }
     
-    @GetMapping("/deleteCommentary/{publicationId}/{commentaryId}")
+    @GetMapping("/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
     public String deleteCommentAnsDisplayCommentaryView(@PathVariable String publicationId, @PathVariable String commentaryId,
-                                                        Model model){
+                                                        Model model, @PathVariable String publicationType){
         commentaryService.deleteCommentById(Integer.parseInt(commentaryId));
         
-        return displayCommentaryView(publicationId,model);
+        return displayCommentaryView(publicationId, model, publicationType);
     }
     
 }
