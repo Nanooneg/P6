@@ -36,7 +36,8 @@
             </p>
             <p class="description">${topo.description}</p>
             <p class="title">Date de parution :</p>
-            <p class="description">Le ${topo.dateOfPublication.day} ${topo.dateOfPublication.month} ${topo.dateOfPublication.year}</p>
+            <%--<p class="description">Le ${topo.dateOfPublication.day} ${topo.dateOfPublication.month} ${topo.dateOfPublication.year}</p>--%>
+            <p class="description"><fmt:formatDate value="${topo.dateOfPublication}" pattern="dd/MM/yyyy"/></p>
             <p class="title">Etat général :</p>
             <p class="description">${topo.condition}</p>
             <div>

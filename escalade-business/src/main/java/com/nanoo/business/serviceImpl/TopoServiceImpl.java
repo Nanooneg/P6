@@ -219,8 +219,7 @@ public class TopoServiceImpl implements TopoService {
         
         TopoBooking tBooking = new TopoBooking();
         calendar = Calendar.getInstance();
-        //calendar.add(Calendar.DAY_OF_WEEK,2);
-        calendar.add(Calendar.MINUTE,5);
+        calendar.add(Calendar.DAY_OF_WEEK,2);
         
         tBooking.setIdTopo(topoId);
         tBooking.setIdAccountBorrower(accountId);
@@ -304,8 +303,7 @@ public class TopoServiceImpl implements TopoService {
         Optional<TopoBooking> topoBooking = topoBookingRepository.findById(Integer.parseInt(topoBookingId));
         TopoBooking existingTopoBooking;
         calendar = Calendar.getInstance();
-        //calendar.add(Calendar.DAY_OF_WEEK,2);
-        calendar.add(Calendar.MINUTE,5);
+        calendar.add(Calendar.DAY_OF_WEEK,2);
         
         if(topoBooking.isPresent()){
             existingTopoBooking = topoBooking.get();

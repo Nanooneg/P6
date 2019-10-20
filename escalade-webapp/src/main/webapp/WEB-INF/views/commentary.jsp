@@ -20,9 +20,9 @@
                 <div class="commentary">
                     <div class="commentary-header">
                         <p>${commentary.key.title} - écrit par ${commentary.value.firstName} <span class="commentary-date">
-                                ${commentary.key.dateOfPublication}
+                                <fmt:formatDate value="${commentary.key.dateOfPublication}" pattern="dd/MM/yyyy HH:mm:ss"/>
                                     <c:if test="${commentary.key.dateOfPublication != commentary.key.dateOfModification}">
-                                        - Modifié le ${commentary.key.dateOfModification}
+                                        - Modifié le <fmt:formatDate value="${commentary.key.dateOfModification}" pattern="dd/MM/yyyy HH:mm:ss"/>
                                     </c:if>
                         </span></p>
                     </div>
