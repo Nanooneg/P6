@@ -294,8 +294,6 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public List<SiteDTO> searchSiteByFilter(SearchFilter filter) {
         result = "";
-        enumValues = new HandlingEnumValues();
-        
         String fRegion = filter.getRegion();
         int fSectorNbrMin = Integer.parseInt(filter.getSectorNbrMin());
         boolean fOfficialLabel = filter.isOfficialLabel();
@@ -303,7 +301,7 @@ public class SpotServiceImpl implements SpotService {
         if (filter.getRating().equals("all"))
             fRating = 20;
         else
-            fRating = enumValues.getEnumRatingLevelFromAbbreviationValue(filter.getRating());
+            fRating = HandlingEnumValues.getEnumRatingLevelFromAbbreviationValue(filter.getRating());
 
         List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating);
         List<SiteDTO> siteDTOList = new ArrayList<>();
@@ -443,8 +441,8 @@ public class SpotServiceImpl implements SpotService {
      * @return level value associated
      */
     private int getLevelOfRatingAbbreviation(String rating) {
-        enumValues = new HandlingEnumValues();
         
-        return enumValues.getEnumRatingLevelFromAbbreviationValue(rating);
+        return HandlingEnumValues.getEnumRatingLevelFromAbbreviationValue(rating);
+        
     }
 }

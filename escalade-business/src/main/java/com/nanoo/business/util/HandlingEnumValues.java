@@ -1,6 +1,9 @@
 package com.nanoo.business.util;
 
-import com.nanoo.model.enums.*;
+import com.nanoo.model.enums.EnumCondition;
+import com.nanoo.model.enums.EnumRating;
+import com.nanoo.model.enums.EnumRegion;
+import com.nanoo.model.enums.EnumTitle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,12 +16,15 @@ import java.util.Map;
  */
 public class HandlingEnumValues {
     
+    private HandlingEnumValues() {
+    }
+    
     /**
      * This method return a list of string with all abbreviation contained in enum
      *
      * @return a list of string
      */
-    public List<String> getEnumTitleStringValues (){
+    public static List<String> getEnumTitleStringValues (){
         EnumTitle[] listTitle = EnumTitle.values();
         List<String> listTitleStringValues = new ArrayList<>();
         
@@ -34,7 +40,7 @@ public class HandlingEnumValues {
      *
      * @return a list of string
      */
-    public List<String> getEnumRegionStringValues (){
+    public static List<String> getEnumRegionStringValues (){
         EnumRegion[] listRegion = EnumRegion.values();
         List<String> listRegionStringValues = new ArrayList<>();
         
@@ -50,7 +56,7 @@ public class HandlingEnumValues {
      *
      * @return a list of string
      */
-    public List<String> getEnumRatingStringValues (){
+    public static List<String> getEnumRatingStringValues (){
         EnumRating[] listRating = EnumRating.values();
         List<String> listRatingStringValues = new ArrayList<>();
         
@@ -66,7 +72,7 @@ public class HandlingEnumValues {
      *
      * @return the level value
      */
-    public int getEnumRatingLevelFromAbbreviationValue (String abbreviation){
+    public static int getEnumRatingLevelFromAbbreviationValue (String abbreviation){
         EnumRating[] listRating = EnumRating.values();
         Map<Integer,String> listRatingLevelAndAbbreviationValues = new HashMap<>();
         
@@ -89,7 +95,7 @@ public class HandlingEnumValues {
      *
      * @return a list of string
      */
-    public List<String> getEnumConditionStringValues (){
+    public static List<String> getEnumConditionStringValues (){
         EnumCondition[] listCondition = EnumCondition.values();
         List<String> listConditionStringValues = new ArrayList<>();
         

@@ -15,7 +15,7 @@ public class HomeController {
     
     private static final String HOME_VIEW = "home";
     
-    SessionHandling sessionHandling;
+    private SessionHandling sessionHandling;
     
     
     @GetMapping(value = {"/","/home"})

@@ -92,7 +92,7 @@ public class CommentController {
         return COMMENTARY_FORM_VIEW;
     }
     
-    @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
+    @PostMapping({"/saveComment/{publicationType}c/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
     public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute("commentary") CommentaryDTO commentaryDTO,
                                                      BindingResult br, Model model, HttpServletRequest request,
                                                      @PathVariable String publicationId,

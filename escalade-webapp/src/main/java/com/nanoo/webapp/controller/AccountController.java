@@ -46,8 +46,7 @@ public class AccountController {
     private static final String YES2_MESSAGE = "Ok, je me déconnecte";
     private static final String NO_MESSAGE = "Non je reste encore un peu";
     
-    private HandlingEnumValues enumValues = new HandlingEnumValues();
-    private List<String> listTitle = enumValues.getEnumTitleStringValues();
+    private List<String> listTitle = HandlingEnumValues.getEnumTitleStringValues();
     private SessionHandling sessionHandling;
     
     private final AccountService accountService;

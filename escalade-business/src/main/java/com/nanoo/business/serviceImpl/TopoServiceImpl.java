@@ -166,7 +166,6 @@ public class TopoServiceImpl implements TopoService {
     public List<TopoDTO> searchTopoByFilter(SearchFilter filter) {
         result = "";
         dateUtil = new DateUtil();
-        enumValues = new HandlingEnumValues();
         
         String fRegion = filter.getRegion();
         boolean fLendable = filter.isLendable();

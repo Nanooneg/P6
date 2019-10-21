@@ -8,8 +8,6 @@ import com.nanoo.business.serviceContract.TopoService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
 import com.nanoo.webapp.util.SessionHandling;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -28,8 +26,6 @@ import java.util.List;
  */
 @Controller
 public class TopoController {
-    
-    private static final Logger log = LoggerFactory.getLogger(TopoController.class);
     
     private static final String TOPO_SEARCH_VIEW = "topoSpot";
     private static final String TOPO_VIEW = "topo";
@@ -52,9 +48,8 @@ public class TopoController {
     private static final String ALREADY_ASK_MESS = "Vous avez déjà une demande en attente pour ce topo. Si vous souaitez" +
                                     " en faire une nouvelle, supprimer d'abord l'ancienne depuis votre espace utilisateur";
     
-    private HandlingEnumValues enumValues = new HandlingEnumValues();
-    private List<String> listRegion = enumValues.getEnumRegionStringValues();
-    private List<String> listCondition = enumValues.getEnumConditionStringValues();
+    private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
+    private List<String> listCondition = HandlingEnumValues.getEnumConditionStringValues();
     private SessionHandling sessionHandling;
     
     private final TopoService topoService;

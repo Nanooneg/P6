@@ -52,9 +52,8 @@ public class SpotController {
     private static final String WAY_ATT = "way";
     private static final String MAP_WAY_BY_SECTOR_ID_ATT = "wayListBySectorId";
     
-    private HandlingEnumValues enumValues = new HandlingEnumValues();
-    private List<String> listRating = enumValues.getEnumRatingStringValues();
-    private List<String> listRegion = enumValues.getEnumRegionStringValues();
+    private List<String> listRating = HandlingEnumValues.getEnumRatingStringValues();
+    private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
     private SessionHandling sessionHandling;
     
     private final SpotService spotService;
