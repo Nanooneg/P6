@@ -4,7 +4,7 @@ import com.nanoo.model.entities.TopoBooking;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +17,7 @@ import java.util.Set;
  * @create 04/09/2019 - 17:54
  */
 @Repository
-public interface TopoBookingRepository extends CrudRepository<TopoBooking,Integer> {
+public interface TopoBookingRepository extends PagingAndSortingRepository<TopoBooking,Integer> {
     
     /**
      * This method find all topobooking in DB who concern some topos

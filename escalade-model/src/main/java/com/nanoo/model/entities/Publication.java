@@ -1,7 +1,8 @@
 package com.nanoo.model.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +13,9 @@ import java.util.Date;
  * @create 02/09/2019 - 15:34
  */
 @MappedSuperclass
-@Data @NoArgsConstructor
-public class Publication implements Serializable {
+@Getter @Setter
+@NoArgsConstructor
+class Publication implements Serializable {
     
     private static final long serialVersionUID = 1L;
     

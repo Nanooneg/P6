@@ -2,7 +2,7 @@ package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Commentary;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @create 04/09/2019 - 17:47
  */
 @Repository
-public interface CommentaryRepository extends CrudRepository<Commentary,Integer> {
+public interface CommentaryRepository extends PagingAndSortingRepository<Commentary,Integer> {
     
     /**
      * This method find all commentaries associated to a particular publication.

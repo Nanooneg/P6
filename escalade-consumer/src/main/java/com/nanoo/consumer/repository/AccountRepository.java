@@ -2,7 +2,7 @@ package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Account;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * @create 01/09/2019 - 16:42
  */
 @Repository
-public interface AccountRepository extends CrudRepository<Account,Integer> {
+public interface AccountRepository extends PagingAndSortingRepository<Account,Integer> {
     
     /**
      * This method find an account in DB who contain value of {@code mail} in mail field

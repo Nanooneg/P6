@@ -4,7 +4,7 @@ import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @create 04/09/2019 - 17:52
  */
 @Repository
-public interface SiteRepository extends CrudRepository<Site,Integer> {
+public interface SiteRepository extends PagingAndSortingRepository<Site,Integer> {
     
     /**
      * This method find all sites in DB who match with criteria passed in parameter.
@@ -37,14 +37,6 @@ public interface SiteRepository extends CrudRepository<Site,Integer> {
            nativeQuery = true)
     List<Site> findAllByFilter (@Param("sectorNbrMin") int sectorNbrMin, @Param("region") String region,
                                 @Param("isLabelOfficial") boolean isLabelOfficial, @Param("ratingLevel") int ratingLevel);
-    
-    /**
-     * This method find all sites contained in DB and sort them
-     *
-     * @param sort way to sort sites
-     * @return all sites contained in DB
-     */
-    Iterable<Site> findAll(Sort sort);
     
     /**
      * This method find all sites posted by a particular userId.

@@ -114,13 +114,19 @@ public class SpotServiceImpl implements SpotService {
     }
     
     /**
-     * This method delete a site from DB
+     * This method delete a site from DB.
      *
      * @param siteId id of site to delete
      */
     @Override
     public void deleteSiteWithId(int siteId) {
-        siteRepository.deleteById(siteId);
+        uploadUtil = new UploadUtil();
+        Optional<Site> site = siteRepository.findById(siteId);
+        
+        if (site.isPresent()) {
+            siteRepository.deleteById(siteId);
+            uploadUtil.eraseOldPicture(site.get().getPicturePath());
+        }
     }
     
     /**
@@ -195,7 +201,7 @@ public class SpotServiceImpl implements SpotService {
         }
         
         sector.ifPresent(way::setSector);
-        way.setRatingLevel(getLevelOfRatingAbbreviation(way.getRating()));
+        way.setRatingLevel(HandlingEnumValues.getLevelOfRatingAbbreviation(way.getRating()));
         way.setDateOfUpdate(new Date());
         
         try {
@@ -431,18 +437,5 @@ public class SpotServiceImpl implements SpotService {
         }
         
         return wayDtoListBySectorId;
-    }
-    
-    
-    /**
-     * This method find the level value associated to the abbreviation in the EnumRating.
-     *
-     * @param rating abbreviation picked up in form
-     * @return level value associated
-     */
-    private int getLevelOfRatingAbbreviation(String rating) {
-        
-        return HandlingEnumValues.getEnumRatingLevelFromAbbreviationValue(rating);
-        
     }
 }

@@ -1,8 +1,8 @@
 package com.nanoo.model.entities;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
  * @create 31/08/2019 - 12:20
  */
 @Entity
-@Data @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@Getter @Setter
+@NoArgsConstructor
 public class Way extends Publication{
     
     @ManyToOne
@@ -32,4 +32,13 @@ public class Way extends Publication{
     @Column(name = "anchor_nbr")
     private int anchorNbr;
     
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+    
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

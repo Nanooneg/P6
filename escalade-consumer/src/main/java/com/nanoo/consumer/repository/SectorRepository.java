@@ -3,7 +3,7 @@ package com.nanoo.consumer.repository;
 import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
 import com.nanoo.model.entities.Way;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @create 04/09/2019 - 17:52
  */
 @Repository
-public interface SectorRepository extends CrudRepository<Sector,Integer> {
+public interface SectorRepository extends PagingAndSortingRepository<Sector,Integer> {
     
     /**
      * This method find all sectors contained in particular {@code site}.

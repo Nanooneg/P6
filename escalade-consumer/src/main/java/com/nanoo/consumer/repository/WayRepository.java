@@ -2,7 +2,7 @@ package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Way;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @create 04/09/2019 - 17:55
  */
 @Repository
-public interface WayRepository extends CrudRepository<Way,Integer> {
+public interface WayRepository extends PagingAndSortingRepository<Way,Integer> {
     
     /**
      * This method find all ways contained in a particular {@code sector}
