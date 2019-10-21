@@ -24,7 +24,7 @@
                 <h4 class="text-center error">${message}</h4>
             </div>
             <div class="select-style">
-                <form:select path="title" >
+                <form:select path="title" autofocus="autofocus">
                     <form:option value="N/C" label="Civil"/>
                     <form:options items="${listTitle}"/>
                 </form:select>
@@ -69,6 +69,11 @@
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Je m'inscris!">
+            </div>
+            <div>
+                <a href="<c:out value="javascript:history.go(-1)"/>">
+                    <input type="button" class="btn-form text-center" value="Annuler">
+                </a>
             </div>
             <c:if test="${empty account.id}">
                 <div class="text-right">

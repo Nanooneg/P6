@@ -25,7 +25,7 @@
                 </div>
             </c:if>
             <div class="select-style">
-                <form:select path="region">
+                <form:select path="region" autofocus="autofocus">
                     <form:option value="Région"/>
                     <form:options items="${listRegion}"/>
                 </form:select>
@@ -46,6 +46,11 @@
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Enregistrer">
+            </div>
+            <div>
+                <a href="<c:out value="javascript:history.go(-1)"/>">
+                    <input type="button" class="btn-form text-center" value="Annuler">
+                </a>
             </div>
         </form:form>
     </div>

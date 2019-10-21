@@ -17,7 +17,7 @@
             </div>
             <div class="textbox">
                 <em class="fas fa-at"></em>
-                <form:input path="mail" type="email" placeholder="Adresse e-mail"/>
+                <form:input path="mail" type="email" placeholder="Adresse e-mail" autofocus="autofocus"/>
                 <c:if test="${!empty registration.errors['mail']}">
                     <span class="error">${registration.errors['mail']}</span>
                 </c:if>
@@ -31,6 +31,11 @@
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="C'est parti!">
+            </div>
+            <div>
+                <a href="<c:out value="javascript:history.go(-1)"/>">
+                    <input type="button" class="btn-form text-center" value="Annuler">
+                </a>
             </div>
             <div class="text-right">
                 <a href="<c:url value="/register"/>" class="text-info-link">Je crée un compte</a>

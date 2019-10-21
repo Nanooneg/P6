@@ -8,7 +8,7 @@
 <section class="container-fluid">
     <div id="signout" class="form-box center-box">
         <div>
-            <h2 class="text-center">${sessionScope.account.firstName}, ${message}</h2>
+            <h2 class="text-center">${sessionScope.account.lastName}, ${message}</h2>
         </div>
         <div class="text-center">
             <a href="<c:url value="/unlog"/>" class="form-group">

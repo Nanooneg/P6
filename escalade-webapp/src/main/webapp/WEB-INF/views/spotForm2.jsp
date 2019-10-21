@@ -19,7 +19,7 @@
                 <h4 class="text-center error">${saveSpot.result}</h4>
             </div>
             <div class="textbox">
-                <form:input path="name" placeholder="nom" required="true"/>
+                <form:input path="name" placeholder="nom" required="true" autofocus="autofocus"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
             <div class="textbox">
@@ -29,6 +29,11 @@
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Enregistrer">
+            </div>
+            <div>
+                <a href="<c:out value="javascript:history.go(-1)"/>">
+                    <input type="button" class="btn-form text-center" value="Annuler">
+                </a>
             </div>
         </form:form>
     </div>

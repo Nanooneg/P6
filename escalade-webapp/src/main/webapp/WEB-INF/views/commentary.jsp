@@ -18,7 +18,7 @@
                 <input type="button" class="btn-search text-center" value="Ajouter un commentaire">
             </a>
             <a href="<c:url value="${publicationType.equals('topo') ? topo : spot}/${publicationId}"/>">
-                <input type="button" class="btn-search text-center" value="Revenir au site">
+                <input type="button" class="btn-search text-center" value="Revenir au ${publicationType}">
             </a>
         </div>
         <div>

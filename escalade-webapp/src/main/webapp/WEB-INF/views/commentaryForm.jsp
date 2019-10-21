@@ -8,13 +8,20 @@
 <section>
     <div id="commentary-form" class="center-box form-box">
         <form:form action="/saveComment/${publicationType}/${publicationId}/${commentaryId}" method="post" modelAttribute="commentary">
-            <h1 class="text-center">Ajouter un commentaire</h1>
+            <div>
+                <h1 class="text-center">
+                    <c:choose>
+                        <c:when test="${empty commentary.id}">Ajouter un commentaire</c:when>
+                        <c:otherwise>Modifier un commentaire</c:otherwise>
+                    </c:choose>
+                </h1>
+            </div>
             <div>
                 <c:if test="${empty message}"><br/></c:if>
                 <h4 class="text-center error">${message}</h4>
             </div>
             <div class="textbox">
-                <form:input path="title" placeholder="Titre" required="true" maxlength="30"/>
+                <form:input path="title" placeholder="Titre" required="true" maxlength="30" autofocus="autofocus"/>
                 <form:errors path="title" cssClass="error"/>
             </div>
             <div class="textbox">
@@ -24,6 +31,11 @@
             </div>
             <div>
                 <input type="submit" name="submit" class="btn-form text-center" value="Enregistrer">
+            </div>
+            <div>
+                <a href="<c:out value="javascript:history.go(-1)"/>">
+                    <input type="button" class="btn-form text-center" value="Annuler">
+                </a>
             </div>
         </form:form>
     </div>

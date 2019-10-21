@@ -108,7 +108,9 @@
                             <em class="fas fa-pen"></em>
                             <a href="<c:url value="/updateSector/${site.id}/${sector.id}"/>" class="text-info-link">Modifier le sector</a>
                         </c:if>
-                        <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
+                        <c:if test="${sessionScope.account.id == sector.idAccount
+                                    || sessionScope.account.roleName == 'Member'
+                                    || sessionScope.account.roleName == 'Administrator'}">
                             <em class="fas fa-minus-circle"></em>
                             <a href="<c:url value="/deleteSector/${site.id}/${sector.id}"/>" class="text-info-link">Supprimer ce secteur</a>
                         </c:if>
