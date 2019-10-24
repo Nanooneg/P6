@@ -11,7 +11,7 @@
             <h1 class="text-center">
                 <c:choose>
                     <c:when test="${empty way.id}">Création de Voie</c:when>
-                    <c:otherwise>Update de la Voie</c:otherwise>
+                    <c:otherwise>Modification de la Voie</c:otherwise>
                 </c:choose>
             </h1>
             <div>

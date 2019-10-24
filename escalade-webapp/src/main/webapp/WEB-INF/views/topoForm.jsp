@@ -12,7 +12,7 @@
                 <h1 class="text-center">
                     <c:choose>
                         <c:when test="${empty topo.id}">Création de Topo</c:when>
-                        <c:otherwise>Update du Topo</c:otherwise>
+                        <c:otherwise>Modification du Topo</c:otherwise>
                     </c:choose>
                 </h1>
             </div>

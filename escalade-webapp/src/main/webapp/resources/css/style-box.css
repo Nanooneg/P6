@@ -37,6 +37,13 @@
     margin-bottom: 45px;
 }
 
+#home-box{
+    width: 80%;
+    position: absolute;
+    height: auto;
+    margin-bottom: 45px;
+}
+
 #site-box, #topo-box{
     width: 80%;
     position: relative;
@@ -471,6 +478,10 @@ input[type=number]{
 #label-icon-result, #lendable-icon-result{
     height: 20px;
     color: white;
+}
+
+.lendable-icon, .label-icon{
+    height: 20px;
 }
 
 .btn-search:hover, .btn-topo:hover, .btn-search:focus, .btn-topo:focus {

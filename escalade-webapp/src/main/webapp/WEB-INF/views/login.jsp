@@ -9,7 +9,7 @@
     <div id="login" class="form-box center-box">
         <form:form action="/user/user-area" method="post" modelAttribute="account">
             <div>
-                <h1 class="text-center">Login</h1>
+                <h1 class="text-center">Connexion</h1>
             </div>
             <div>
                 <c:if test="${empty registration.result}"><br/></c:if>

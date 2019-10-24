@@ -14,8 +14,8 @@
             <div>
                 <h1 class="text-center">
                     <c:choose>
-                        <c:when test="${empty account.id}">Register</c:when>
-                        <c:otherwise>Update du Compte</c:otherwise>
+                        <c:when test="${empty account.id}">Créer un compte</c:when>
+                        <c:otherwise>Modifier mon Compte</c:otherwise>
                     </c:choose>
                 </h1>
             </div>

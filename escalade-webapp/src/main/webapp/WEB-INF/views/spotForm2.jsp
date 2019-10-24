@@ -11,7 +11,7 @@
             <h1 class="text-center">
                 <c:choose>
                     <c:when test="${empty sector.id}">Création de Secteur</c:when>
-                    <c:otherwise>Update du Secteur</c:otherwise>
+                    <c:otherwise>Modification du Secteur</c:otherwise>
                 </c:choose>
             </h1>
             <div>

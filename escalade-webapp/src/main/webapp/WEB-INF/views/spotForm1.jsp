@@ -11,7 +11,7 @@
             <h1 class="text-center">
                 <c:choose>
                     <c:when test="${empty site.id}">Création de Site</c:when>
-                    <c:otherwise>Update du Site</c:otherwise>
+                    <c:otherwise>Modification du Site</c:otherwise>
                 </c:choose>
             </h1>
             <div>
