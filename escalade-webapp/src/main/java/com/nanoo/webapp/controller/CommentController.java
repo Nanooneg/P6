@@ -24,8 +24,6 @@ import java.util.Map;
 @Controller
 public class CommentController {
     
-    private static final Logger LOG = LoggerFactory.getLogger(CommentController.class);
-    
     private static final String COMMENTARY_VIEW = "commentary";
     private static final String COMMENTARY_FORM_VIEW = "commentaryForm";
     private static final String LOGIN_VIEW = "login";
@@ -100,9 +98,6 @@ public class CommentController {
                                                      @PathVariable String publicationType,
                                                      @PathVariable String publicationId,
                                                      @PathVariable(required = false) String commentaryId){
-    
-        System.out.println("test entrée controller method");
-        LOG.trace("test entrée controller log trace");
         
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);

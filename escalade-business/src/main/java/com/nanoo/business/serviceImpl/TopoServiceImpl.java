@@ -11,6 +11,7 @@ import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
 import com.nanoo.business.util.UploadUtil;
 import com.nanoo.consumer.repository.AccountRepository;
+import com.nanoo.consumer.repository.CommentaryRepository;
 import com.nanoo.consumer.repository.TopoBookingRepository;
 import com.nanoo.consumer.repository.TopoRepository;
 import com.nanoo.model.entities.Topo;
