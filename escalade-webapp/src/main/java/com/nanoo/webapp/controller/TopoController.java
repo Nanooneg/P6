@@ -119,7 +119,7 @@ public class TopoController {
     
     @PostMapping({"/saveTopo/","/saveTopo/{topoId}"})
     public String saveTopo(@Valid @ModelAttribute("topo") TopoDTO topoDTO,
-                           @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
+                           @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
                            BindingResult bResult, Model model, @PathVariable(required = false) String topoId){
         
         if (bResult.hasErrors()){
@@ -134,7 +134,7 @@ public class TopoController {
         if (topoId != null)
             topoDTO.setId(Integer.parseInt(topoId));
         else
-            topoDTO.setIdAccount(sessionAccountDTOLight.getId());
+            topoDTO.setIdAccount(accountSessionDTO.getId());
         
         topoService.saveTopo(topoDTO);
         

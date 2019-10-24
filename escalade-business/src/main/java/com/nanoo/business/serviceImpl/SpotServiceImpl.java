@@ -6,6 +6,7 @@ import com.nanoo.business.dto.WayDTO;
 import com.nanoo.business.mapper.SectorMapper;
 import com.nanoo.business.mapper.SiteMapper;
 import com.nanoo.business.mapper.WayMapper;
+import com.nanoo.business.serviceContract.CommentaryService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.DateUtil;
 import com.nanoo.business.util.HandlingEnumValues;
@@ -49,6 +50,8 @@ public class SpotServiceImpl implements SpotService {
     private EnumRating enumRating;
     private HandlingEnumValues enumValues;
     
+    private CommentaryService commentaryService;
+    
     private final SiteRepository siteRepository;
     private final SectorRepository sectorRepository;
     private final WayRepository wayRepository;
@@ -57,13 +60,15 @@ public class SpotServiceImpl implements SpotService {
     private final SectorMapper sectorMapper;
     private final WayMapper wayMapper;
     
-    public SpotServiceImpl(SiteRepository siteRepository, SectorRepository sectorRepository, WayRepository wayRepository, SiteMapper siteMapper, SectorMapper sectorMapper, WayMapper wayMapper) {
+    public SpotServiceImpl(SiteRepository siteRepository, SectorRepository sectorRepository, WayRepository wayRepository,
+                           SiteMapper siteMapper, SectorMapper sectorMapper, WayMapper wayMapper, CommentaryService commentaryService) {
         this.siteRepository = siteRepository;
         this.sectorRepository = sectorRepository;
         this.wayRepository = wayRepository;
         this.siteMapper = siteMapper;
         this.sectorMapper = sectorMapper;
         this.wayMapper = wayMapper;
+        this.commentaryService = commentaryService;
     }
     
     
@@ -126,6 +131,7 @@ public class SpotServiceImpl implements SpotService {
         if (site.isPresent()) {
             siteRepository.deleteById(siteId);
             uploadUtil.eraseOldPicture(site.get().getPicturePath());
+            commentaryService.deleteCommentByPublicationId(siteId);
         }
     }
     
@@ -173,6 +179,7 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public void deleteSectorWithId(int sectorId) {
         sectorRepository.deleteById(sectorId);
+        commentaryService.deleteCommentByPublicationId(sectorId);
     }
     
     /**
@@ -220,6 +227,7 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public void deleteWayWithId(int wayId) {
         wayRepository.deleteById(wayId);
+        commentaryService.deleteCommentByPublicationId(wayId);
     }
     
     /**

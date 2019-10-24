@@ -27,8 +27,9 @@ public class CommentaryServiceImpl implements CommentaryService {
     
     private DateUtil date;
     
-    private final CommentaryRepository commentaryRepository;
     private final AccountService accountService;
+    
+    private final CommentaryRepository commentaryRepository;
     
     private final CommentaryMapper commentaryMapper;
     
@@ -115,5 +116,17 @@ public class CommentaryServiceImpl implements CommentaryService {
         }
     
         return null;
+    }
+    
+    /**
+     * This method delete all comment attached to a publication
+     *
+     * @param publicationId id of publication
+     */
+    @Override
+    public void deleteCommentByPublicationId(int publicationId) {
+        
+        commentaryRepository.deleteAllByIdPublication(publicationId);
+        
     }
 }

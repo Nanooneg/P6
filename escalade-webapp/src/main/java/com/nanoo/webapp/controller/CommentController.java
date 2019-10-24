@@ -4,6 +4,8 @@ import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.dto.CommentaryDTO;
 import com.nanoo.business.serviceContract.CommentaryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ import java.util.Map;
  */
 @Controller
 public class CommentController {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(CommentController.class);
     
     private static final String COMMENTARY_VIEW = "commentary";
     private static final String COMMENTARY_FORM_VIEW = "commentaryForm";
@@ -50,7 +53,7 @@ public class CommentController {
     }
     
     @GetMapping("/commentary/{publicationType}/{publicationId}")
-    public String displayCommentaryView(@PathVariable String publicationId, Model model, @PathVariable String publicationType){
+    public String displayCommentaryView(@PathVariable String publicationType, @PathVariable String publicationId, Model model){
     
         Map<CommentaryDTO,AccountDTO> commentariedDTOList = commentaryService.findAllCommentaryOfPublicationId(publicationId);
         model.addAttribute(COMMENTARY_LIST_ATT,commentariedDTOList);
@@ -61,8 +64,7 @@ public class CommentController {
     }
     
     @GetMapping("/addComment/{publicationType}/{publicationId}")
-    public String displayCommentForm(@PathVariable String publicationId, Model model,
-                                     @PathVariable String publicationType,
+    public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model,
                                      @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
     
         if (accountSessionDTO == null){
@@ -91,13 +93,16 @@ public class CommentController {
         return COMMENTARY_FORM_VIEW;
     }
     
-    @PostMapping({"/saveComment/{publicationType}c/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
+    @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
     public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute("commentary") CommentaryDTO commentaryDTO,
-                                                     @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
-                                                     BindingResult br, Model model, HttpServletRequest request,
+                                                     BindingResult br, Model model,
+                                                     @SessionAttribute ("accountSession") AccountSessionDTO accountSessionDTO,
                                                      @PathVariable String publicationType,
                                                      @PathVariable String publicationId,
                                                      @PathVariable(required = false) String commentaryId){
+    
+        System.out.println("test entrée controller method");
+        LOG.trace("test entrée controller log trace");
         
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);
@@ -108,13 +113,13 @@ public class CommentController {
         if (commentaryId != null)
             commentaryDTO.setId(Integer.parseInt(commentaryId));
         else
-            commentaryDTO.setIdAccount(sessionAccountDTOLight.getId());
+            commentaryDTO.setIdAccount(accountSessionDTO.getId());
         
         commentaryDTO.setIdPublication(Integer.parseInt(publicationId));
         
         commentaryService.saveComment(commentaryDTO);
-        
-        return displayCommentaryView(publicationId, model, publicationType);
+    
+        return displayCommentaryView(publicationType, publicationId, model);
     }
     
     @GetMapping("/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
@@ -122,7 +127,7 @@ public class CommentController {
                                                         Model model, @PathVariable String publicationType){
         commentaryService.deleteCommentById(Integer.parseInt(commentaryId));
         
-        return displayCommentaryView(publicationId, model, publicationType);
+        return displayCommentaryView(publicationType, publicationId, model);
     }
     
 }

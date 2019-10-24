@@ -40,4 +40,11 @@ public interface CommentaryService {
      * @return the commentary searched if exist
      */
     CommentaryDTO searchCommentaryById(int commentaryId);
+    
+    /**
+     * This method delete all comment attached to a publication
+     *
+     * @param publicationId id of publication
+     */
+    void deleteCommentByPublicationId(int publicationId);
 }

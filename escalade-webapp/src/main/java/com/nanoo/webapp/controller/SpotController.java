@@ -5,7 +5,6 @@ import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
-import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +48,6 @@ public class SpotController {
     
     private List<String> listRating = HandlingEnumValues.getEnumRatingStringValues();
     private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
-    private SessionHandling sessionHandling;
     
     private final SpotService spotService;
     private final AccountService accountService;
@@ -185,8 +182,8 @@ public class SpotController {
     
     @PostMapping({"/saveSite/","/saveSite/{siteID}"})
     public String displaySpotAfterSaving(@Valid @ModelAttribute("site") SiteDTO siteDTO,
-                                         @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
-                                         BindingResult bResult, Model model, HttpServletRequest request,
+                                         BindingResult bResult, Model model,
+                                         @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
                                          @PathVariable(required = false) String siteID){
         
         if (bResult.hasErrors()) {
@@ -199,7 +196,7 @@ public class SpotController {
         if (siteID != null)
             siteDTO.setId(Integer.parseInt(siteID));
         else
-            siteDTO.setIdAccount(sessionAccountDTOLight.getId());
+            siteDTO.setIdAccount(accountSessionDTO.getId());
         
         spotService.saveSite(siteDTO);
         
@@ -228,8 +225,8 @@ public class SpotController {
     
     @PostMapping({"/saveSector/{siteId}","/saveSector/{siteId}/{sectorId}"})
     public String displaySiteAfterSaveSector(@Valid @ModelAttribute("sector") SectorDTO sectorDTO,
-                                             @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
-                                             BindingResult bResult, Model model, HttpServletRequest request,
+                                             BindingResult bResult, Model model,
+                                             @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
                                              @PathVariable String siteId, @PathVariable (required = false) String sectorId){
         
         
@@ -242,7 +239,7 @@ public class SpotController {
         if (sectorId != null)
             sectorDTO.setId(Integer.parseInt(sectorId));
         else
-            sectorDTO.setIdAccount(sessionAccountDTOLight.getId());
+            sectorDTO.setIdAccount(accountSessionDTO.getId());
         
         sectorDTO.setIdSite(Integer.parseInt(siteId));
         spotService.saveSector(sectorDTO);
@@ -266,8 +263,8 @@ public class SpotController {
     
     @PostMapping({"/saveWay/{sectorId}","/saveWay/{sectorId}/{wayId}"})
     public String displaySiteAfterSaveWay(@Valid @ModelAttribute("way") WayDTO wayDTO,
-                                          @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
-                                          BindingResult bResult, Model model, HttpServletRequest request,
+                                          BindingResult bResult, Model model,
+                                          @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
                                           @PathVariable String sectorId, @PathVariable(required = false) String wayId){
         
         if (bResult.hasErrors()) {
@@ -280,7 +277,7 @@ public class SpotController {
         if (wayId != null)
             wayDTO.setId(Integer.parseInt(wayId));
         else
-            wayDTO.setIdAccount(sessionAccountDTOLight.getId());
+            wayDTO.setIdAccount(accountSessionDTO.getId());
         
         wayDTO.setIdSector(Integer.parseInt(sectorId));
         spotService.saveWay(wayDTO);

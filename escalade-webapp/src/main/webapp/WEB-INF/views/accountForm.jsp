@@ -78,7 +78,7 @@
                 </c:choose>
             </div>
             <div>
-                <a href="<c:out value="javascript:history.go(-1)"/>">
+                <a href="<c:out value="/user/user-area"/>">
                     <input type="button" class="btn-form text-center" value="Annuler">
                 </a>
             </div>
