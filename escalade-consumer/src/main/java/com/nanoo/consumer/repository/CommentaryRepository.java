@@ -23,4 +23,10 @@ public interface CommentaryRepository extends PagingAndSortingRepository<Comment
      */
     List<Commentary> findAllByIdPublication(Integer publicationId, Sort sort);
     
+    /**
+     * This method remove all commentaries from DB who concern a particular publication
+     *
+     * @param idPublication id of publication concerned
+     */
+    void deleteAllByIdPublication (Integer idPublication);
 }

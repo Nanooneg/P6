@@ -10,6 +10,7 @@ import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
 import com.nanoo.business.util.UploadUtil;
 import com.nanoo.consumer.repository.AccountRepository;
+import com.nanoo.consumer.repository.CommentaryRepository;
 import com.nanoo.consumer.repository.TopoBookingRepository;
 import com.nanoo.consumer.repository.TopoRepository;
 import com.nanoo.model.entities.Topo;
@@ -51,15 +52,17 @@ public class TopoServiceImpl implements TopoService {
     private final TopoRepository topoRepository;
     private final TopoBookingRepository topoBookingRepository;
     private final AccountRepository accountRepository;
+    private final CommentaryRepository commentaryRepository;
     
     private final TopoMapper topoMapper;
     private final TopoBookingMapper topoBookingMapper;
     
     @Autowired
-    public TopoServiceImpl(TopoRepository topoRepository, TopoBookingRepository topoBookingRepository, AccountRepository accountRepository, TopoMapper topoMapper, TopoBookingMapper topoBookingMapper) {
+    public TopoServiceImpl(TopoRepository topoRepository, TopoBookingRepository topoBookingRepository, AccountRepository accountRepository, CommentaryRepository commentaryRepository, TopoMapper topoMapper, TopoBookingMapper topoBookingMapper) {
         this.topoRepository = topoRepository;
         this.topoBookingRepository = topoBookingRepository;
         this.accountRepository = accountRepository;
+        this.commentaryRepository = commentaryRepository;
         this.topoMapper = topoMapper;
         this.topoBookingMapper = topoBookingMapper;
     }
@@ -123,6 +126,7 @@ public class TopoServiceImpl implements TopoService {
         if (topo.isPresent()) {
             topoRepository.deleteById(topoId);
             uploadUtil.eraseOldPicture(topo.get().getPicturePath());
+            commentaryRepository.deleteAllByIdPublication(topoId);
         }
     }
     

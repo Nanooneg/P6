@@ -1,6 +1,7 @@
 package com.nanoo.business.serviceContract;
 
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.dto.AccountSessionDTO;
 
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public interface AccountService {
      * @param accountDTO account parameters from form
      * @return full account parameters if exist in DB
      */
-    AccountDTO searchRegisteredAccount(AccountDTO accountDTO);
+    AccountSessionDTO searchRegisteredAccount(AccountDTO accountDTO);
     
     /**
      * This method search an account in DB

@@ -44,14 +44,6 @@ public interface TopoRepository extends PagingAndSortingRepository<Topo,Integer>
     List<Topo> findAllByIdAccount (Integer accountID, Sort sort);
     
     /**
-     * This method find all topos posted by a particular userId.
-     *
-     * @param accountId id of user
-     * @return a list of topos if exist
-     */
-    List<Topo> findAllByIdAccount(Integer accountId);
-    
-    /**
      * This method find all id from topos posted by a particular user.
      *
      * @param accountId id of user

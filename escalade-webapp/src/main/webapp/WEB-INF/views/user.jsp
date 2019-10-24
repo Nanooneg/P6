@@ -8,7 +8,7 @@
 <section class="container-fluid">
     <div id="user-box" class="form-box top-box">
         <div>
-            <h1 class="text-center">Bienvenue ${sessionScope.account.firstName} ${sessionScope.account.lastName}</h1>
+            <h1 class="text-center">Bienvenue ${sessionScope.accountSession.firstName} ${sessionScope.accountSession.lastName}</h1>
         </div>
         <div>
             <c:if test="${empty registration.result}"><br/></c:if>
@@ -18,13 +18,13 @@
             <div>
                 <p class="title">
                     Demandes de prêt :
-                    <span><a href="<c:url value="/lendingRequestReceived/${sessionScope.account.id }"/>">
+                    <span><a href="<c:url value="/lendingRequestReceived/${sessionScope.accountSession.id }"/>">
                     <input type="button" class="btn-search text-center" value="${topoBookingReceived}"/></a></span>
                 </p>
             </div>
             <div class="pull-right">
                 <em class="fas fa-pen"></em>
-                <a href="<c:url value="/updateAccount/${sessionScope.account.id}"/>" class="text-info-link">Modifier mon
+                <a href="<c:url value="/updateAccount/${sessionScope.accountSession.id}"/>" class="text-info-link">Modifier mon
                     compte</a>
             </div>
         </div>
