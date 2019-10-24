@@ -1,9 +1,6 @@
 package com.nanoo.webapp.controller;
 
-import com.nanoo.business.dto.AccountDTO;
-import com.nanoo.business.dto.SectorDTO;
-import com.nanoo.business.dto.SiteDTO;
-import com.nanoo.business.dto.WayDTO;
+import com.nanoo.business.dto.*;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.HandlingEnumValues;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -114,11 +110,10 @@ public class SpotController {
     }
     
     @GetMapping("/spotForm1")
-    public String displaySpotFormSiteStep (HttpServletRequest request, Model model){
-    
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+    public String displaySpotFormSiteStep (Model model,
+                                           @SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
+        
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -139,11 +134,10 @@ public class SpotController {
     }
     
     @GetMapping("/spotForm2/{siteId}")
-    public String displaySpotFormSectorStep(HttpServletRequest request, Model model, @PathVariable String siteId){
+    public String displaySpotFormSectorStep(Model model, @PathVariable String siteId,
+                                            @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO) {
         
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -164,11 +158,10 @@ public class SpotController {
     }
     
     @GetMapping("/spotForm3/{sectorId}")
-    public String displaySpotFormWayStep(HttpServletRequest request, Model model, @PathVariable String sectorId){
-    
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+    public String displaySpotFormWayStep(Model model, @PathVariable String sectorId,
+                                         @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+        
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -192,6 +185,7 @@ public class SpotController {
     
     @PostMapping({"/saveSite/","/saveSite/{siteID}"})
     public String displaySpotAfterSaving(@Valid @ModelAttribute("site") SiteDTO siteDTO,
+                                         @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
                                          BindingResult bResult, Model model, HttpServletRequest request,
                                          @PathVariable(required = false) String siteID){
         
@@ -201,14 +195,11 @@ public class SpotController {
             model.addAttribute(SPOT_SERV_ATT, spotService);
             return SPOT_FORM_VIEW1;
         }
-        
-        HttpSession session = request.getSession();
-        AccountDTO accountDTOLight = (AccountDTO) session.getAttribute(ACCOUNT_ATT);
     
         if (siteID != null)
             siteDTO.setId(Integer.parseInt(siteID));
         else
-            siteDTO.setIdAccount(accountDTOLight.getId());
+            siteDTO.setIdAccount(sessionAccountDTOLight.getId());
         
         spotService.saveSite(siteDTO);
         
@@ -222,11 +213,10 @@ public class SpotController {
     }
     
     @GetMapping("/deleteSite/{siteId}")
-    public String deleteSite(@PathVariable String siteId, Model model, HttpServletRequest request){
-     
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+    public String deleteSite(@PathVariable String siteId, Model model,
+                             @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+        
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -238,10 +228,10 @@ public class SpotController {
     
     @PostMapping({"/saveSector/{siteId}","/saveSector/{siteId}/{sectorId}"})
     public String displaySiteAfterSaveSector(@Valid @ModelAttribute("sector") SectorDTO sectorDTO,
+                                             @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
                                              BindingResult bResult, Model model, HttpServletRequest request,
                                              @PathVariable String siteId, @PathVariable (required = false) String sectorId){
         
-        sessionHandling = new SessionHandling();
         
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
@@ -249,12 +239,10 @@ public class SpotController {
             return SPOT_FORM_VIEW2;
         }
         
-        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
-        
         if (sectorId != null)
             sectorDTO.setId(Integer.parseInt(sectorId));
         else
-            sectorDTO.setIdAccount(accountDTOLight.getId());
+            sectorDTO.setIdAccount(sessionAccountDTOLight.getId());
         
         sectorDTO.setIdSite(Integer.parseInt(siteId));
         spotService.saveSector(sectorDTO);
@@ -263,11 +251,10 @@ public class SpotController {
     }
     
     @GetMapping("/deleteSector/{siteId}/{sectorId}")
-    public String deleteSector(@PathVariable String sectorId, Model model, HttpServletRequest request, @PathVariable String siteId){
+    public String deleteSector(@PathVariable String sectorId, Model model, @PathVariable String siteId,
+                               @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
         
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -279,10 +266,9 @@ public class SpotController {
     
     @PostMapping({"/saveWay/{sectorId}","/saveWay/{sectorId}/{wayId}"})
     public String displaySiteAfterSaveWay(@Valid @ModelAttribute("way") WayDTO wayDTO,
+                                          @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
                                           BindingResult bResult, Model model, HttpServletRequest request,
                                           @PathVariable String sectorId, @PathVariable(required = false) String wayId){
-    
-        sessionHandling = new SessionHandling();
         
         if (bResult.hasErrors()) {
             model.addAttribute(WAY_ATT, wayDTO);
@@ -290,13 +276,11 @@ public class SpotController {
             model.addAttribute(SPOT_SERV_ATT, spotService);
             return SPOT_FORM_VIEW3;
         }
-    
-        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
         
         if (wayId != null)
             wayDTO.setId(Integer.parseInt(wayId));
         else
-            wayDTO.setIdAccount(accountDTOLight.getId());
+            wayDTO.setIdAccount(sessionAccountDTOLight.getId());
         
         wayDTO.setIdSector(Integer.parseInt(sectorId));
         spotService.saveWay(wayDTO);
@@ -307,11 +291,10 @@ public class SpotController {
     }
     
     @GetMapping("/deleteWay/{siteId}/{wayId}")
-    public String deleteWay(@PathVariable String wayId, Model model, HttpServletRequest request, @PathVariable String siteId){
-        
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+    public String deleteWay(@PathVariable String wayId, Model model, @PathVariable String siteId,
+                            @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }

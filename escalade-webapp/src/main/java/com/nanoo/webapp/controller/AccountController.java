@@ -1,6 +1,7 @@
 package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.webapp.util.SessionHandling;
@@ -23,11 +24,13 @@ import java.util.List;
  * @create 11/09/2019 - 17:44
  */
 @Controller
+@SessionAttributes("accountSession")
 public class AccountController {
     
     private static final String TITLE_ATT = "listTitle";
     private static final String ACCOUNT_SERV_ATT = "registration";
     private static final String ACCOUNT_ATT = "account";
+    private static final String ACCOUNT_SESSION_ATT = "accountSession";
     private static final String MESSAGE_ATT = "message";
     private static final String MESSAGE_YES_ATT = "yes";
     private static final String MESSAGE_NO_ATT = "no";
@@ -65,11 +68,13 @@ public class AccountController {
     }
     
     @GetMapping("/register")
-    public String displayAccountRegistrationForm(HttpServletRequest request, Model model){
+    public String displayAccountRegistrationForm(Model model,HttpServletResponse response,
+                                                 @SessionAttribute (value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
     
-        /* Check if user has access */
+        /* if user use previous button after logout */
         sessionHandling = new SessionHandling();
-        if (!sessionHandling.checkSession(request)){
+        sessionHandling.clearCache(response);
+        if (accountSessionDTO != null){
             model.addAttribute(MESSAGE_ATT,LOGOUT2_MESSAGE);
             model.addAttribute(MESSAGE_YES_ATT,YES2_MESSAGE);
             model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
@@ -84,6 +89,7 @@ public class AccountController {
     
     @GetMapping("/updateAccount/{accountId}")
     public String updateAccount(@PathVariable String accountId, Model model){
+        
         AccountDTO accountDTO = accountService.searchAccountById(Integer.parseInt(accountId));
         if (accountDTO.getPostalCode().equals("0"))
             accountDTO.setPostalCode(null);
@@ -113,9 +119,10 @@ public class AccountController {
     
         accountDTO.setId(Integer.parseInt(accountId));
         accountService.saveAccount(accountDTO);
+        AccountSessionDTO accountSessionDTO = accountService.searchRegisteredAccount(accountDTO);
         
         model.addAttribute(ACCOUNT_SERV_ATT,accountService);
-        sessionHandling.setSessionAttribute(request,accountDTO);
+        model.addAttribute(ACCOUNT_SESSION_ATT,accountSessionDTO);
     
         return "redirect:/user/user-area";
         
@@ -153,13 +160,13 @@ public class AccountController {
     }
     
     @GetMapping("/signout")
-    public String confirmLogout(HttpServletResponse response, HttpServletRequest request, Model model){
+    public String confirmLogout(HttpServletResponse response, Model model,
+                                @SessionAttribute (value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+        
+        /* if user use previous button after logout */
         sessionHandling = new SessionHandling();
-    
         sessionHandling.clearCache(response);
-    
-        /* Check if user has access */
-        if (sessionHandling.checkSession(request)){
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }

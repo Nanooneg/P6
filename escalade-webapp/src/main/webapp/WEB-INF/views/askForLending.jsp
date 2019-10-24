@@ -27,7 +27,7 @@
             </div>
         </c:if>
         <div class="text-center">
-            <a href="<c:url value="/validAskForLending/${sessionScope.account.id}/${topo.id}"/>">
+            <a href="<c:url value="/validAskForLending/${sessionScope.accountSession.id}/${topo.id}"/>">
                 <input type="button" class="btn-search text-center" value="Oui, j'ai compris"/></a>
             <a href="<c:url value="/topo/${topo.id}"/>">
                 <input type="button" class="btn-search text-center" value="Non, je ne veux pas"/></a>

@@ -1,9 +1,9 @@
 package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.dto.CommentaryDTO;
 import com.nanoo.business.serviceContract.CommentaryService;
-import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -61,12 +61,11 @@ public class CommentController {
     }
     
     @GetMapping("/addComment/{publicationType}/{publicationId}")
-    public String displayCommentForm(@PathVariable String publicationId, Model model, HttpServletRequest request,
-                                     @PathVariable String publicationType){
+    public String displayCommentForm(@PathVariable String publicationId, Model model,
+                                     @PathVariable String publicationType,
+                                     @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
     
-        /* Check if user has access */
-        SessionHandling sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -94,12 +93,11 @@ public class CommentController {
     
     @PostMapping({"/saveComment/{publicationType}c/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
     public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute("commentary") CommentaryDTO commentaryDTO,
+                                                     @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
                                                      BindingResult br, Model model, HttpServletRequest request,
+                                                     @PathVariable String publicationType,
                                                      @PathVariable String publicationId,
-                                                     @PathVariable(required = false) String commentaryId,
-                                                     @PathVariable String publicationType){
-    
-        SessionHandling sessionHandling = new SessionHandling();
+                                                     @PathVariable(required = false) String commentaryId){
         
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);
@@ -107,14 +105,13 @@ public class CommentController {
             return COMMENTARY_FORM_VIEW;
         }
         
-        AccountDTO accountDTO = sessionHandling.getSessionAttribute(request);
-    
         if (commentaryId != null)
             commentaryDTO.setId(Integer.parseInt(commentaryId));
         else
-            commentaryDTO.setIdAccount(accountDTO.getId());
+            commentaryDTO.setIdAccount(sessionAccountDTOLight.getId());
         
         commentaryDTO.setIdPublication(Integer.parseInt(publicationId));
+        
         commentaryService.saveComment(commentaryDTO);
         
         return displayCommentaryView(publicationId, model, publicationType);

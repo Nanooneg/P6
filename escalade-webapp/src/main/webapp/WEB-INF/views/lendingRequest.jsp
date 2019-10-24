@@ -32,9 +32,9 @@
                 </div>
                 <c:if test="${tBooking.status == 'En attente'}">
                     <div class="message-validation col-md-12">
-                        <a href="<c:url value="/validLendingRequest/${sessionScope.account.id}/${tBooking.id}/acceptance"/>">
+                        <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/acceptance"/>">
                             <input type="button" class="btn-search text-center" value="j'accepte"/></a>
-                        <a href="<c:url value="/validLendingRequest/${sessionScope.account.id}/${tBooking.id}/refusal"/>">
+                        <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/refusal"/>">
                             <input type="button" class="btn-search text-center" value="Je refuse"/></a>
                     </div>
                 </c:if>
@@ -67,7 +67,7 @@
                         <c:if test="${tBooking.status == 'Accepté'}">- ${tBooking.ownerMail}</c:if> </h2>
                 </div>
                 <div class="button-display-bar pull-right">
-                    <c:if test="${sessionScope.account.id == tBooking.idAccountBorrower}">
+                    <c:if test="${sessionScope.accountSession.id == tBooking.idAccountBorrower}">
                         <em class="fas fa-minus-circle"></em>
                         <a href="<c:url value="/deleteTopoBooking/${tBooking.idAccountBorrower}/${tBooking.id}"/>" class="text-info-link">
                             Supprimer la demande

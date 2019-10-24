@@ -14,7 +14,7 @@
     </ul>
     <ul class="nav nav-pills pull-right">
         <c:choose>
-            <c:when test="${sessionScope.account != null}">
+            <c:when test="${sessionScope.accountSession != null}">
                 <li><a class="custom-link" href="<c:url value="/signout"/>">Unlog</a></li>
             </c:when>
             <c:otherwise>

@@ -1,13 +1,13 @@
 package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.dto.TopoBookingDTO;
 import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.TopoService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
-import com.nanoo.webapp.util.SessionHandling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -50,7 +49,6 @@ public class TopoController {
     
     private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
     private List<String> listCondition = HandlingEnumValues.getEnumConditionStringValues();
-    private SessionHandling sessionHandling;
     
     private final TopoService topoService;
     private final AccountService accountService;
@@ -92,11 +90,10 @@ public class TopoController {
     }
     
     @GetMapping("/topoForm")
-    public String displayTopoForm (HttpServletRequest request, Model model){
-    
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+    public String displayTopoForm (Model model,
+                                   @SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
+        
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -122,10 +119,8 @@ public class TopoController {
     
     @PostMapping({"/saveTopo/","/saveTopo/{topoId}"})
     public String saveTopo(@Valid @ModelAttribute("topo") TopoDTO topoDTO,
-                           BindingResult bResult, HttpServletRequest request,
-                           Model model, @PathVariable(required = false) String topoId){
-        
-        sessionHandling = new SessionHandling();
+                           @SessionAttribute ("account") AccountDTO sessionAccountDTOLight,
+                           BindingResult bResult, Model model, @PathVariable(required = false) String topoId){
         
         if (bResult.hasErrors()){
             model.addAttribute(TOPO_ATT,topoDTO);
@@ -135,13 +130,11 @@ public class TopoController {
             
             return TOPO_FORM_VIEW;
         }
-    
-        AccountDTO accountDTOLight = sessionHandling.getSessionAttribute(request);
-    
+        
         if (topoId != null)
             topoDTO.setId(Integer.parseInt(topoId));
         else
-            topoDTO.setIdAccount(accountDTOLight.getId());
+            topoDTO.setIdAccount(sessionAccountDTOLight.getId());
         
         topoService.saveTopo(topoDTO);
         
@@ -167,11 +160,10 @@ public class TopoController {
     }
     
     @GetMapping("/askForLending/{topoId}")
-    public String askForLending(HttpServletRequest request, Model model, @PathVariable String topoId){
-    
-        /* Check if user has access */
-        sessionHandling = new SessionHandling();
-        if (sessionHandling.checkSession(request)){
+    public String askForLending(Model model, @PathVariable String topoId,
+                                @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+
+        if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
             return LOGIN_VIEW;
         }
@@ -182,11 +174,12 @@ public class TopoController {
     }
     
     @GetMapping("/validAskForLending/{accountId}/{topoId}")
-    public String createTopoBooking(HttpServletRequest request, Model model, @PathVariable String accountId, @PathVariable String topoId){
+    public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId,
+                                    @SessionAttribute(value = "accountSession")AccountSessionDTO accountSessionDTO){
         
         if (!topoService.checkTopoBookingAskRequest(accountId,topoId)) {
             model.addAttribute(MESSAGE_ATT,ALREADY_ASK_MESS);
-            return askForLending(request,model,topoId);
+            return askForLending(model,topoId,accountSessionDTO);
         }
         topoService.saveTopoBooking(Integer.parseInt(accountId),Integer.parseInt(topoId));
         

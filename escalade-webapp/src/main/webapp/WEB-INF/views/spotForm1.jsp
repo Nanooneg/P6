@@ -18,7 +18,7 @@
                 <c:if test="${empty saveSpot.result}"><br/></c:if>
                 <h4 class="text-center error">${saveSpot.result}</h4>
             </div>
-            <c:if test="${sessionScope.account.roleName == 'Member' || sessionScope.account.roleName == 'Administrator'}">
+            <c:if test="${sessionScope.accountSession.roleName == 'Member' || sessionScope.accountSession.roleName == 'Administrator'}">
                 <div class="labelbox">
                     <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
                     <label>Label officiel</label>

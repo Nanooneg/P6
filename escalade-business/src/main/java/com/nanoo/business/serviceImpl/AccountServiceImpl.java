@@ -1,7 +1,9 @@
 package com.nanoo.business.serviceImpl;
 
 import com.nanoo.business.dto.AccountDTO;
+import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.mapper.AccountMapper;
+import com.nanoo.business.mapper.AccountSessionMapper;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.util.DateUtil;
 import com.nanoo.consumer.repository.AccountRepository;
@@ -45,11 +47,13 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     
     private final AccountMapper accountMapper;
+    private final AccountSessionMapper accountSessionMapper;
     
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
+    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper, AccountSessionMapper accountSessionMapper) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
+        this.accountSessionMapper = accountSessionMapper;
     }
     
     
@@ -100,7 +104,7 @@ public class AccountServiceImpl implements AccountService {
      * @return true if the couple match with DB
      */
     @Override
-    public AccountDTO searchRegisteredAccount(AccountDTO accountDTO){
+    public AccountSessionDTO searchRegisteredAccount(AccountDTO accountDTO){
         errors = new HashMap<>();
         result = "";
         
@@ -110,16 +114,16 @@ public class AccountServiceImpl implements AccountService {
             setError(MAIL_FIELD, "Aucun compte ne correspond à votre adresse mail");
             result = ERROR_LOG_MESSAGE;
             
-            return accountDTO;
+            return accountSessionMapper.fromAccountToSessionDto(account);
         }else if (!checkPassword(accountDTO.getPassword(), account.getPassword())) {
             setError(PASSWORD_FIELD, "Le mot de passe renseigné n'est pas correct");
             result = ERROR_LOG_MESSAGE;
-            
-            return accountDTO;
+    
+            return accountSessionMapper.fromAccountToSessionDto(account);
         }else{
             result = SUCCESS_LOG_MESSAGE    ;
             
-            return accountMapper.fromAccountToDtoLight(account);
+            return accountSessionMapper.fromAccountToSessionDto(account);
         }
     }
     

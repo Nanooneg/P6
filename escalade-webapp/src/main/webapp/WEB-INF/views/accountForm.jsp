@@ -68,7 +68,14 @@
                 <form:input path="city" type="text" placeholder="Ville"/>
             </div>
             <div>
-                <input type="submit" name="submit" class="btn-form text-center" value="Je m'inscris!">
+                <c:choose>
+                    <c:when test="${empty account.id}">
+                        <input type="submit" name="submit" class="btn-form text-center" value="Je m'inscris!">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="submit" name="submit" class="btn-form text-center" value="J'enregistre">
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div>
                 <a href="<c:out value="javascript:history.go(-1)"/>">

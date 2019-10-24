@@ -42,15 +42,15 @@
                 <a href="/commentary/spot/${site.id}" class="text-info-link">Commentaire</a>
                 <em class="fas fa-plus-circle"></em>
                 <a href="<c:url value="/spotForm2/${site.id}"/>" class="text-info-link">Ajouter un secteur</a>
-                <c:if test="${sessionScope.account.id == site.idAccount
-                            || sessionScope.account.roleName == 'Member'
-                            || sessionScope.account.roleName == 'Administrator'}">
+                <c:if test="${sessionScope.accountSession.id == site.idAccount
+                            || sessionScope.accountSession.roleName == 'Member'
+                            || sessionScope.accountSession.roleName == 'Administrator'}">
                     <em class="fas fa-pen"></em>
                     <a href="<c:url value="/updateSite/${site.id}"/>" class="text-info-link">Modifier le site</a>
                 </c:if>
-                <c:if test="${sessionScope.account.id == site.idAccount
-                            || sessionScope.account.roleName == 'Member'
-                            || sessionScope.account.roleName == 'Administrator'}">
+                <c:if test="${sessionScope.accountSession.id == site.idAccount
+                            || sessionScope.accountSession.roleName == 'Member'
+                            || sessionScope.accountSession.roleName == 'Administrator'}">
                     <em class="fas fa-minus-circle"></em>
                     <a href="<c:url value="/deleteSite/${site.id}"/>" class="text-info-link">Supprimer ce site</a>
                 </c:if>
@@ -74,16 +74,16 @@
                         <div class="way-info">
                             <div>
                                 <p>
-                                    <c:if test="${sessionScope.account.id == way.idAccount
-                                                || sessionScope.account.roleName == 'Member'
-                                                || sessionScope.account.roleName == 'Administrator'}">
+                                    <c:if test="${sessionScope.accountSession.id == way.idAccount
+                                                || sessionScope.accountSession.roleName == 'Member'
+                                                || sessionScope.accountSession.roleName == 'Administrator'}">
                                     <a href="<c:url value="/deleteWay/${site.id}/${way.id}"/>" class="text-info-link">
                                         <em class="fas fa-minus-circle"></em>
                                     </a>
                                     </c:if>
-                                    <c:if test="${sessionScope.account.id == way.idAccount
-                                                || sessionScope.account.roleName == 'Member'
-                                                || sessionScope.account.roleName == 'Administrator'}">
+                                    <c:if test="${sessionScope.accountSession.id == way.idAccount
+                                                || sessionScope.accountSession.roleName == 'Member'
+                                                || sessionScope.accountSession.roleName == 'Administrator'}">
                                         <a id="way" href="<c:url value="/updateWay/${sector.id}/${way.id}"/>" class="text-info-link">
                                             <em class="fas fa-pen"></em>
                                         </a>
@@ -102,15 +102,15 @@
                         <a href="/commentary/spot/${sector.id}" class="text-info-link">Commentaire</a>
                         <em class="fas fa-plus-circle"></em>
                         <a href="<c:url value="/spotForm3/${sector.id}"/>" class="text-info-link">Ajouter une voie</a>
-                        <c:if test="${sessionScope.account.id == sector.idAccount
-                                    || sessionScope.account.roleName == 'Member'
-                                    || sessionScope.account.roleName == 'Administrator'}">
+                        <c:if test="${sessionScope.accountSession.id == sector.idAccount
+                                    || sessionScope.accountSession.roleName == 'Member'
+                                    || sessionScope.accountSession.roleName == 'Administrator'}">
                             <em class="fas fa-pen"></em>
                             <a href="<c:url value="/updateSector/${site.id}/${sector.id}"/>" class="text-info-link">Modifier le sector</a>
                         </c:if>
-                        <c:if test="${sessionScope.account.id == sector.idAccount
-                                    || sessionScope.account.roleName == 'Member'
-                                    || sessionScope.account.roleName == 'Administrator'}">
+                        <c:if test="${sessionScope.accountSession.id == sector.idAccount
+                                    || sessionScope.accountSession.roleName == 'Member'
+                                    || sessionScope.accountSession.roleName == 'Administrator'}">
                             <em class="fas fa-minus-circle"></em>
                             <a href="<c:url value="/deleteSector/${site.id}/${sector.id}"/>" class="text-info-link">Supprimer ce secteur</a>
                         </c:if>

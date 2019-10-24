@@ -36,15 +36,15 @@
                         <p>${commentary.key.text}</p>
                     </div>
                     <div class="button-display-bar pull-right">
-                        <c:if test="${sessionScope.account.id == commentary.key.idAccount
-                                    || sessionScope.account.roleName == 'Member'
-                                    || sessionScope.account.roleName == 'Administrator'}">
+                        <c:if test="${sessionScope.accountSession.id == commentary.key.idAccount
+                                    || sessionScope.accountSession.roleName == 'Member'
+                                    || sessionScope.accountSession.roleName == 'Administrator'}">
                             <em class="fas fa-pen"></em>
                             <a href="<c:url value="/updateCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">Modifier le commentaire</a>
                         </c:if>
-                        <c:if test="${sessionScope.account.id == commentary.key.idAccount
-                                    || sessionScope.account.roleName == 'Member'
-                                    || sessionScope.account.roleName == 'Administrator'}">
+                        <c:if test="${sessionScope.accountSession.id == commentary.key.idAccount
+                                    || sessionScope.accountSession.roleName == 'Member'
+                                    || sessionScope.accountSession.roleName == 'Administrator'}">
                             <em class="fas fa-minus-circle"></em>
                             <a href="<c:url value="/deleteCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">Supprimer le commentaire</a>
                         </c:if>

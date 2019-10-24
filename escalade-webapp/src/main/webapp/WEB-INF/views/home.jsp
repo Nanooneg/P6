@@ -8,6 +8,7 @@
 <section class="container-fluid">
     <div id="message" class="form-box center-box">
         <h1 class="text-center">Page de bienvenue</h1>
+        <%--TODO--%>
     </div>
 </section>
 
