@@ -5,22 +5,19 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section class="container-fluid">
-    <div id="signout" class="form-box center-box">
-        <div>
-            <h2 class="text-center">${sessionScope.accountSession.lastName}, ${message}</h2>
-        </div>
-        <div class="text-center">
-            <a href="<c:url value="/user/unlog"/>" class="form-group">
-                <button type="submit" class="btn-form">${yes}</button>
-            </a>
-        </div>
-        <br/>
-        <div class="text-center">
-            <a href="<c:out value="javascript:history.go(-1)"/>" class="text-info-link">${no}</a>
-        </div>
-
+<div id="signout" class="background-custom">
+    <div>
+        <h2 class="text-center">${sessionScope.accountSession.lastName}, ${message}</h2>
     </div>
-</section>
+    <div class="button">
+        <a href="<c:url value="/user/unlog"/>" class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">${yes}</button>
+        </a>
+    </div>
+    <br/>
+    <div class="text-center">
+        <a href="<c:out value="javascript:history.go(-1)"/>" class="forgot">${no}</a>
+    </div>
+</div>
 
 <%@include file="common/footer.jsp" %>

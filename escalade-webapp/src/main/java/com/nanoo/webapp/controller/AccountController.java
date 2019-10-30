@@ -5,6 +5,7 @@ import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.webapp.util.SessionHandling;
+import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
@@ -36,10 +36,6 @@ public class AccountController {
     private static final String MESSAGE_NO_ATT = "no";
     
     private static final String MAIL_FIELD = "mail";
-    
-    private static final String LOGIN_VIEW = "login";
-    private static final String ACCOUNT_FORM_VIEW = "accountForm";
-    private static final String SIGNOUT_VIEW = "signout";
     
     private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
     private static final String ERROR_MAIL_MESSAGE = "Cette adresse mail est déjà utilisée";
@@ -78,13 +74,13 @@ public class AccountController {
             model.addAttribute(MESSAGE_ATT,LOGOUT2_MESSAGE);
             model.addAttribute(MESSAGE_YES_ATT,YES2_MESSAGE);
             model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
-            return SIGNOUT_VIEW;
+            return Views.SIGNOUT;
         }
         
         model.addAttribute(ACCOUNT_ATT,new AccountDTO());
         model.addAttribute(TITLE_ATT,listTitle);
         
-        return ACCOUNT_FORM_VIEW;
+        return Views.ACCOUNT_FORM;
     }
     
     @GetMapping("/updateAccount/{accountId}")
@@ -97,13 +93,13 @@ public class AccountController {
         model.addAttribute(ACCOUNT_ATT, accountDTO);
         model.addAttribute(TITLE_ATT, listTitle);
         
-        return ACCOUNT_FORM_VIEW;
+        return Views.ACCOUNT_FORM;
     }
     
     @PostMapping("/updateAccount/{accountId}")
     public String saveUpdatedAccount(@PathVariable("accountId") String accountId,
                                      @Valid @ModelAttribute("account") AccountDTO accountDTO,
-                                     BindingResult bResult, Model model, HttpServletRequest request){
+                                     BindingResult bResult, Model model){
     
         sessionHandling = new SessionHandling();
         boolean mailAvailability = accountService.checkMailAvailabilityForUpdate(accountDTO.getMail(), Integer.parseInt(accountId));
@@ -114,7 +110,7 @@ public class AccountController {
             model.addAttribute(TITLE_ATT,listTitle);
             if (!mailAvailability)
                 bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
-            return ACCOUNT_FORM_VIEW;
+            return Views.ACCOUNT_FORM;
         }
     
         accountDTO.setId(Integer.parseInt(accountId));
@@ -133,7 +129,7 @@ public class AccountController {
         
         model.addAttribute(ACCOUNT_ATT,new AccountDTO());
         
-        return LOGIN_VIEW;
+        return Views.LOGIN;
     }
     
     
@@ -149,13 +145,13 @@ public class AccountController {
             model.addAttribute(TITLE_ATT,listTitle);
             if (!mailAvailability)
                 bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
-            return ACCOUNT_FORM_VIEW;
+            return Views.ACCOUNT_FORM;
         }
         
         accountService.saveAccount(accountDTO);
         model.addAttribute(ACCOUNT_SERV_ATT,accountService);
         
-        return LOGIN_VIEW;
+        return Views.LOGIN;
         
     }
     
@@ -168,14 +164,14 @@ public class AccountController {
         sessionHandling.clearCache(response);
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         model.addAttribute(MESSAGE_ATT,LOGOUT1_MESSAGE);
         model.addAttribute(MESSAGE_YES_ATT,YES1_MESSAGE);
         model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
         
-        return SIGNOUT_VIEW;
+        return Views.SIGNOUT;
     }
 }
 

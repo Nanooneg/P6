@@ -5,43 +5,39 @@
 <%@page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section class="container-fluid">
-    <div id="login" class="form-box center-box">
-        <form:form action="/user/user-area" method="post" modelAttribute="account">
-            <div>
-                <h1 class="text-center">Connexion</h1>
-            </div>
-            <div>
-                <c:if test="${empty registration.result}"><br/></c:if>
-                <h4 class="text-center ${empty registration.errors ? 'success' : 'error'}">${registration.result}</h4>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-at"></em>
-                <form:input path="mail" type="email" placeholder="Adresse e-mail" autofocus="autofocus"/>
-                <c:if test="${!empty registration.errors['mail']}">
-                    <span class="error">${registration.errors['mail']}</span>
-                </c:if>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-lock"></em>
-                <form:input path="password" type="password" placeholder="Mot de passe"/>
-                <c:if test="${!empty registration.errors['password']}">
-                    <span class="error">${registration.errors['password']}</span>
-                </c:if>
-            </div>
-            <div>
-                <input type="submit" name="submit" class="btn-form text-center" value="C'est parti!">
-            </div>
-            <div>
-                <a href="<c:out value="javascript:history.go(-1)"/>">
-                    <input type="button" class="btn-form text-center" value="Annuler">
-                </a>
-            </div>
-            <div class="text-right">
-                <a href="<c:url value="/register"/>" class="text-info-link">Je crée un compte</a>
-            </div>
-        </form:form>
-    </div>
-</section>
+<div id="login-form" class="login-dark">
+    <form:form action="/user/user-area" class="background-custom" method="post" modelAttribute="account">
+        <div>
+            <h2 class="text-center">Connexion</h2>
+        </div>
+        <div>
+            <c:if test="${empty registration.result}"><br/></c:if>
+            <h4 class="text-center ${empty registration.errors ? 'success' : 'error'}">${registration.result}</h4>
+        </div>
+        <div class="illustration"><em class="fas fa-lock"></em></div>
+        <div class="form-group">
+            <form:input path="mail" class="form-control" type="email" name="email" placeholder="Email"/>
+            <c:if test="${!empty registration.errors['mail']}">
+                <span class="error">${registration.errors['mail']}</span>
+            </c:if>
+        </div>
+        <div class="form-group">
+            <form:input path="password" class="form-control" type="password" name="password"
+                        placeholder="Mot de passe"/>
+            <c:if test="${!empty registration.errors['password']}">
+                <span class="error">${registration.errors['password']}</span>
+            </c:if>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit">Connexion</button>
+            <a href="<c:out value="javascript:history.go(-1)"/>">
+                <button class="btn btn-primary btn-block" type="submit">Annuler</button>
+            </a>
+        </div>
+        <div>
+            <a href="<c:url value="/register"/>" class="forgot">Je n'ai pas de compte</a>
+        </div>
+    </form:form>
+</div>
 
 <%@include file="common/footer.jsp" %>

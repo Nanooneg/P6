@@ -3,11 +3,11 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/OLDheader.jsp" %>
 
 <section>
     <div id="message-box">
-        <div class="">
+        <div class="big-title">
             <h1 class="text-center">Prêt de topo</h1><br/>
         </div><br/>
         <c:if test="${!empty topoBookingReceived}">
@@ -79,4 +79,4 @@
     </div>
 </section>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

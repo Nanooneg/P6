@@ -5,10 +5,10 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section class="container-fluid">
-    <div id="search-box" class="form-box top-box">
-        <form:form action="/topoSpot" method="post" modelAttribute="searchAttribut">
-        <div>
+<div class="container-fluid">
+    <div id="topo-search" class="search-dark">
+        <form:form action="/topoSpot" method="post" modelAttribute="searchAttribut" cssClass="background-custom">
+        <div class="intro">
             <h1 class="text-center">Topo de grimpe</h1>
         </div>
         <div>
@@ -16,97 +16,81 @@
             <h4 class="text-center ${empty listTopo ? 'error' : 'success'}">${message}</h4>
         </div>
         <div class="row">
-            <div class="col-md-2 text-center">
-                <div class="col-md-12">
-                    <label>Ajouter des filtres :</label>
-                </div>
-                <div class="col-md-12">
-                    <form:checkbox path="lendable" value="true" cssClass="checkbox-boolean"/>
-                    <label>Disponible</label>
-                </div>
+            <div class="col-sm-12 col-md-6 select-style-md form-group">
+                <label for="region">Région :</label>
+                <form:select path="region" id="region" cssClass="form-control">
+                    <form:option value="all">*****</form:option>
+                    <form:options items="${listRegion}"/>
+                </form:select>
             </div>
-            <div class="col-md-10">
-                <div class="col-md-4 select-style-md">
-                    <label for="region">Région :</label>
-                    <form:select path="region" id="region">
-                        <form:option value="all">*****</form:option>
-                        <form:options items="${listRegion}"/>
-                    </form:select>
-                </div>
-                <div class="col-md-4 select-style-md">
-                    <label for="publication">Date de parution :</label>
-                    <form:select path="publication" id="publication">
-                        <form:option value="all">*****</form:option>
-                        <form:option value="HY">moins de 6 mois</form:option>
-                        <form:option value="1Y">moins de 1 an</form:option>
-                        <form:option value="2Y">moins de 2 ans</form:option>
-                        <form:option value="5Y">moins de 5 ans</form:option>
-                        <form:option value="10Y">moins de 10 ans</form:option>
-                    </form:select>
-                </div>
-                <%--<div class="col-md-4 select-style-md">
-                    <label>Cotation de voie:</label>
-                    <form:select path="rating">
-                        <form:option value="all">*****</form:option>
-                        <form:options items="${listRating}"/>
-                    </form:select>
-                </div>--%>
+            <div class="col-sm-12 col-md-6 select-style-md form-group">
+                <label for="publication">Date de parution :</label>
+                <form:select path="publication" id="publication" cssClass="form-control">
+                    <form:option value="all">*****</form:option>
+                    <form:option value="HY">moins de 6 mois</form:option>
+                    <form:option value="1Y">moins de 1 an</form:option>
+                    <form:option value="2Y">moins de 2 ans</form:option>
+                    <form:option value="5Y">moins de 5 ans</form:option>
+                    <form:option value="10Y">moins de 10 ans</form:option>
+                </form:select>
             </div>
         </div>
         <br/>
-        <div class="button-search-bar">
-            <div class="pull-left">
-                <input type="submit" class="btn-search text-center" value="Rechercher"/>
-                <a href="<c:url value="/topoSpot"/>"><input type="button" class="btn-search text-center" value="Afficher tout"/></a>
-            </div>
-            <div class="pull-right">
-                <em class="fas fa-plus-circle"></em>
-                <a href="<c:url value="/topoForm"/>" class="text-info-link">Ajouter un topo</a>
-            </div>
+        <div class="form-group">
+            <form:checkbox path="lendable" value="true" cssClass="checkbox-boolean"/>
+            <label>Disponible</label>
+        </div>
+        <div class="form-group button">
+            <button type="submit" class="btn btn-primary btn-block">Rechercher</button>
+            <a href="<c:url value="/topoSpot"/>"><button type="button" class="btn btn-primary btn-block">Afficher tout</button></a>
+        </div>
+        <div class="form-group text-center bottom-link">
+            <a href="<c:url value="/topoForm"/>" class="text-info-link"><em class="fas fa-plus-circle"></em> Ajouter un topo</a>
         </div>
         </form:form>
     </div>
-</section>
 
-<section class="container-fluid">
-    <c:forEach items="${listTopo}" var="topo">
-        <a href="<c:url value="/topo/${topo.id}"/>" class="title-link">
-        <div class="display-box">
-            <div class="row">
-                <div class="col-md-2 image-small">
+    <div class="article-list">
+        <div class="row articles">
+            <c:forEach items="${listTopo}" var="topo">
+                <div class="col-sm-6 col-md-4 item background-custom">
                     <c:choose>
                         <c:when test="${topo.picturePath != null}">
-                            <img src="<c:url value="${topo.picturePath}"/>" alt="photo du topo">
+                            <a href="<c:url value="/topo/${topo.id}"/>">
+                                <img src="<c:url value="${topo.picturePath}"/>" alt="photo du topo">
+                            </a>
                         </c:when>
                         <c:otherwise>
-                            <img src="<c:url value="/resources/pictures/no-picture.jpg"/>" alt="pas d'image disponible">
+                            <a href="<c:url value="/topo/${topo.id}"/>">
+                                <img src="<c:url value="/resources/pictures/no-picture.jpg"/>"
+                                     alt="pas d'image disponible">
+                            </a>
                         </c:otherwise>
                     </c:choose>
-                </div>
-                <div class="col-md-10 contain-link">
-                    <div class="title-link">
-                        <p class="title">
+                    <h3 class="name">
+                    <span>
+                        <c:choose>
+                            <c:when test="${topo.lendable}">
+                                <img id="lendable-icon-result"
+                                     src="<c:url value="/resources/pictures/label-lendable-green.png"/>"
+                                     alt="lendable"/>
+                            </c:when>
+                            <c:when test="${!topo.lendable}">
+                                <img id="lendable-icon-result"
+                                     src="<c:url value="/resources/pictures/label-lendable-red.png"/>" alt="lendable"/>
+                            </c:when>
+                        </c:choose>
+                    </span>
                             ${topo.name} - ${topo.region}
-                            <span>
-                                <c:choose>
-                                    <c:when test="${topo.lendable}">
-                                        <img id="lendable-icon-result" src="<c:url value="/resources/pictures/label-lendable-green.png"/>" alt="lendable"/>
-                                    </c:when>
-                                    <c:when test="${!topo.lendable}">
-                                        <img id="lendable-icon-result" src="<c:url value="/resources/pictures/label-lendable-red.png"/>" alt="lendable"/>
-                                    </c:when>
-                                </c:choose>
-                            </span>
-                        </p>
-                    </div>
-                    <div>
-                        <p class="display-description">${topo.description}</p>
-                    </div>
+                    </h3>
+                    <p class="description">${topo.description}</p>
+                    <p class="description"><fmt:formatDate value="${topo.dateOfPublication}" pattern="dd/MM/yyyy"/></p>
+                    <a class="action" href="<c:url value="/topo/${topo.id}"/>"><em
+                            class="fa fa-arrow-circle-right"></em></a>
                 </div>
-            </div>
+            </c:forEach>
         </div>
-        </a>
-    </c:forEach>
-</section>
+    </div>
+</div>
 
 <%@include file="common/footer.jsp" %>

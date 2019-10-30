@@ -3,7 +3,9 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%--TODO--%>
+
+<%@include file="jQueryScript.jsp"%>
+
 </div>
 </body>
 </html>

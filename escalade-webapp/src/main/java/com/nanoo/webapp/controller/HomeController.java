@@ -1,6 +1,7 @@
 package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountSessionDTO;
+import com.nanoo.webapp.util.Views;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @Controller
 public class HomeController {
     
-    private static final String HOME_VIEW = "home";
-    
     
     @GetMapping(value = {"/","/home"})
     public String home(@SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
@@ -22,7 +21,7 @@ public class HomeController {
             return "redirect:/user/user-area" ;
         }
         
-        return HOME_VIEW;
+        return Views.HOME;
     }
     
 }

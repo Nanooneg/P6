@@ -5,6 +5,7 @@ import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
+import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,6 @@ import java.util.Map;
  */
 @Controller
 public class SpotController {
-    
-    private static final String SITE_VIEW = "site";
-    private static final String SPOT_VIEW = "climbSpot";
-    private static final String SPOT_FORM_VIEW1 = "spotForm1";
-    private static final String SPOT_FORM_VIEW2 = "spotForm2";
-    private static final String SPOT_FORM_VIEW3 = "spotForm3";
-    private static final String LOGIN_VIEW = "login";
     
     private static final String ACCOUNT_ATT = "account";
     private static final String SPOT_SERV_ATT = "saveSpot";
@@ -73,7 +67,7 @@ public class SpotController {
         model.addAttribute(REGION_ATT,listRegion);
         model.addAttribute(LIST_SITE_ATT,siteDTOList);
         
-        return SPOT_VIEW;
+        return Views.SPOT;
     }
     
     @PostMapping("/climbSpot")
@@ -87,7 +81,7 @@ public class SpotController {
         model.addAttribute(RATING_ATT, listRating);
         model.addAttribute(REGION_ATT, listRegion);
         
-        return SPOT_VIEW;
+        return Views.SPOT;
     }
     
     @GetMapping("/site/{spotId}")
@@ -103,7 +97,7 @@ public class SpotController {
         model.addAttribute(LIST_SECTOR_ATT,sectorDTOList);
         model.addAttribute(MAP_WAY_BY_SECTOR_ID_ATT,wayDTOList);
         
-        return SITE_VIEW;
+        return Views.SITE;
     }
     
     @GetMapping("/spotForm1")
@@ -112,13 +106,13 @@ public class SpotController {
         
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         model.addAttribute(SITE_ATT,new SiteDTO());
         model.addAttribute(REGION_ATT,listRegion);
     
-        return SPOT_FORM_VIEW1;
+        return Views.SPOT_FORM1;
     }
     
     @GetMapping("/updateSite/{siteID}")
@@ -127,7 +121,7 @@ public class SpotController {
         model.addAttribute(SITE_ATT,spotService.searchSiteById(Integer.parseInt(siteID)));
         model.addAttribute(REGION_ATT,listRegion);
         
-        return SPOT_FORM_VIEW1;
+        return Views.SPOT_FORM1;
     }
     
     @GetMapping("/spotForm2/{siteId}")
@@ -136,13 +130,13 @@ public class SpotController {
         
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         model.addAttribute(SECTOR_ATT,new SectorDTO());
         model.addAttribute(SITE_ID_ATT, siteId);
     
-        return SPOT_FORM_VIEW2;
+        return Views.SPOT_FORM2;
     }
     
     @GetMapping("/updateSector/{siteId}/{sectorId}")
@@ -151,7 +145,7 @@ public class SpotController {
         model.addAttribute(SECTOR_ATT,spotService.searchSectorById(Integer.parseInt(sectorId)));
         model.addAttribute(SITE_ID_ATT, siteId);
         
-        return SPOT_FORM_VIEW2;
+        return Views.SPOT_FORM2;
     }
     
     @GetMapping("/spotForm3/{sectorId}")
@@ -160,14 +154,14 @@ public class SpotController {
         
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
     
         model.addAttribute(WAY_ATT,new WayDTO());
         model.addAttribute(RATING_ATT,listRating);
         model.addAttribute(SECTOR_ID_ATT,sectorId);
     
-        return SPOT_FORM_VIEW3;
+        return Views.SPOT_FORM3;
     }
     
     @GetMapping("/updateWay/{sectorId}/{wayId}")
@@ -177,7 +171,7 @@ public class SpotController {
         model.addAttribute(RATING_ATT,listRating);
         model.addAttribute(SITE_ID_ATT, sectorId);
         
-        return SPOT_FORM_VIEW3;
+        return Views.SPOT_FORM3;
     }
     
     @PostMapping({"/saveSite/","/saveSite/{siteID}"})
@@ -190,7 +184,7 @@ public class SpotController {
             model.addAttribute(SITE_ATT, siteDTO);
             model.addAttribute(REGION_ATT, listRegion);
             model.addAttribute(SPOT_SERV_ATT, spotService);
-            return SPOT_FORM_VIEW1;
+            return Views.SPOT_FORM1;
         }
     
         if (siteID != null)
@@ -206,7 +200,7 @@ public class SpotController {
         model.addAttribute(REGION_ATT,listRegion);
         model.addAttribute(LIST_SITE_ATT,siteDTOList);
         
-        return SPOT_VIEW;
+        return Views.SPOT;
     }
     
     @GetMapping("/deleteSite/{siteId}")
@@ -215,7 +209,7 @@ public class SpotController {
         
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         spotService.deleteSiteWithId(Integer.parseInt(siteId));
@@ -233,7 +227,7 @@ public class SpotController {
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
             model.addAttribute(SPOT_SERV_ATT, spotService);
-            return SPOT_FORM_VIEW2;
+            return Views.SPOT_FORM2;
         }
         
         if (sectorId != null)
@@ -253,7 +247,7 @@ public class SpotController {
         
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         spotService.deleteSectorWithId(Integer.parseInt(sectorId));
@@ -271,7 +265,7 @@ public class SpotController {
             model.addAttribute(WAY_ATT, wayDTO);
             model.addAttribute(RATING_ATT, listRating);
             model.addAttribute(SPOT_SERV_ATT, spotService);
-            return SPOT_FORM_VIEW3;
+            return Views.SPOT_FORM3;
         }
         
         if (wayId != null)
@@ -293,7 +287,7 @@ public class SpotController {
 
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         spotService.deleteWayWithId(Integer.parseInt(wayId));

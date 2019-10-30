@@ -6,8 +6,8 @@
 <%@include file="common/header.jsp" %>
 
 <section>
-    <div id="spot-form-3" class="center-box form-box">
-        <form:form action="/saveWay/${sectorId}/${way.id}" method="post" modelAttribute="way">
+    <div id="spot-form-3" class="login-dark">
+        <form:form action="/saveWay/${sectorId}/${way.id}" method="post" modelAttribute="way" cssClass="background-custom">
             <h1 class="text-center">
                 <c:choose>
                     <c:when test="${empty way.id}">Création de Voie</c:when>
@@ -18,37 +18,31 @@
                 <c:if test="${empty saveSpot.result}"><br/></c:if>
                 <h4 class="text-center error">${saveSpot.result}</h4>
             </div>
-            <div class="textbox">
-                <label>Nom de la voie :</label>
-                <form:input path="name" placeholder="nom" required="true" autofocus="autofocus"/>
+            <div class="form-group">
+                <form:input path="name" placeholder="Nom" required="true" autofocus="autofocus" cssClass="form-control"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
-            <label id="way-form">Cotations :</label>
-            <div class="select-style">
-                <form:select path="rating">
-                    <form:option value="">*****</form:option>
+            <div class="form-group">
+                <form:select path="rating" cssClass="form-control">
+                    <form:option value="">Cotations</form:option>
                     <form:options items="${listRating}"/>
                 </form:select>
                 <form:errors path="rating" cssClass="error"/>
             </div>
-            <div class="textbox">
-                <label>Hauteur (en m) :</label>
-                <form:input path="height" type="number" required="true"/>
+            <div class="form-group">
+                <form:input path="height" type="tel" required="true" placeholder="Hauteur (en m)" cssClass="form-control"/>
             </div>
-            <div class="textbox">
-                <label>Nombre de longueur :</label>
-                <form:input path="pitchNbr" type="number" required="true"/>
+            <div class="form-group">
+                <form:input path="pitchNbr" type="tel" required="true" placeholder="Nombre de longueur" cssClass="form-control"/>
             </div>
-            <div class="textbox">
+            <div class="form-group">
                 <label>nombre de point d'ancrage :</label>
-                <form:input path="anchorNbr" type="number" required="true"/>
+                <form:input path="anchorNbr" type="tel" required="true" placeholder="Point d'ancrage" cssClass="form-control"/>
             </div>
-            <div>
-                <input type="submit" name="submit" class="btn-form text-center" value="Enregistrer">
-            </div>
-            <div>
+            <div class="form-group">
+                <button type="submit" name="submit" class="btn btn-primary btn-block">Enregistrer</button>
                 <a href="<c:out value="javascript:history.go(-1)"/>">
-                    <input type="button" class="btn-form text-center" value="Annuler">
+                    <button type="button" class="btn btn-primary btn-block">Annuler</button>
                 </a>
             </div>
         </form:form>

@@ -3,14 +3,14 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/OLDheader.jsp" %>
 
 <section>
     <div id="message-box">
         <div>
             <h1 class="text-center">Demande de prêt</h1>
         </div>
-        <div class="">
+        <div class="topo-booking-message">
             <div class="message-header">
                 <h2>Au sujet du topo "${topo.name}"</h2>
             </div>
@@ -35,4 +35,4 @@
     </div>
 </section>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

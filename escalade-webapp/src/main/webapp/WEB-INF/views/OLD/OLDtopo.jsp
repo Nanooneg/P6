@@ -3,11 +3,11 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/OLDheader.jsp" %>
 
 <section class="container-fluid">
     <div id="topo-box">
-        <div class="">
+        <div class="topo-header">
             <h1 class="text-center">${topo.name}</h1>
         </div>
         <div id="topo-picture">
@@ -71,4 +71,4 @@
     </div>
 </section>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

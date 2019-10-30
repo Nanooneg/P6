@@ -3,16 +3,16 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/OLDheader.jsp" %>
 
 <section class="container-fluid">
     <div id="home-box" class="form-box center-box">
-        <%--<div>
+        <div>
             <h1 class="text-center">Bienvenue ches les Amis de l'escalade</h1>
         </div>
         <div class="description">
             <p>
-                Nous somme une association de passionnés ! Sur ce site vous trouverez des infos sur les spots de grimpe
+                Nous somme une association de passionés ! Sur ce site vous trouverez des infos sur les spots de grimpe
                 que les utilisateurs ont postées. Certains de ces sites ont été reconnus par nos membres et porte le label
                 "officiel les amis de l'escalade" : <img class="label-icon"
                                                         src="<c:url value="/resources/pictures/label-3-white.png"/>"
@@ -31,8 +31,8 @@
                 N'hésitez pas à créer un compte pour profiter de cette fonctionalité et bien d'autre (commenter, poster
                 vous-même un topo ou des infos sur un spot).
             </p>
-        </div>--%>
+        </div>
     </div>
 </section>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

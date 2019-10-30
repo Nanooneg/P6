@@ -4,8 +4,7 @@ import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.dto.CommentaryDTO;
 import com.nanoo.business.serviceContract.CommentaryService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -23,10 +22,6 @@ import java.util.Map;
  */
 @Controller
 public class CommentController {
-    
-    private static final String COMMENTARY_VIEW = "commentary";
-    private static final String COMMENTARY_FORM_VIEW = "commentaryForm";
-    private static final String LOGIN_VIEW = "login";
     
     private static final String ACCOUNT_ATT = "account";
     private static final String MESSAGE_ATT = "message";
@@ -58,7 +53,7 @@ public class CommentController {
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
         model.addAttribute(PUBLICATION_TYPE_ATT, publicationType);
         
-        return COMMENTARY_VIEW;
+        return Views.COMMENTARY;
     }
     
     @GetMapping("/addComment/{publicationType}/{publicationId}")
@@ -67,14 +62,14 @@ public class CommentController {
     
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         model.addAttribute(COMMENTARY_ATT, new CommentaryDTO());
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
         model.addAttribute(PUBLICATION_TYPE_ATT, publicationType);
     
-        return COMMENTARY_FORM_VIEW;
+        return Views.COMMENTARY_FORM;
     }
     
     @GetMapping("/updateCommentary/{publicationType}/{publicationId}/{commentaryId}")
@@ -88,7 +83,7 @@ public class CommentController {
         model.addAttribute(PUBLICATION_TYPE_ATT, publicationType);
         model.addAttribute(COMMENTARY_ID_ATT, commentaryId);
         
-        return COMMENTARY_FORM_VIEW;
+        return Views.COMMENTARY_FORM;
     }
     
     @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
@@ -102,7 +97,7 @@ public class CommentController {
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);
             model.addAttribute(MESSAGE_ATT, "L'ajout a échoué");
-            return COMMENTARY_FORM_VIEW;
+            return Views.COMMENTARY_FORM;
         }
         
         if (commentaryId != null)

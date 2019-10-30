@@ -5,37 +5,28 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section class="container-fluid">
-    <div id="search-box" class="form-box top-box">
-        <form:form action="/climbSpot" method="post" modelAttribute="searchAttribut">
-        <div>
-            <h1 class="text-center">Site de grimpe</h1>
-        </div>
+
+<div class="container-fluid">
+    <div id="spot-form" class="search-dark">
+        <form:form action="/climbSpot" method="post" class="background-custom" modelAttribute="searchAttribut">
+            <div class="intro">
+                <h1 class="text-center">Site de grimpe</h1>
+            </div>
             <div>
                 <c:if test="${empty message}"><br/></c:if>
                 <h4 class="text-center ${empty listSite ? 'error' : 'success'}">${message}</h4>
             </div>
-        <div class="row">
-            <div class="col-md-2 text-center">
-                <div class="col-md-12">
-                    <label>Ajouter des filtres :</label>
-                </div>
-                <div class="col-md-12">
-                    <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
-                    <label>Label officiel</label>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="col-md-4 select-style-md">
+            <div class="row">
+                <div class="col-sm-12 col-md-4 select-style-md form-group">
                     <label for="region">Région :</label>
-                    <form:select path="region" id="region">
+                    <form:select path="region" id="region" cssClass="form-control">
                         <form:option value="all">*****</form:option>
                         <form:options items="${listRegion}"/>
                     </form:select>
                 </div>
-                <div class="col-md-4 select-style-md">
+                <div class="col-sm-12 col-md-4 select-style-md form-group">
                     <label for="sectorNbr">Secteur par site (minimum) :</label>
-                    <form:select path="sectorNbrMin" id="sectorNbr">
+                    <form:select path="sectorNbrMin" id="sectorNbr" cssClass="form-control">
                         <form:option value="0">*****</form:option>
                         <form:option value="1">1</form:option>
                         <form:option value="2">2</form:option>
@@ -44,31 +35,67 @@
                         <form:option value="5">5</form:option>
                     </form:select>
                 </div>
-                <div class="col-md-4 select-style-md">
+                <div class="col-sm-12 col-md-4 select-style-md form-group">
                     <label>Difficulté (minimum) :</label>
-                    <form:select path="rating">
+                    <form:select path="rating" cssClass="form-control">
                         <form:option value="all">*****</form:option>
                         <form:options items="${listRating}"/>
                     </form:select>
                 </div>
             </div>
-        </div>
-        <br/>
-        <div class="button-search-bar">
-            <div class="pull-left">
-                <input type="submit" class="btn-search text-center" value="Rechercher"/>
-                <a href="<c:url value="/climbSpot"/>"><input type="button" class="btn-search text-center" value="Afficher tout"/></a>
+            <br/>
+            <div class="form-group">
+                <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
+                <label>Label officiel</label>
             </div>
-            <div class="pull-right">
-                <em class="fas fa-plus-circle"></em>
-                <a href="<c:url value="/spotForm1"/>" class="text-info-link">Ajouter un site</a>
+            <div class="form-group button">
+                <button type="submit" class="btn btn-primary btn-block">Rechercher</button>
+                <a href="<c:url value="/climbSpot"/>">
+                    <button type="button" class="btn btn-primary btn-block">Afficher tout</button>
+                </a>
             </div>
-        </div>
+            <div class="form-group bottom-link text-center">
+                <a href="<c:url value="/spotForm1"/>" class="forgot"><em class="fas fa-plus-circle"></em> Ajouter un site</a>
+            </div>
         </form:form>
     </div>
-</section>
 
-<section class="container-fluid">
+    <div class="article-list">
+        <div class="row articles">
+            <c:forEach items="${listSite}" var="site">
+                <div class="col-sm-6 col-md-4 item background-custom">
+                    <c:choose>
+                        <c:when test="${site.picturePath != null}">
+                            <a href="<c:url value="/site/${site.id}"/>">
+                                <img class="img-fluid" src="<c:url value="${site.picturePath}"/>" alt="photo du site">
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="<c:url value="/site/${site.id}"/>"><img src="<c:url value="/resources/pictures/no-picture.jpg"/>"
+                                             alt="pas d'image disponible"></a>
+                        </c:otherwise>
+                    </c:choose>
+                    <h3 class="name">
+                    <span>
+                        <c:if test="${site.officialLabel}">
+                        <img id="label-icon-result"
+                             src="<c:url value="/resources/pictures/label-3-white.png"/>"
+                             alt="label">
+                        </c:if>
+                    </span>
+                    ${site.name} - ${site.region}
+                    </h3>
+                    <p class="description">${site.description}</p>
+                    <a class="action" href="<c:url value="/site/${site.id}"/>"><em class="fa fa-arrow-circle-right"></em></a>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+
+
+
+<%--<section class="container-fluid">
     <c:forEach items="${listSite}" var="site">
         <a href="<c:url value="/site/${site.id}"/>" class="title-link">
         <div class="display-box">
@@ -104,6 +131,6 @@
         </div>
         </a>
     </c:forEach>
-</section>
+</section>--%>
 
 <%@include file="common/footer.jsp" %>

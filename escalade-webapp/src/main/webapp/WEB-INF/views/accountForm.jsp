@@ -8,87 +8,78 @@
 <s:url value="/saveAccount" var="save"/>
 <s:url value="/updateAccount/${account.id}" var="update"/>
 
-<section class="container-fluid">
-    <div id="register" class="form-box center-box">
-        <form:form action="${empty account.id ? save : update}" method="post" modelAttribute="account">
-            <div>
-                <h1 class="text-center">
-                    <c:choose>
-                        <c:when test="${empty account.id}">Créer un compte</c:when>
-                        <c:otherwise>Modifier mon Compte</c:otherwise>
-                    </c:choose>
-                </h1>
-            </div>
-            <div>
-                <c:if test="${empty message}"><br/></c:if>
-                <h4 class="text-center error">${message}</h4>
-            </div>
-            <div class="select-style">
-                <form:select path="title" autofocus="autofocus">
-                    <form:option value="N/C" label="Civil"/>
-                    <form:options items="${listTitle}"/>
-                </form:select>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-user"></em>
-                <form:input path="lastName" type="text" placeholder="Nom" required="true"/>
-                <form:errors path="lastName" cssClass="error"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-user"></em>
-                <form:input path="firstName" type="text" placeholder="Prénom" required="true"/>
-                <form:errors path="firstName" cssClass="error"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-at"></em>
-                <form:input path="mail" type="email" placeholder="Adresse mail" required="true"/>
-                <form:errors path="mail" cssClass="error"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-lock"></em>
-                <form:password path="password" placeholder="Mot de passe" required="true"/>
-                <form:errors path="password" cssClass="error"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-lock"></em>
-                <form:password path="confirmation" placeholder="Confirmez le mot de passe" required="true"/>
-                <form:errors path="confirmation" cssClass="error"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-location-arrow"></em>
-                <form:input path="streetName" type="text" placeholder="Adresse"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-map-marker"></em>
-                <form:input path="postalCode" type="text" placeholder="Code postal"/>
-                <form:errors path="postalCode" cssClass="error"/>
-            </div>
-            <div class="textbox">
-                <em class="fas fa-map"></em>
-                <form:input path="city" type="text" placeholder="Ville"/>
-            </div>
-            <div>
+<div id="account-form" class="login-dark">
+    <form:form action="${empty account.id ? save : update}" class="background-custom" method="post" modelAttribute="account">
+        <div>
+            <h2 class="text-center">
                 <c:choose>
-                    <c:when test="${empty account.id}">
-                        <input type="submit" name="submit" class="btn-form text-center" value="Je m'inscris!">
-                    </c:when>
-                    <c:otherwise>
-                        <input type="submit" name="submit" class="btn-form text-center" value="J'enregistre">
-                    </c:otherwise>
+                    <c:when test="${empty account.id}">Créer un compte</c:when>
+                    <c:otherwise>Modifier mon Compte</c:otherwise>
                 </c:choose>
-            </div>
+            </h2>
+        </div>
+        <div>
+            <c:if test="${empty message}"><br/></c:if>
+            <h4 class="text-center error">${message}</h4>
+        </div>
+        <div class="form-group">
+            <form:select path="title" autofocus="autofocus" cssClass="form-control">
+                <form:option value="N/C" label="Civilité" cssClass="title"/>
+                <form:options items="${listTitle}"/>
+            </form:select>
+        </div>
+        <div class="form-group">
+            <form:input path="lastName" cssClass="form-control" type="text" placeholder="Nom" required="true"/>
+            <form:errors path="lastName" cssClass="error"/>
+        </div>
+        <div class="form-group">
+            <form:input path="firstName" cssClass="form-control" type="text" placeholder="Prénom" required="true"/>
+            <form:errors path="firstName" cssClass="error"/>
+        </div>
+        <div class="form-group">
+            <form:input path="mail" cssClass="form-control" type="email" placeholder="Adresse mail" required="true"/>
+            <form:errors path="mail" cssClass="error"/>
+        </div>
+        <div class="form-group">
+            <form:password path="password" cssClass="form-control" placeholder="Mot de passe" required="true"/>
+            <form:errors path="password" cssClass="error"/>
+        </div>
+        <div class="form-group">
+            <form:password path="confirmation" cssClass="form-control" placeholder="Confirmez le mot de passe" required="true"/>
+            <form:errors path="confirmation" cssClass="error"/>
+        </div>
+        <div class="form-group">
+            <form:input path="streetName" cssClass="form-control" type="text" placeholder="Adresse"/>
+        </div>
+        <div class="form-group">
+            <form:input path="postalCode" cssClass="form-control" type="text" placeholder="Code postal"/>
+            <form:errors path="postalCode" cssClass="error"/>
+        </div>
+        <div class="form-group">
+            <form:input path="city" cssClass="form-control" type="text" placeholder="Ville"/>
+        </div>
+        <div class="form-group">
+            <c:choose>
+                <c:when test="${empty account.id}">
+                    <button type="submit" class="btn btn-primary btn-block">Je m'inscris!</button>
+                    <a href="<c:out value="javascript:history.go(-1)"/>">
+                        <button type="button" class="btn btn-primary btn-block">Annuler</button>
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <button type="submit" class="btn btn-primary btn-block">J'enregistre</button>
+                    <a href="<c:out value="/user/user-area"/>">
+                        <button type="button" class="btn btn-primary btn-block">Annuler</button>
+                    </a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+        <c:if test="${empty account.id}">
             <div>
-                <a href="<c:out value="/user/user-area"/>">
-                    <input type="button" class="btn-form text-center" value="Annuler">
-                </a>
+                <a href="<c:url value="/login"/>" class="forgot">J'ai déjà un compte</a>
             </div>
-            <c:if test="${empty account.id}">
-                <div class="text-right">
-                    <a href="<c:url value="/login"/>" class="text-info-link">J'ai déjà un compte</a>
-                </div>
-            </c:if>
-        </form:form>
-    </div>
-</section>
+        </c:if>
+    </form:form>
+</div>
 
 <%@include file="common/footer.jsp" %>

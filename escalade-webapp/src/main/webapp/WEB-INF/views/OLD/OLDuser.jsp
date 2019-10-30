@@ -3,10 +3,10 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/OLDheader.jsp" %>
 
 <section class="container-fluid">
-    <div id="user-box" class="">
+    <div id="user-box" class="form-box top-box">
         <div>
             <h1 class="text-center">Bienvenue ${sessionScope.accountSession.firstName} ${sessionScope.accountSession.lastName}</h1>
         </div>
@@ -118,4 +118,4 @@
     </c:forEach>
 </section>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

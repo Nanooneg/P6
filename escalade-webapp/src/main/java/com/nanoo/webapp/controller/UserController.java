@@ -4,6 +4,7 @@ import com.nanoo.business.dto.*;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
 import com.nanoo.business.serviceContract.TopoService;
+import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,10 +30,6 @@ public class UserController {
     private static final String TOPOBOOKING_R_ATT = "topoBookingReceived";
     private static final String TOPOBOOKING_S_ATT = "topoBookingSent";
     
-    private static final String LOGIN_VIEW = "login";
-    private static final String USER_HOME_VIEW = "user";
-    private static final String HOME_VIEW = "home";
-    
     private final AccountService accountService;
     private final SpotService spotService;
     private final TopoService topoService;
@@ -55,7 +52,7 @@ public class UserController {
         }else{
             model.addAttribute(ACCOUNT_ATT,accountDTO);
             model.addAttribute(ACCOUNT_SERV_ATT,accountService);
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
     }
     
@@ -72,7 +69,7 @@ public class UserController {
         model.addAttribute(TOPOBOOKING_R_ATT, topoBookingReceivedDTOList.size());
         model.addAttribute(TOPOBOOKING_S_ATT, topoBookingSentDTOList.size());
         
-        return USER_HOME_VIEW;
+        return Views.USER_HOME;
     }
     
     @GetMapping("/unlog")
@@ -80,6 +77,6 @@ public class UserController {
 
         status.setComplete();
         
-        return HOME_VIEW;
+        return Views.HOME;
     }
 }

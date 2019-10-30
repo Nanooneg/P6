@@ -8,6 +8,7 @@ import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.TopoService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
+import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -26,18 +27,11 @@ import java.util.List;
 @Controller
 public class TopoController {
     
-    private static final String TOPO_SEARCH_VIEW = "topoSpot";
-    private static final String TOPO_VIEW = "topo";
-    private static final String TOPO_FORM_VIEW = "topoForm";
-    private static final String TOPOBOOKING_RECEIVED_ATT = "topoBookingReceived";
-    private static final String TOPOBOOKING_SENT_ATT = "topoBookingSent";
-    private static final String LOGIN_VIEW = "login";
-    private static final String ASK_FOR_LENDING_VIEW = "askForLending";
-    private static final String LENDING_REQUEST = "lendingRequest";
-    
     private static final String ACCOUNT_ATT = "account";
     private static final String MESSAGE_ATT = "message";
     private static final String TOPO_ATT = "topo";
+    private static final String TOPOBOOKING_RECEIVED_ATT = "topoBookingReceived";
+    private static final String TOPOBOOKING_SENT_ATT = "topoBookingSent";
     private static final String REGION_ATT = "listRegion";
     private static final String CONDITION_ATT = "listCondition";
     private static final String SEARCH_ATT = "searchAttribut";
@@ -73,7 +67,7 @@ public class TopoController {
         model.addAttribute(REGION_ATT,listRegion);
         model.addAttribute(LIST_TOPO_ATT,topoDTOList);
         
-        return TOPO_SEARCH_VIEW;
+        return Views.TOPO_SEARCH;
     }
     
     @PostMapping("/topoSpot")
@@ -86,7 +80,7 @@ public class TopoController {
         model.addAttribute(REGION_ATT,listRegion);
         model.addAttribute(LIST_TOPO_ATT,topoDTOList);
         
-        return TOPO_SEARCH_VIEW;
+        return Views.TOPO_SEARCH;
     }
     
     @GetMapping("/topoForm")
@@ -95,14 +89,14 @@ public class TopoController {
         
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
     
         model.addAttribute(TOPO_ATT,new TopoDTO());
         model.addAttribute(REGION_ATT,listRegion);
         model.addAttribute(CONDITION_ATT,listCondition);
         
-        return TOPO_FORM_VIEW;
+        return Views.TOPO_FORM;
     }
     
     @GetMapping("/topo/{topoId}")
@@ -114,7 +108,7 @@ public class TopoController {
         model.addAttribute(TOPO_ATT, topoDTO);
         model.addAttribute(ACCOUNT_ATT,accountDTO);
         
-        return TOPO_VIEW;
+        return Views.TOPO;
     }
     
     @PostMapping({"/saveTopo/","/saveTopo/{topoId}"})
@@ -128,7 +122,7 @@ public class TopoController {
             model.addAttribute(CONDITION_ATT,listCondition);
             model.addAttribute(SPOT_SERV_ATT, topoService);
             
-            return TOPO_FORM_VIEW;
+            return Views.TOPO_FORM;
         }
         
         if (topoId != null)
@@ -148,7 +142,7 @@ public class TopoController {
         model.addAttribute(REGION_ATT,listRegion);
         model.addAttribute(CONDITION_ATT,listCondition);
         
-        return TOPO_FORM_VIEW;
+        return Views.TOPO_FORM;
     }
     
     @GetMapping("/deleteTopo/{topoId}")
@@ -165,12 +159,12 @@ public class TopoController {
 
         if (accountSessionDTO == null){
             model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return LOGIN_VIEW;
+            return Views.LOGIN;
         }
         
         model.addAttribute(TOPO_ATT,topoService.searchTopoById(Integer.parseInt(topoId)));
         
-        return ASK_FOR_LENDING_VIEW;
+        return Views.ASK_FOR_LENDING;
     }
     
     @GetMapping("/validAskForLending/{accountId}/{topoId}")
@@ -195,7 +189,7 @@ public class TopoController {
         model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
         model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);
         
-        return LENDING_REQUEST;
+        return Views.LENDING_REQUEST;
     }
     
     @GetMapping("/validLendingRequest/{userId}/{topoBookingId}/{answer}")
