@@ -19,11 +19,11 @@
         </div>
         <c:if test="${sessionScope.accountSession.roleName == 'Member' || sessionScope.accountSession.roleName == 'Administrator'}">
             <div class="form-group">
-                <form:checkbox path="officialLabel" value="true" cssClass="form-box"/>
+                <form:checkbox path="officialLabel" cssClass="form-box"/>
                 <label>Label officiel</label>
             </div>
         </c:if>
-        <div class="form-group">
+        <div class="form-group select-style">
             <form:select path="region" autofocus="autofocus" cssClass="form-control">
                 <form:option value="Région"/>
                 <form:options items="${listRegion}"/>

@@ -22,7 +22,7 @@
             <c:if test="${empty message}"><br/></c:if>
             <h4 class="text-center error">${message}</h4>
         </div>
-        <div class="form-group">
+        <div class="form-group select-style">
             <form:select path="title" autofocus="autofocus" cssClass="form-control">
                 <form:option value="N/C" label="Civilité" cssClass="title"/>
                 <form:options items="${listTitle}"/>

@@ -11,7 +11,6 @@ import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
 import com.nanoo.business.util.UploadUtil;
 import com.nanoo.consumer.repository.AccountRepository;
-import com.nanoo.consumer.repository.CommentaryRepository;
 import com.nanoo.consumer.repository.TopoBookingRepository;
 import com.nanoo.consumer.repository.TopoRepository;
 import com.nanoo.model.entities.Topo;
@@ -23,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -250,15 +250,15 @@ public class TopoServiceImpl implements TopoService {
      */
     @Override
     public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountId(Integer accountId){
-        
+    
         Set<Integer> topoIdList = topoRepository.getTopoIdByAccountId(accountId);
         List<TopoBooking> topoBookingList = topoBookingRepository.findAllTopoBookingByIdTopo(topoIdList,Sort.by("status","dateOfExpiry"));
         List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
-        
+    
         for (TopoBooking topoBooking : topoBookingList){
             topoBookingDTOList.add(topoBookingMapper.fromTopoBookingToDto(topoBooking));
         }
-        
+    
         return topoBookingDTOList;
     }
     
@@ -269,12 +269,13 @@ public class TopoServiceImpl implements TopoService {
      * @return list of topobooking with pending status if exist
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountIdWithPendingStatus(Integer accountId){
         List<TopoBookingDTO> topoBookingDTOList = searchAllTopoBookingByTopoAccountId(accountId);
         List<TopoBookingDTO> topoBookingPendingDTOList = new ArrayList<>();
         
         for (TopoBookingDTO topoBookingDTO : topoBookingDTOList){
-            if(topoBookingDTO.getStatus().equals("En attente")){
+            if(topoBookingDTO.getStatus().equals(EnumStatus.PENDING.getAbbreviation())){
                 topoBookingPendingDTOList.add(topoBookingDTO);
             }
         }

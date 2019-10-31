@@ -3,7 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="../common/OLDheader.jsp" %>
+<%@include file="OLDheader.jsp" %>
 
 <s:url value="/topo" var="topo"/>
 <s:url value="/site" var="spot"/>

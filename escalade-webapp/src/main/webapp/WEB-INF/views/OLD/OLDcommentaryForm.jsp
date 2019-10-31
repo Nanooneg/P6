@@ -3,7 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="../common/OLDheader.jsp" %>
+<%@include file="OLDheader.jsp" %>
 
 <section>
     <div id="commentary-form" class="center-box form-box">

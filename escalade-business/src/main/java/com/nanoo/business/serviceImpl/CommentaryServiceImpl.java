@@ -50,7 +50,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     @Override
     public Map<CommentaryDTO, AccountDTO> findAllCommentaryOfPublicationId(String publicationId) {
         List<Commentary> commentariesList =
-                commentaryRepository.findAllByIdPublication(Integer.parseInt(publicationId), Sort.by("dateOfPublication").descending());
+                commentaryRepository.findAllByIdPublication(Integer.parseInt(publicationId), Sort.by("dateOfPublication").ascending());
         Map<CommentaryDTO, AccountDTO> commentariesAndAccountIdDtoList = new HashMap<>();
         
         for (Commentary commentary : commentariesList){

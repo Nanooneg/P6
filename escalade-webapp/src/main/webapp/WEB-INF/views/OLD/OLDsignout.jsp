@@ -3,7 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="../common/OLDheader.jsp" %>
+<%@include file="OLDheader.jsp" %>
 
 <section class="container-fluid">
     <div id="signout" class="form-box center-box">

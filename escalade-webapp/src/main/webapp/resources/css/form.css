@@ -2,7 +2,8 @@
   max-width: 400px;
 }
 
-#account-form form, #spot-form-1 form, #spot-form-2 form, #spot-form-3 form, #commentary-form form, #topo-form form{
+#account-form form, #spot-form-1 form, #spot-form-2 form, #spot-form-3 form,
+#commentary-form form, #topo-form form{
   max-width: 500px;
 }
 
@@ -10,12 +11,9 @@
   max-width: 80%;
 }
 
-#spot-form button, #commentary-box button, #topo-search button{
-  width: 150px;
-  margin: 0 20px 0 20px;
-}
-
 #signout {
+  position: absolute;
+  max-width: 500px;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
@@ -46,14 +44,14 @@
 .search-dark form{
   width: 90%;
   padding: 20px;
-  margin: 50px auto 50px auto;
+  margin: 150px auto 50px auto;
   border-radius: 4px;
   position: relative;
   color: #fff;
   box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
   }
 
-.login-dark h2, .search-dark h2{
+.login-dark h2, .search-dark h2, #signout h2, .intro h2{
   font-weight: bold;
   font-size: 30px;
 }
@@ -61,14 +59,14 @@
 .login-dark form .form-control, .search-dark form .form-control {
   background: none;
   border: none;
-  border-bottom: 1px solid #434a52;
+  border-bottom: 1px solid #ababab;
   border-radius: 0;
   box-shadow: none;
   outline: none;
   color: inherit;
 }
 
-.login-dark form .btn-primary, .search-dark form .btn-primary {
+.login-dark form .btn-primary, .search-dark form .btn-primary, #signout .btn-primary {
   background: #ababab;
   border: none;
   border-radius: 4px;
@@ -79,8 +77,8 @@
   outline: none;
 }
 
-.login-dark form .btn-primary:hover, .search-dark form .btn-primary:hover,
-.login-dark form .btn-primary:active, .search-dark form .btn-primary:active {
+.login-dark form .btn-primary:hover, .search-dark form .btn-primary:hover, #signout .btn-primary:hover,
+.login-dark form .btn-primary:active, .search-dark form .btn-primary:active, #signout .btn-primary:active {
   background: #616161;
   outline: none;
 }
@@ -94,7 +92,7 @@
   text-decoration: none;
 }
 
-.login-dark form .forgot:hover, .search-dark form .forgot:hover, #signout .forgot:hover
+.login-dark form .forgot:hover, .search-dark form .forgot:hover, #signout .forgot:hover,
 .login-dark form .forgot:focus, .search-dark form .forgot:focus, #signout .forgot:focus{
   color: white;
 }
@@ -127,8 +125,8 @@ select:hover {
 
 .select-style {
   padding: 0;
-  margin: 0;
-  border: 1px solid #ffffff;
+  margin-bottom: 10px;
+  border: 1px solid #ababab;
   width: auto;
   border-radius: 3px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -148,23 +146,16 @@ select:hover {
   width: 100%;
   border: none;
   box-shadow: none;
-  background-color: transparent;
-  background-image: none;
+  background: rgba(0, 0, 0, 0);
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
-.select-style select:focus, .select-style select:hover {
-  background-color: #ffffff;
-  color: #383838;
-  text-decoration: none;
-  outline: none;
-}
-
-.select-style-md select:focus, .select-style-md select:hover {
-  background-color: #ffffff;
-  color: #383838;
+.select-style select:focus, .select-style select:hover,
+.select-style-md select:focus, .select-style-md select:hover{
+  background-color: black;
+  color: #ababab;
   text-decoration: none;
   outline: none;
 }
@@ -172,7 +163,7 @@ select:hover {
 .select-style-md select {
   padding: 5px 8px;
   width: 100%;
-  border: 1px solid #ffffff;
+  border: 1px solid #ababab;
   box-shadow: none;
   background-color: transparent;
   background-image: none;

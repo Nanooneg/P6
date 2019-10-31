@@ -94,6 +94,7 @@ public class SpotServiceImpl implements SpotService {
                 site.setDateOfCreation(existingSite.getDateOfCreation());
                 site.setIdAccount(existingSite.getIdAccount());
                 site.setPicturePath(existingSite.getPicturePath());
+                site.setSectors(existingSite.getSectors());
                 oldPicturePath = site.getPicturePath();
             }
         }else{
@@ -155,6 +156,7 @@ public class SpotServiceImpl implements SpotService {
                 existingSector = oldSector.get();
                 sector.setDateOfCreation(existingSector.getDateOfCreation());
                 sector.setIdAccount(existingSector.getIdAccount());
+                sector.setWays(existingSector.getWays());
             }
         }else{
             sector.setDateOfCreation(new Date());
@@ -317,7 +319,7 @@ public class SpotServiceImpl implements SpotService {
         else
             fRating = HandlingEnumValues.getEnumRatingLevelFromAbbreviationValue(filter.getRating());
 
-        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating);
+        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating); //TODO
         List<SiteDTO> siteDTOList = new ArrayList<>();
         
         for (Site site : siteList){
@@ -387,7 +389,7 @@ public class SpotServiceImpl implements SpotService {
             existingSite = site.get();
         }
         
-        List<Sector> sectorList = sectorRepository.findAllBySite(existingSite);
+        List<Sector> sectorList = sectorRepository.findAllBySite(existingSite, Sort.by("dateOfCreation"));
         List<SectorDTO> sectorDTOList = new ArrayList<>();
         
         for (Sector sector : sectorList){
@@ -434,7 +436,7 @@ public class SpotServiceImpl implements SpotService {
                 existingSector = sector.get();
             }
             
-            List<Way> wayList = wayRepository.findAllBySector(existingSector);
+            List<Way> wayList = wayRepository.findAllBySector(existingSector, Sort.by("dateOfCreation"));
             List<WayDTO> wayDTOList = new ArrayList<>();
             
             for (Way way : wayList){

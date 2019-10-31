@@ -5,12 +5,12 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section>
-    <div id="message-box">
+<div class="container-fluid">
+    <div id="message-box" class="publication-dark background-custom">
         <div>
             <h1 class="text-center">Demande de prêt</h1>
         </div>
-        <div class="">
+        <div class="message">
             <div class="message-header">
                 <h2>Au sujet du topo "${topo.name}"</h2>
             </div>
@@ -26,13 +26,17 @@
                 <p class="error">${message}</p>
             </div>
         </c:if>
-        <div class="text-center">
-            <a href="<c:url value="/validAskForLending/${sessionScope.accountSession.id}/${topo.id}"/>">
-                <input type="button" class="btn-search text-center" value="Oui, j'ai compris"/></a>
-            <a href="<c:url value="/topo/${topo.id}"/>">
-                <input type="button" class="btn-search text-center" value="Non, je ne veux pas"/></a>
+        <div class="form-group row message-button">
+            <div class="col-md-2 offset-md-4 col-sm-12">
+                <a href="<c:url value="/validAskForLending/${sessionScope.accountSession.id}/${topo.id}"/>">
+                    <button type="button" class="btn btn-primary btn-block">Oui, j'ai compris</button></a>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <a href="<c:url value="/topo/${topo.id}"/>">
+                    <button type="button" class="btn btn-primary btn-block">Non, merci</button></a>
+            </div>
         </div>
     </div>
-</section>
+</div>
 
 <%@include file="common/footer.jsp" %>

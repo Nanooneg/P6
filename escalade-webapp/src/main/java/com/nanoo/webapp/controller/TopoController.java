@@ -2,7 +2,6 @@ package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.dto.AccountSessionDTO;
-import com.nanoo.business.dto.TopoBookingDTO;
 import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.TopoService;
@@ -183,17 +182,19 @@ public class TopoController {
     @GetMapping("/lendingRequestReceived/{userId}")
     public String displayLendingRequestReceived(@PathVariable String userId, Model model){
     
-        List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
-        List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));
+        /*List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
+        List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));*/
     
-        model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
-        model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);
+        /*model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
+        model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);*/
         
         return Views.LENDING_REQUEST;
     }
     
     @GetMapping("/validLendingRequest/{userId}/{topoBookingId}/{answer}")
-    public String giveAnswerToLendingRequest(@PathVariable String topoBookingId, @PathVariable String answer, Model model, @PathVariable String userId){
+    public String giveAnswerToLendingRequest(@PathVariable String topoBookingId,
+                                             @PathVariable String answer, Model model,
+                                             @PathVariable String userId){
         
         topoService.changeStatus(userId,topoBookingId,answer);
         

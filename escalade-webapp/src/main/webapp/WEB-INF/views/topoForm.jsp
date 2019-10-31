@@ -26,14 +26,14 @@
                            rows="3" cols="35" maxlength="300" cssClass="form-control"/>
             <form:errors path="description" cssClass="error"/>
         </div>
-        <div class="form-group">
+        <div class="form-group select-style">
             <form:select path="region" cssClass="form-control">
                 <form:option value="Région"/>
                 <form:options items="${listRegion}"/>
             </form:select>
             <form:errors path="region" cssClass="error"/>
         </div>
-        <div class="form-group">
+        <div class="form-group select-style">
             <form:select path="condition" cssClass="form-control">
                 <form:option value="Etat général"/>
                 <form:options items="${listCondition}"/>

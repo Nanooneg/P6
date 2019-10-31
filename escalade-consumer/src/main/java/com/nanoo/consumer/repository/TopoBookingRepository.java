@@ -24,7 +24,7 @@ public interface TopoBookingRepository extends PagingAndSortingRepository<TopoBo
      *
      * @param topoIdList if of topos concerned
      * @param sort way to sort result
-     * @return a list of topobooking if exist
+     * @return a list of topobooking if exist findAllTopoBookingByIdTopo
      */
     List<TopoBooking> findAllTopoBookingByIdTopo (Set<Integer> topoIdList, Sort sort);
     

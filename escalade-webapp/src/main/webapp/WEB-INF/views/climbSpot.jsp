@@ -10,7 +10,7 @@
     <div id="spot-form" class="search-dark">
         <form:form action="/climbSpot" method="post" class="background-custom" modelAttribute="searchAttribut">
             <div class="intro">
-                <h1 class="text-center">Site de grimpe</h1>
+                <h2 class="text-center">Site de grimpe</h2>
             </div>
             <div>
                 <c:if test="${empty message}"><br/></c:if>
@@ -48,11 +48,15 @@
                 <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
                 <label>Label officiel</label>
             </div>
-            <div class="form-group button">
-                <button type="submit" class="btn btn-primary btn-block">Rechercher</button>
-                <a href="<c:url value="/climbSpot"/>">
-                    <button type="button" class="btn btn-primary btn-block">Afficher tout</button>
-                </a>
+            <div class="form-group row">
+                <div class="col-md-2 offset-md-4 col-sm-12">
+                    <button type="submit" class="btn btn-primary btn-block">Rechercher</button>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <a href="<c:url value="/climbSpot"/>">
+                        <button type="button" class="btn btn-primary btn-block">Afficher tout</button>
+                    </a>
+                </div>
             </div>
             <div class="form-group bottom-link text-center">
                 <a href="<c:url value="/spotForm1"/>" class="forgot"><em class="fas fa-plus-circle"></em> Ajouter un site</a>
@@ -64,29 +68,39 @@
         <div class="row articles">
             <c:forEach items="${listSite}" var="site">
                 <div class="col-sm-6 col-md-4 item background-custom">
-                    <c:choose>
-                        <c:when test="${site.picturePath != null}">
-                            <a href="<c:url value="/site/${site.id}"/>">
-                                <img class="img-fluid" src="<c:url value="${site.picturePath}"/>" alt="photo du site">
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="<c:url value="/site/${site.id}"/>"><img src="<c:url value="/resources/pictures/no-picture.jpg"/>"
-                                             alt="pas d'image disponible"></a>
-                        </c:otherwise>
-                    </c:choose>
-                    <h3 class="name">
-                    <span>
-                        <c:if test="${site.officialLabel}">
-                        <img id="label-icon-result"
-                             src="<c:url value="/resources/pictures/label-3-white.png"/>"
-                             alt="label">
-                        </c:if>
-                    </span>
-                    ${site.name} - ${site.region}
-                    </h3>
-                    <p class="description">${site.description}</p>
-                    <a class="action" href="<c:url value="/site/${site.id}"/>"><em class="fa fa-arrow-circle-right"></em></a>
+                    <div class="item-picture">
+                        <c:choose>
+                            <c:when test="${site.picturePath != null}">
+                                <a href="<c:url value="/site/${site.id}"/>">
+                                    <img class="img-fluid" src="<c:url value="${site.picturePath}"/>" alt="photo du site">
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<c:url value="/site/${site.id}"/>"><img src="<c:url value="/resources/pictures/no-picture.jpg"/>"
+                                                                                 alt="pas d'image disponible"></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <div class="article-info">
+                        <div class="article-info-div">
+                            <h3 class="name">
+                            <span>
+                                <c:if test="${site.officialLabel}">
+                                <img id="label-icon-result"
+                                     src="<c:url value="/resources/pictures/label-3-white.png"/>"
+                                     alt="label">
+                                </c:if>
+                            </span>
+                                    ${site.name} - ${site.region}
+                            </h3>
+                        </div>
+                        <div class="article-info-div">
+                            <p class="description">${site.description}</p>
+                        </div>
+                        <div class="article-info-div">
+                            <a class="action" href="<c:url value="/site/${site.id}"/>"><em class="fa fa-arrow-circle-right"></em></a>
+                        </div>
+                    </div>
                 </div>
             </c:forEach>
         </div>

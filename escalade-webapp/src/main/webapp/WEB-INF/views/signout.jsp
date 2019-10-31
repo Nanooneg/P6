@@ -9,7 +9,7 @@
     <div>
         <h2 class="text-center">${sessionScope.accountSession.lastName}, ${message}</h2>
     </div>
-    <div class="button">
+    <div class="form-group">
         <a href="<c:url value="/user/unlog"/>" class="form-group">
             <button type="submit" class="btn btn-primary btn-block">${yes}</button>
         </a>

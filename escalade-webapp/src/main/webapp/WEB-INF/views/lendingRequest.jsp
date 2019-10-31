@@ -5,9 +5,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="common/header.jsp" %>
 
-<section>
-    <div id="message-box">
-        <div class="">
+<div class="container-fluid">
+    <div id="message-box" class="publication-dark background-custom">
+        <div>
             <h1 class="text-center">Prêt de topo</h1><br/>
         </div><br/>
         <c:if test="${!empty topoBookingReceived}">
@@ -77,6 +77,6 @@
             </div>
         </c:forEach>
     </div>
-</section>
+</div>
 
 <%@include file="common/footer.jsp" %>

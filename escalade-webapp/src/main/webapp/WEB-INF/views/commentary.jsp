@@ -13,19 +13,33 @@
         <div>
             <h1 class="text-center">Espace commentaire</h1>
         </div>
-        <div class="button">
-            <a href="<c:url value="/addComment/${publicationType}/${publicationId}"/>">
-                <button type="button" class="btn btn-primary btn-block">Commenter</button>
-            </a>
-            <a href="<c:url value="${publicationType.equals('topo') ? topo : spot}/${publicationId}"/>">
-                <button type="button" class="btn btn-primary btn-block">Revenir au ${publicationType}</button>
-            </a>
+        <div class="form-group row">
+            <div class="col-md-2 offset-md-4 col-sm-12">
+                <a href="<c:url value="/addComment/${publicationType}/${publicationId}"/>">
+                    <button type="button" class="btn btn-primary btn-block">Commenter</button>
+                </a>
+            </div>
+            <div class="col-md-2 col-sm-12">
+                <a href="<c:url value="${publicationType.equals('topo') ? topo : spot}/${publicationId}"/>">
+                    <button type="button" class="btn btn-primary btn-block">Revenir au ${publicationType}</button>
+                </a>
+            </div>
         </div>
         <div>
             <c:forEach items="${listCommentaries}" var="commentary">
                 <div class="commentary">
                     <div class="commentary-header">
-                        ${commentary.key.title} - écrit par ${commentary.value.firstName}
+                        <div>
+                            ${commentary.key.title}
+                        </div>
+                        <div class="commentary-date">
+                            ${commentary.value.firstName} le <fmt:formatDate value="${commentary.key.dateOfPublication}" pattern="dd/MM/yyyy HH:mm:ss"/>
+                        </div>
+                        <c:if test="${commentary.key.dateOfPublication != commentary.key.dateOfModification}">
+                            <div class="commentary-date">
+                                Modifié le <fmt:formatDate value="${commentary.key.dateOfModification}" pattern="dd/MM/yyyy HH:mm:ss"/>
+                            </div>
+                        </c:if>
                     </div>
                     <div class="commentary-text">
                         <p>${commentary.key.text}</p>
@@ -65,16 +79,6 @@
                                     <em class="fas fa-minus-circle"></em></a>
                             </c:if>
                         </div>
-                    </div>
-                    <div class="commentary-date row">
-                        <div class="col-md-2 col-sm-12">
-                            <fmt:formatDate value="${commentary.key.dateOfPublication}" pattern="dd/MM/yyyy HH:mm:ss"/>
-                        </div>
-                        <c:if test="${commentary.key.dateOfPublication != commentary.key.dateOfModification}">
-                            <div class="col-md-4 col-sm-12">
-                                Modifié le <fmt:formatDate value="${commentary.key.dateOfModification}" pattern="dd/MM/yyyy HH:mm:ss"/>
-                            </div>
-                        </c:if>
                     </div>
                 </div>
             </c:forEach>

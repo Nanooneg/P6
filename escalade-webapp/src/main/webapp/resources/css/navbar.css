@@ -7,18 +7,24 @@
     box-shadow: none;
     border: none;
     margin-bottom: 0;
+    position: fixed;
+    font-size: 20px;
 }
 
 @media (min-width:768px) {
     .navigation-clean-button {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        padding-top: .50rem;
+        padding-bottom: .50rem;
     }
 }
 
 .navigation-clean-button .navbar-brand {
     font-weight: bold;
     color: inherit;
+}
+
+.navigation-clean-button .navbar-brand img{
+    height: 60px;
 }
 
 .navigation-clean-button .navbar-brand:hover {
@@ -105,7 +111,6 @@
     text-shadow: none;
     padding: .5rem 1rem;
     transition: background-color 0.25s;
-    font-size: inherit;
 }
 
 .navigation-clean-button .navbar-text .action-button:hover {

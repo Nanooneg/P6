@@ -3,6 +3,7 @@ package com.nanoo.consumer.repository;
 import com.nanoo.model.entities.Sector;
 import com.nanoo.model.entities.Site;
 import com.nanoo.model.entities.Way;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +20,10 @@ public interface SectorRepository extends PagingAndSortingRepository<Sector,Inte
      * This method find all sectors contained in particular {@code site}.
      *
      * @param site site we are looking sectors for
+     * @param sort way of sort results
      * @return a list of sector contained in {@code site} if exist
      */
-    List<Sector> findAllBySite(Site site);
+    List<Sector> findAllBySite(Site site, Sort sort);
     
     /**
      * This method return a sector who contain a particular way

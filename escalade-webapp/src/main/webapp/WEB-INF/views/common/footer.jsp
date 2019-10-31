@@ -4,7 +4,7 @@
 --%>
 <%@ page pageEncoding="UTF-8" %>
 
-<%@include file="jQueryScript.jsp"%>
+<%@include file="script.jsp"%>
 
 </div>
 </body>

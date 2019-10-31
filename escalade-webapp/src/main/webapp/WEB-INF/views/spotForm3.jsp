@@ -22,7 +22,7 @@
                 <form:input path="name" placeholder="Nom" required="true" autofocus="autofocus" cssClass="form-control"/>
                 <form:errors path="name" cssClass="error"/>
             </div>
-            <div class="form-group">
+            <div class="form-group select-style">
                 <form:select path="rating" cssClass="form-control">
                     <form:option value="">Cotations</form:option>
                     <form:options items="${listRating}"/>
@@ -30,14 +30,16 @@
                 <form:errors path="rating" cssClass="error"/>
             </div>
             <div class="form-group">
-                <form:input path="height" type="tel" required="true" placeholder="Hauteur (en m)" cssClass="form-control"/>
+                <label>Hauteur (en m) :</label>
+                <form:input path="height" type="number" required="true" cssClass="form-control"/>
             </div>
             <div class="form-group">
-                <form:input path="pitchNbr" type="tel" required="true" placeholder="Nombre de longueur" cssClass="form-control"/>
+                <label>Nombre de longueur :</label>
+                <form:input path="pitchNbr" type="number" required="true" cssClass="form-control"/>
             </div>
             <div class="form-group">
-                <label>nombre de point d'ancrage :</label>
-                <form:input path="anchorNbr" type="tel" required="true" placeholder="Point d'ancrage" cssClass="form-control"/>
+                <label>Point d'ancrage :</label>
+                <form:input path="anchorNbr" type="number" required="true" cssClass="form-control"/>
             </div>
             <div class="form-group">
                 <button type="submit" name="submit" class="btn btn-primary btn-block">Enregistrer</button>
