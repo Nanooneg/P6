@@ -69,7 +69,7 @@ public class HandlingEnumValues {
     
     /**
      * This method return the level value associated to the abbreviation in enum
-     * TODO maybe simplify this method (use previous method same code)
+     *
      * @return the level value
      */
     public static int getEnumRatingLevelFromAbbreviationValue (String abbreviation){

@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Repository
 public interface SiteRepository extends PagingAndSortingRepository<Site,Integer> {
-    
     /**
      * This method find all sites in DB who match with criteria passed in parameter.
      * It use a custom query request.
@@ -27,16 +26,18 @@ public interface SiteRepository extends PagingAndSortingRepository<Site,Integer>
      * @param ratingLevel ratingLevel minimum to found in ways contained in sites
      * @return a list of site who match with criteria
      */
-    @Query(value = "SELECT distinct s.* FROM Site s " +
-                   "INNER JOIN Sector sec ON s.id = sec.id_site " +
-                   "INNER JOIN Way w ON sec.id = w.id_sector " +
-                   "WHERE (SELECT COUNT(sec.id) FROM Sector sec WHERE sec.id_site = s.id) >= :sectorNbrMin " +
-                   "AND (:region = 'all' OR s.region = :region) " +
-                   "AND (:isLabelOfficial = false OR s.is_official_label = :isLabelOfficial) " +
-                   "AND (w.rating_level <= :ratingLevel)",
-           nativeQuery = true)
+    @Query(value = "SELECT distinct site.* FROM site " +
+            "LEFT JOIN sector ON site.id = sector.id_site " +
+            "LEFT JOIN way ON sector.id = way.id_sector " +
+            "WHERE (:region = 'all' OR site.region = :region) " +
+            "AND (:isLabelOfficial = false OR site.is_official_label = :isLabelOfficial) " +
+            "AND (SELECT COUNT(sector.id) FROM sector WHERE sector.id_site = site.id) >= :sectorNbrMin " +
+            "AND (way.rating_level <= :ratingLevel)",
+            nativeQuery = true)
     List<Site> findAllByFilter (@Param("sectorNbrMin") int sectorNbrMin, @Param("region") String region,
                                 @Param("isLabelOfficial") boolean isLabelOfficial, @Param("ratingLevel") int ratingLevel);
+    
+    
     
     /**
      * This method find all sites posted by a particular userId.

@@ -24,7 +24,7 @@ public class Site extends Publication implements Serializable {
     private String region;
     @Column(name = "is_official_label", nullable = false)
     private boolean officialLabel;
-    @OneToMany(mappedBy = "site", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "site", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<Sector> sectors;
     @Column(name = "picture_path")
     private String picturePath;
@@ -32,13 +32,4 @@ public class Site extends Publication implements Serializable {
     @Transient
     private MultipartFile picture;
     
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-    
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

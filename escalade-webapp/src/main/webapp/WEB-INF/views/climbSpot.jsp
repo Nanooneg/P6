@@ -45,7 +45,7 @@
             </div>
             <br/>
             <div class="form-group">
-                <form:checkbox path="officialLabel" value="true" cssClass="checkbox-boolean"/>
+                <form:checkbox path="officialLabel" cssClass="checkbox-boolean"/>
                 <label>Label officiel</label>
             </div>
             <div class="form-group row">

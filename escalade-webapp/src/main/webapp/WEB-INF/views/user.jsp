@@ -17,7 +17,9 @@
         <div class="row form-group">
             <div class="col-md-4 offset-md-4 col-sm-12">
                 <a href="<c:url value="/lendingRequestReceived/${sessionScope.accountSession.id }"/>">
-                    <button type="button" class="btn btn-primary btn-block">Demandes de prêt :${topoBookingReceived}</button>
+                    <button type="button" class="btn btn-primary btn-block">
+                        Demandes de prêt : ${topoBookingReceived + topoBookingSent}
+                    </button>
                 </a>
             </div>
         </div>

@@ -19,16 +19,7 @@ public class Sector extends Publication {
     @ManyToOne
     @JoinColumn(name = "id_site", nullable = false)
     private Site site;
-    @OneToMany(mappedBy = "sector", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "sector", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<Way> ways;
     
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-    
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

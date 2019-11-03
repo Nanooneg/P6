@@ -44,6 +44,8 @@ public class SpotServiceImpl implements SpotService {
     
     private static final String SITE_ATT = "site";
     
+    private static final String DATE_OF_CREATION_FIELD = "dateOfCreation";
+    
     private String result;
     private DateUtil dateUtil;
     private UploadUtil uploadUtil;
@@ -98,7 +100,6 @@ public class SpotServiceImpl implements SpotService {
                 oldPicturePath = site.getPicturePath();
             }
         }else{
-            site.setOfficialLabel(false); // label is set false by default.
             site.setDateOfCreation(new Date());
         }
         
@@ -239,7 +240,7 @@ public class SpotServiceImpl implements SpotService {
      */
     @Override
     public List<SiteDTO> findAllSite(){
-        Iterable<Site> siteIterable = siteRepository.findAll(Sort.by("dateOfCreation"));
+        Iterable<Site> siteIterable = siteRepository.findAll(Sort.by(DATE_OF_CREATION_FIELD));
         List<SiteDTO> siteDTOList = new ArrayList<>();
         
         for (Site site : siteIterable){
@@ -257,7 +258,7 @@ public class SpotServiceImpl implements SpotService {
      */
     @Override
     public List<SiteDTO> searchSiteByAccountId(Integer accountId) {
-        Iterable<Site> siteIterable = siteRepository.findAllByIdAccount(accountId, Sort.by("dateOfCreation"));
+        Iterable<Site> siteIterable = siteRepository.findAllByIdAccount(accountId, Sort.by(DATE_OF_CREATION_FIELD));
         List<SiteDTO> siteDTOList = new ArrayList<>();
     
         for (Site site : siteIterable){
@@ -314,12 +315,13 @@ public class SpotServiceImpl implements SpotService {
         int fSectorNbrMin = Integer.parseInt(filter.getSectorNbrMin());
         boolean fOfficialLabel = filter.isOfficialLabel();
         int fRating;
+        
         if (filter.getRating().equals("all"))
             fRating = 20;
         else
             fRating = HandlingEnumValues.getEnumRatingLevelFromAbbreviationValue(filter.getRating());
-
-        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating); //TODO
+        
+        List<Site> siteList = siteRepository.findAllByFilter(fSectorNbrMin,fRegion,fOfficialLabel,fRating);
         List<SiteDTO> siteDTOList = new ArrayList<>();
         
         for (Site site : siteList){
@@ -389,7 +391,7 @@ public class SpotServiceImpl implements SpotService {
             existingSite = site.get();
         }
         
-        List<Sector> sectorList = sectorRepository.findAllBySite(existingSite, Sort.by("dateOfCreation"));
+        List<Sector> sectorList = sectorRepository.findAllBySite(existingSite, Sort.by(DATE_OF_CREATION_FIELD));
         List<SectorDTO> sectorDTOList = new ArrayList<>();
         
         for (Sector sector : sectorList){
@@ -436,7 +438,7 @@ public class SpotServiceImpl implements SpotService {
                 existingSector = sector.get();
             }
             
-            List<Way> wayList = wayRepository.findAllBySector(existingSector, Sort.by("dateOfCreation"));
+            List<Way> wayList = wayRepository.findAllBySector(existingSector, Sort.by(DATE_OF_CREATION_FIELD));
             List<WayDTO> wayDTOList = new ArrayList<>();
             
             for (Way way : wayList){

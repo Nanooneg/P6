@@ -32,13 +32,4 @@ public class Way extends Publication{
     @Column(name = "anchor_nbr")
     private int anchorNbr;
     
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
-    
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

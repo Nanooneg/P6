@@ -93,6 +93,12 @@ body {
     font-weight: bold;
 }
 
+#message-box .lending-title h1{
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 5px 0 5px;
+}
+
 #home-box h1{
     margin-bottom: 30px;
 }
@@ -191,10 +197,11 @@ body {
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
+    justify-items: center;
 
 }
 
-.commentary-header div{
+.commentary-header div, .message-header div{
     margin: 0 10px 0 10px;
 }
 
@@ -228,6 +235,8 @@ body {
 
 .message-button{
     padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*============ Buttons ============*/
@@ -251,7 +260,7 @@ body {
     margin: 10px 0 10px;
 }
 
-.publication-dark .btn-primary:hover, .publication-dark .btn-primary:active, .publication-dark .btn-primary:focus
+.publication-dark .btn-primary:hover, .publication-dark .btn-primary:active, .publication-dark .btn-primary:focus,
 #home-box .btn-primary:hover, #home-box .btn-primary:active, #home-box .btn-primary:focus{
     background: #616161;
     outline: none;

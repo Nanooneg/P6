@@ -2,8 +2,10 @@ package com.nanoo.webapp.controller;
 
 import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.dto.AccountSessionDTO;
+import com.nanoo.business.dto.TopoBookingDTO;
 import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.serviceContract.AccountService;
+import com.nanoo.business.serviceContract.TopoBookingService;
 import com.nanoo.business.serviceContract.TopoService;
 import com.nanoo.business.util.HandlingEnumValues;
 import com.nanoo.business.util.SearchFilter;
@@ -44,11 +46,13 @@ public class TopoController {
     private List<String> listCondition = HandlingEnumValues.getEnumConditionStringValues();
     
     private final TopoService topoService;
+    private final TopoBookingService topoBookingService;
     private final AccountService accountService;
     
     @Autowired
-    public TopoController(TopoService topoService, AccountService accountService) {
+    public TopoController(TopoService topoService, TopoBookingService topoBookingService, AccountService accountService) {
         this.topoService = topoService;
+        this.topoBookingService = topoBookingService;
         this.accountService = accountService;
     }
     
@@ -170,11 +174,11 @@ public class TopoController {
     public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId,
                                     @SessionAttribute(value = "accountSession")AccountSessionDTO accountSessionDTO){
         
-        if (!topoService.checkTopoBookingAskRequest(accountId,topoId)) {
+        if (!topoBookingService.checkTopoBookingAskRequest(accountId,topoId)) {
             model.addAttribute(MESSAGE_ATT,ALREADY_ASK_MESS);
             return askForLending(model,topoId,accountSessionDTO);
         }
-        topoService.saveTopoBooking(Integer.parseInt(accountId),Integer.parseInt(topoId));
+        topoBookingService.saveTopoBooking(Integer.parseInt(accountId),Integer.parseInt(topoId));
         
         return displayTopo(topoId,model);
     }
@@ -182,11 +186,11 @@ public class TopoController {
     @GetMapping("/lendingRequestReceived/{userId}")
     public String displayLendingRequestReceived(@PathVariable String userId, Model model){
     
-        /*List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
-        List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));*/
+        List<TopoBookingDTO> topoBookingReceivedDTOList = topoBookingService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
+        List<TopoBookingDTO> topoBookingSentDTOList = topoBookingService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));
     
-        /*model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
-        model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);*/
+        model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
+        model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);
         
         return Views.LENDING_REQUEST;
     }
@@ -195,16 +199,16 @@ public class TopoController {
     public String giveAnswerToLendingRequest(@PathVariable String topoBookingId,
                                              @PathVariable String answer, Model model,
                                              @PathVariable String userId){
-        
-        topoService.changeStatus(userId,topoBookingId,answer);
+    
+        topoBookingService.changeStatus(userId,topoBookingId,answer);
         
         return displayLendingRequestReceived(userId,model);
     }
     
     @GetMapping("/deleteTopoBooking/{userId}/{topoBookingId}")
     public String deleteTopoBooking(@PathVariable String userId, @PathVariable String topoBookingId, Model model){
-        
-        topoService.deleteTopoBooking(Integer.parseInt(topoBookingId));
+    
+        topoBookingService.deleteTopoBooking(Integer.parseInt(topoBookingId));
         
         return displayLendingRequestReceived(userId, model);
     }
