@@ -3,6 +3,7 @@ package com.nanoo.webapp.controller;
 import com.nanoo.business.dto.*;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.serviceContract.SpotService;
+import com.nanoo.business.serviceContract.TopoBookingService;
 import com.nanoo.business.serviceContract.TopoService;
 import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,14 @@ public class UserController {
     private final AccountService accountService;
     private final SpotService spotService;
     private final TopoService topoService;
+    private final TopoBookingService topoBookingService;
     
     @Autowired
-    public UserController(AccountService accountService, SpotService spotService, TopoService topoService) {
+    public UserController(AccountService accountService, SpotService spotService, TopoService topoService, TopoBookingService topoBookingService) {
         this.accountService = accountService;
         this.spotService = spotService;
         this.topoService = topoService;
+        this.topoBookingService = topoBookingService;
     }
     
     @PostMapping("/user-area")
@@ -61,12 +64,14 @@ public class UserController {
     
         List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountSessionDTO.getId());
         List<SiteDTO> siteDTOList = spotService.searchSiteByAccountId(accountSessionDTO.getId());
-        List<TopoBookingDTO> topoBookingReceivedDTOList = topoService.searchAllTopoBookingByTopoAccountIdWithPendingStatus(accountSessionDTO.getId());
-        List<TopoBookingDTO> topoBookingSentDTOList = topoService.searchAllTopoBookingByAccountId(accountSessionDTO.getId());
+        List<TopoBookingDTO> topoBookingReceivedPendingStatusDTOList =
+                topoBookingService.searchAllTopoBookingByIdOwnerWithPendingStatus(accountSessionDTO.getId());
+        List<TopoBookingDTO> topoBookingSentDTOList =
+                topoBookingService.searchAllTopoBookingByIdBorrower(accountSessionDTO.getId());
         
         model.addAttribute(LIST_TOPO_ATT, topoDTOList);
         model.addAttribute(LIST_SITE_ATT, siteDTOList);
-        model.addAttribute(TOPOBOOKING_R_ATT, topoBookingReceivedDTOList.size());
+        model.addAttribute(TOPOBOOKING_R_ATT, topoBookingReceivedPendingStatusDTOList.size());
         model.addAttribute(TOPOBOOKING_S_ATT, topoBookingSentDTOList.size());
         
         return Views.USER_HOME;

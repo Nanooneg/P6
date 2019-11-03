@@ -186,8 +186,10 @@ public class TopoController {
     @GetMapping("/lendingRequestReceived/{userId}")
     public String displayLendingRequestReceived(@PathVariable String userId, Model model){
     
-        List<TopoBookingDTO> topoBookingReceivedDTOList = topoBookingService.searchAllTopoBookingByTopoAccountId(Integer.parseInt(userId));
-        List<TopoBookingDTO> topoBookingSentDTOList = topoBookingService.searchAllTopoBookingByAccountId(Integer.parseInt(userId));
+        List<TopoBookingDTO> topoBookingReceivedDTOList =
+                topoBookingService.searchAllTopoBookingByIdOwner(Integer.parseInt(userId));
+        List<TopoBookingDTO> topoBookingSentDTOList =
+                topoBookingService.searchAllTopoBookingByIdBorrower(Integer.parseInt(userId));
     
         model.addAttribute(TOPOBOOKING_RECEIVED_ATT, topoBookingReceivedDTOList);
         model.addAttribute(TOPOBOOKING_SENT_ATT, topoBookingSentDTOList);

@@ -37,6 +37,14 @@ public interface TopoBookingRepository extends PagingAndSortingRepository<TopoBo
     List<TopoBooking> findAllByIdAccountBorrower (Integer accountId);
     
     /**
+     * TODO
+     *
+     * @param accountId
+     * @return
+     */
+    List<TopoBooking> findAllByIdAccountOwner (Integer accountId);
+    
+    /**
      * This method remove topoBooking who expire
      *
      * @param currentDate current date to compare with dateOfExpiry

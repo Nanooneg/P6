@@ -23,6 +23,8 @@ public class TopoBooking implements Serializable {
     private Integer id;
     @Column(name = "id_account_borrower", nullable = false)
     private Integer idAccountBorrower;
+    @Column(name = "id_account_owner", nullable = false)
+    private Integer idAccountOwner;
     @Column(name = "id_topo", nullable = false)
     private Integer idTopo;
     @Column(name = "status", length = 10, nullable = false)

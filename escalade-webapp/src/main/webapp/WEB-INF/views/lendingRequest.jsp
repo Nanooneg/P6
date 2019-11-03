@@ -23,34 +23,36 @@
             </div>
         </c:if>
         <c:forEach items="${topoBookingReceived}" var="tBooking">
-            <div class="message row">
-                <div class="message-header col-md-12 text-center">
-                    <div>
-                        <h2>Demande n° ${tBooking.id}</h2>
-                    </div>
-                    <div>
-                        <h2>Statut : <span class="
+            <c:if test="${tBooking.status == 'En attente'}">
+                <div class="message row">
+                    <div class="message-header col-md-12 text-center">
+                        <div>
+                            <h2>Demande n° ${tBooking.id}</h2>
+                        </div>
+                        <div>
+                            <h2>Statut : <span class="
                         <c:choose>
                             <c:when test="${tBooking.status == 'Accepté'}">accepted</c:when>
                             <c:when test="${tBooking.status == 'Refusé'}">refused</c:when>
                             <c:otherwise>pending</c:otherwise>
                         </c:choose>
                         ">${tBooking.status}</span></h2>
+                        </div>
                     </div>
+                    <c:if test="${tBooking.status == 'En attente'}">
+                        <div class="col-md-12 form-group row message-button">
+                            <div class="col-md-2 offset-md-4 col-sm-12">
+                                <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/acceptance"/>">
+                                    <button type="button" class="btn btn-primary btn-block">Oui, j'ai compris</button></a>
+                            </div>
+                            <div class="col-md-2 col-sm-12">
+                                <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/refusal"/>">
+                                    <button type="button" class="btn btn-primary btn-block">Non, merci</button></a>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
-                <c:if test="${tBooking.status == 'En attente'}">
-                    <div class="col-md-12 form-group row message-button">
-                        <div class="col-md-2 offset-md-4 col-sm-12">
-                            <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/acceptance"/>">
-                                <button type="button" class="btn btn-primary btn-block">Oui, j'ai compris</button></a>
-                        </div>
-                        <div class="col-md-2 col-sm-12">
-                            <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/refusal"/>">
-                                <button type="button" class="btn btn-primary btn-block">Non, merci</button></a>
-                        </div>
-                    </div>
-                </c:if>
-            </div>
+            </c:if>
         </c:forEach>
         <div class="message-text">
             <p>Nous vous rappelons qu'après le retour d'un topo, vous devez changer vous-même son

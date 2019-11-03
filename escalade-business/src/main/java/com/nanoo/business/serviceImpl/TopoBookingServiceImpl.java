@@ -59,6 +59,7 @@ public class TopoBookingServiceImpl implements TopoBookingService {
         
         tBooking.setIdTopo(topoId);
         tBooking.setIdAccountBorrower(accountId);
+        tBooking.setIdAccountOwner(topoRepository.getAccountIdByTopoId(topoId));
         tBooking.setStatus(EnumStatus.PENDING.getAbbreviation());
         tBooking.setDateOfCreation(new Date());
         tBooking.setDateOfUpdate(new Date());
@@ -67,30 +68,7 @@ public class TopoBookingServiceImpl implements TopoBookingService {
         topoBookingRepository.save(tBooking);
     }
     
-    /**
-     * This method search all topobooking who concern particular Topo owner user.
-     *
-     * @param accountId id of user concerned
-     * @return list of topobooking if exist
-     */
-    @Override
-    public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountId(Integer accountId){
-        List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountId);
-        Set<Integer> topoIdList = new HashSet<>();
-        
-        for (TopoDTO topoDTO : topoDTOList){
-            topoIdList.add(topoDTO.getId());
-        }
-        
-        List<TopoBooking> topoBookingList = topoBookingRepository.findAllTopoBookingByIdTopo(topoIdList, Sort.by("status","dateOfExpiry"));
-        List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
-        
-        for (TopoBooking topoBooking : topoBookingList){
-            topoBookingDTOList.add(topoBookingMapper.fromTopoBookingToDto(topoBooking));
-        }
-        
-        return topoBookingDTOList;
-    }
+    
     
     /**
      * This method search all topobooking who concern particular Topo owner user but return only pending status topobooking.
@@ -99,8 +77,8 @@ public class TopoBookingServiceImpl implements TopoBookingService {
      * @return list of topobooking with pending status if exist
      */
     @Override
-    public List<TopoBookingDTO> searchAllTopoBookingByTopoAccountIdWithPendingStatus(Integer accountId){
-        List<TopoBookingDTO> topoBookingDTOList = searchAllTopoBookingByTopoAccountId(accountId);
+    public List<TopoBookingDTO> searchAllTopoBookingByIdOwnerWithPendingStatus(Integer accountId){
+        List<TopoBookingDTO> topoBookingDTOList = searchAllTopoBookingByIdOwner(accountId);
         List<TopoBookingDTO> topoBookingPendingDTOList = new ArrayList<>();
         
         for (TopoBookingDTO topoBookingDTO : topoBookingDTOList){
@@ -119,9 +97,28 @@ public class TopoBookingServiceImpl implements TopoBookingService {
      * @return list of topoBooking if exist
      */
     @Override
-    public List<TopoBookingDTO> searchAllTopoBookingByAccountId(int accountId) {
+    public List<TopoBookingDTO> searchAllTopoBookingByIdBorrower(int accountId) {
         
         List<TopoBooking> topoBookingList = topoBookingRepository.findAllByIdAccountBorrower(accountId);
+        List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
+        
+        for (TopoBooking topoBooking : topoBookingList){
+            topoBookingDTOList.add(topoBookingMapper.fromTopoBookingToDto(topoBooking));
+        }
+        
+        return topoBookingDTOList;
+    }
+    
+    /**
+     * This method search all topobooking who concern particular user.
+     *
+     * @param accountId id of user
+     * @return list of topoBooking if exist
+     */
+    @Override
+    public List<TopoBookingDTO> searchAllTopoBookingByIdOwner(int accountId) {
+        
+        List<TopoBooking> topoBookingList = topoBookingRepository.findAllByIdAccountOwner(accountId);
         List<TopoBookingDTO> topoBookingDTOList = new ArrayList<>();
         
         for (TopoBooking topoBooking : topoBookingList){

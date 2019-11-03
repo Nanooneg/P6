@@ -49,8 +49,18 @@ public interface TopoRepository extends PagingAndSortingRepository<Topo,Integer>
      * @param accountId id of user
      * @return a list of Integer is topos exist
      */
-    @Query(value = "SELECT t.id FROM topo t " +
-            "WHERE t.id_account = :accountId",
-            nativeQuery = true)
+    @Query(value = "SELECT t.id FROM topo t WHERE t.id_account = :accountId",
+           nativeQuery = true)
     Set<Integer> getTopoIdByAccountId(@Param("accountId") Integer accountId);
+    
+    /**
+     * TODO
+     *
+     * @param topoId
+     * @return
+     */
+    @Query(value = "SELECT t.id_account FROM topo t WHERE t.id = :topoId",
+           nativeQuery = true)
+    Integer getAccountIdByTopoId(@Param("topoId") Integer topoId);
+    
 }

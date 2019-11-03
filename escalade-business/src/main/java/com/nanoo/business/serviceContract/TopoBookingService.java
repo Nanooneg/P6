@@ -19,20 +19,12 @@ public interface TopoBookingService {
     void saveTopoBooking(Integer accountId, Integer topoId);
     
     /**
-     * This method search all topobooking who concern particular Topo owner user.
-     *
-     * @param accountId id of user concerned
-     * @return list of topobooking if exist
-     */
-    List<TopoBookingDTO> searchAllTopoBookingByTopoAccountId(Integer accountId);
-    
-    /**
      * This method search all topobooking who concern particular Topo owner user but return only pending status topobooking.
      *
      * @param accountId id of user concerned
      * @return list of topobooking with pending status if exist
      */
-    List<TopoBookingDTO> searchAllTopoBookingByTopoAccountIdWithPendingStatus(Integer accountId);
+    List<TopoBookingDTO> searchAllTopoBookingByIdOwnerWithPendingStatus(Integer accountId);
     
     /**
      * This method search all topobooking who concern particular vuser.
@@ -40,7 +32,15 @@ public interface TopoBookingService {
      * @param accountId id of user
      * @return list of topoBooking if exist
      */
-    List<TopoBookingDTO> searchAllTopoBookingByAccountId(int accountId);
+    List<TopoBookingDTO> searchAllTopoBookingByIdBorrower(int accountId);
+    
+    /**
+     * This method search all topobooking who concern particular user.
+     *
+     * @param accountId id of user
+     * @return list of topoBooking if exist
+     */
+    List<TopoBookingDTO> searchAllTopoBookingByIdOwner(int accountId);
     
     /**
      * This method change topobooking status and if needed topo Lendable status too.
