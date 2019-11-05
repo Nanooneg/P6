@@ -36,7 +36,7 @@
                 </span>
                 Description du Site (${site.region}):
             </p>
-            <p class="description">${site.description}</p>
+            <p class="description text-justify">${site.description}</p>
             <div class="icon-bar">
                 <div class="d-none d-md-block">
                     <a href="/commentary/spot/${site.id}" class="text-info-link">
@@ -99,7 +99,7 @@
                 </div>
                 <div>
                     <p class="info-title">Description du Secteur : </p>
-                    <p class="description">${sector.description}</p>
+                    <p class="description text-justify">${sector.description}</p>
                     <c:if test="${wayListBySectorId[sector.id].size() != 0}">
                         <p class="info-title before-loop">Liste des voies :</p>
                     </c:if>
@@ -130,7 +130,7 @@
                                 <div class="way-info">
                                     <a data-toggle="collapse" href="#collapse${way.id}" role="button"
                                        aria-expanded="false" aria-controls="collapseExample">
-                                    voie n°${wayStatus.count} : ${way.name} ( ${way.rating} ) <em class="fas fa-angle-double-down"></em>
+                                    N°${wayStatus.count} : ${way.name} ( ${way.rating} ) <em class="fas fa-angle-double-down"></em>
                                     </a>
                                 </div>
                             </div>

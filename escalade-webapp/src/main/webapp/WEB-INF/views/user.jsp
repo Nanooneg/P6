@@ -35,9 +35,11 @@
         </div>
     </div>
 
-    <div class="publication-dark background-custom text-center">
-        <h1>Mes topos</h1>
-    </div>
+    <c:if test="${!empty listTopo}">
+        <div class="publication-dark background-custom text-center">
+            <h1>Mes topos</h1>
+        </div>
+    </c:if>
     <div class="article-list">
         <div class="row articles">
             <c:forEach items="${listTopo}" var="topo">
@@ -93,9 +95,11 @@
         </div>
     </div>
 
-    <div class="publication-dark background-custom text-center">
-        <h1>Mes sites publiés</h1>
-    </div>
+    <c:if test="${!empty listSite}">
+        <div class="publication-dark background-custom text-center">
+            <h1>Mes sites publiés</h1>
+        </div>
+    </c:if>
     <div class="article-list">
         <div class="row articles">
             <c:forEach items="${listSite}" var="site">

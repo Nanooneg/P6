@@ -21,15 +21,16 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<c:url value="/climbSpot"/>">Site de grimpe</a></li>
                 </ul>
                 <span class="navbar-text actions">
+                    <c:if test="${sessionScope.accountSession == null}">
+                        <a class="login" href="<c:url value="/login"/>">Connexion</a>
+                    </c:if>
                     <c:choose>
                         <c:when test="${sessionScope.accountSession != null}">
-                            <a class="login" href="<c:url value="/signout"/>">Déconnexion</a>
-                        </c:when>
+                            <a class="btn btn-light action-button" role="button" href="<c:url value="/signout"/>">Déconnexion</a>                        </c:when>
                         <c:otherwise>
-                            <a class="login" href="<c:url value="/login"/>">Connexion</a>
+                            <a class="btn btn-light action-button" role="button" href="<c:url value="/register"/>">Créer un compte</a>
                         </c:otherwise>
                     </c:choose>
-                    <a class="btn btn-light action-button" role="button" href="<c:url value="/register"/>">Créer un compte</a>
                 </span>
             </div>
         </div>
