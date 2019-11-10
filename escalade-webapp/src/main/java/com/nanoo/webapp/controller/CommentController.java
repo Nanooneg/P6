@@ -23,13 +23,16 @@ import java.util.Map;
 @Controller
 public class CommentController {
     
-    private static final String ACCOUNT_ATT = "account";
+    /* Attributes names */
     private static final String MESSAGE_ATT = "message";
     private static final String PUBLICATION_ID_ATT = "publicationId";
     private static final String PUBLICATION_TYPE_ATT = "publicationType";
     private static final String COMMENTARY_ID_ATT = "commentaryId";
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
+    
+    /* Redirection */
+    private static final String LOGIN_REDIRECT = "redirect:/login";
     
     private final CommentaryService commentaryService;
     
@@ -59,10 +62,9 @@ public class CommentController {
     @GetMapping("/addComment/{publicationType}/{publicationId}")
     public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model,
                                      @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-    
+        
         if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
+            return LOGIN_REDIRECT;
         }
         
         model.addAttribute(COMMENTARY_ATT, new CommentaryDTO());
@@ -115,6 +117,7 @@ public class CommentController {
     @GetMapping("/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
     public String deleteCommentAnsDisplayCommentaryView(@PathVariable String publicationId, @PathVariable String commentaryId,
                                                         Model model, @PathVariable String publicationType){
+        
         commentaryService.deleteCommentById(Integer.parseInt(commentaryId));
         
         return displayCommentaryView(publicationType, publicationId, model);

@@ -23,6 +23,7 @@ import java.util.List;
 @SessionAttributes("accountSession")
 public class UserController {
     
+    /* Attributes names */
     private static final String ACCOUNT_SERV_ATT = "registration";
     private static final String ACCOUNT_ATT = "account";
     private static final String ACCOUNT_SESSION_ATT = "accountSession";
@@ -61,7 +62,7 @@ public class UserController {
     
     @GetMapping("/user-area")
     public String getUserHomeView(@SessionAttribute("accountSession") AccountSessionDTO accountSessionDTO, Model model){
-    
+        
         List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountSessionDTO.getId());
         List<SiteDTO> siteDTOList = spotService.searchSiteByAccountId(accountSessionDTO.getId());
         List<TopoBookingDTO> topoBookingReceivedPendingStatusDTOList =
@@ -79,7 +80,7 @@ public class UserController {
     
     @GetMapping("/unlog")
     public String logout(SessionStatus status){
-
+        
         status.setComplete();
         
         return Views.HOME;

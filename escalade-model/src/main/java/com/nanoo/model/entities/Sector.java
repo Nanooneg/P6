@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Sector extends Publication {
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_site", nullable = false)
     private Site site;
     @OneToMany(mappedBy = "sector", orphanRemoval = true, cascade = CascadeType.REMOVE)

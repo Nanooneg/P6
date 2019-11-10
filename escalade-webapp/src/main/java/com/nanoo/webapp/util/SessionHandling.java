@@ -8,16 +8,18 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SessionHandling {
     
+    private SessionHandling() {}
+    
     /**
-     * This method is used to clear the cache of browser. When user use éprevious button" after log out
+     * This method is used to clear the cache of browser. When user use previous button" after log out
      * it avoid to get back in logged status.
      *
      * @param response httpResponse who contain parameter used to clear the cache
      */
-    public void clearCache(HttpServletResponse response) {
-        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
-        response.setHeader("Progma","no-cache");
-        response.setDateHeader("Expires",0);
+    public static void clearCache(HttpServletResponse response) {
+        response.setHeader("Cache-Control","no-cache,no-store,must-revalidate"); // HTTP 1.1
+        response.setHeader("Pragma","no-cache"); // HTTP 1.0
+        response.setHeader("Expires","0"); // Proxies
     }
-
+    
 }

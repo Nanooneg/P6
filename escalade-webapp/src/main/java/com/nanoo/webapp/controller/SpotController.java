@@ -25,6 +25,7 @@ import java.util.Map;
 @Controller
 public class SpotController {
     
+    /* Attributes names */
     private static final String ACCOUNT_ATT = "account";
     private static final String SPOT_SERV_ATT = "saveSpot";
     private static final String LIST_SITE_ATT = "listSite";
@@ -39,6 +40,9 @@ public class SpotController {
     private static final String LIST_SECTOR_ATT = "listSector";
     private static final String WAY_ATT = "way";
     private static final String MAP_WAY_BY_SECTOR_ID_ATT = "wayListBySectorId";
+    
+    /* Redirection */
+    private static final String LOGIN_REDIRECT = "redirect:/login";
     
     private List<String> listRating = HandlingEnumValues.getEnumRatingStringValues();
     private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
@@ -103,10 +107,9 @@ public class SpotController {
     @GetMapping("/spotForm1")
     public String displaySpotFormSiteStep (Model model,
                                            @SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
-        
+    
         if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
+            return LOGIN_REDIRECT;
         }
         
         model.addAttribute(SITE_ATT,new SiteDTO());
@@ -127,10 +130,9 @@ public class SpotController {
     @GetMapping("/spotForm2/{siteId}")
     public String displaySpotFormSectorStep(Model model, @PathVariable String siteId,
                                             @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO) {
-        
+    
         if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
+            return LOGIN_REDIRECT;
         }
         
         model.addAttribute(SECTOR_ATT,new SectorDTO());
@@ -151,10 +153,9 @@ public class SpotController {
     @GetMapping("/spotForm3/{sectorId}")
     public String displaySpotFormWayStep(Model model, @PathVariable String sectorId,
                                          @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-        
+    
         if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
+            return LOGIN_REDIRECT;
         }
     
         model.addAttribute(WAY_ATT,new WayDTO());
@@ -207,11 +208,6 @@ public class SpotController {
     public String deleteSite(@PathVariable String siteId, Model model,
                              @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
         
-        if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
-        }
-        
         spotService.deleteSiteWithId(Integer.parseInt(siteId));
         
         return displaySpotPage(model);
@@ -244,11 +240,6 @@ public class SpotController {
     @GetMapping("/deleteSector/{siteId}/{sectorId}")
     public String deleteSector(@PathVariable String sectorId, Model model, @PathVariable String siteId,
                                @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-        
-        if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
-        }
         
         spotService.deleteSectorWithId(Integer.parseInt(sectorId));
         
@@ -284,11 +275,6 @@ public class SpotController {
     @GetMapping("/deleteWay/{siteId}/{wayId}")
     public String deleteWay(@PathVariable String wayId, Model model, @PathVariable String siteId,
                             @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-
-        if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
-        }
         
         spotService.deleteWayWithId(Integer.parseInt(wayId));
         
