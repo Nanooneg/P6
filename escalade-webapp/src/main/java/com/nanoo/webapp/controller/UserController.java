@@ -19,7 +19,6 @@ import java.util.List;
  * @create 16/09/2019 - 23:22
  */
 @Controller
-@RequestMapping("/user")
 @SessionAttributes("accountSession")
 public class UserController {
     
@@ -60,7 +59,7 @@ public class UserController {
         }
     }
     
-    @GetMapping("/user-area")
+    @GetMapping("/user/user-area")
     public String getUserHomeView(@SessionAttribute("accountSession") AccountSessionDTO accountSessionDTO, Model model){
         
         List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountSessionDTO.getId());
@@ -78,7 +77,7 @@ public class UserController {
         return Views.USER_HOME;
     }
     
-    @GetMapping("/unlog")
+    @GetMapping("/user/unlog")
     public String logout(SessionStatus status){
         
         status.setComplete();

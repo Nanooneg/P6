@@ -26,7 +26,7 @@
                     </c:if>
                     <c:choose>
                         <c:when test="${sessionScope.accountSession != null}">
-                            <a class="btn btn-light action-button" role="button" href="<c:url value="/signout"/>">Déconnexion</a>                        </c:when>
+                            <a class="btn btn-light action-button" role="button" href="<c:url value="/user/signout"/>">Déconnexion</a>                        </c:when>
                         <c:otherwise>
                             <a class="btn btn-light action-button" role="button" href="<c:url value="/register"/>">Créer un compte</a>
                         </c:otherwise>

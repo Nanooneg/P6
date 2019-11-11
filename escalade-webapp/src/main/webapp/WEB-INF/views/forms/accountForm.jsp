@@ -3,7 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 
 <s:url value="/saveAccount" var="save"/>
 <s:url value="/updateAccount/${account.id}" var="update"/>
@@ -82,4 +82,4 @@
     </form:form>
 </div>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

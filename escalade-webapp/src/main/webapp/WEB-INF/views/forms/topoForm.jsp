@@ -3,7 +3,7 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 
 <div id="topo-form" class="login-dark">
     <form:form action="/saveTopo/${topo.id}" method="post" modelAttribute="topo" enctype="multipart/form-data" cssClass="background-custom">
@@ -62,4 +62,4 @@
     </form:form>
 </div>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

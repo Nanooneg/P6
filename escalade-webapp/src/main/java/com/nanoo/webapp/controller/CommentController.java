@@ -24,16 +24,14 @@ import java.util.Map;
 public class CommentController {
     
     /* Attributes names */
+    private static final String ACCOUNT_SESSION_ATT = "accountSession";
     private static final String MESSAGE_ATT = "message";
     private static final String PUBLICATION_ID_ATT = "publicationId";
     private static final String PUBLICATION_TYPE_ATT = "publicationType";
     private static final String COMMENTARY_ID_ATT = "commentaryId";
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
-    
-    /* Redirection */
-    private static final String LOGIN_REDIRECT = "redirect:/login";
-    
+
     private final CommentaryService commentaryService;
     
     @Autowired
@@ -60,12 +58,7 @@ public class CommentController {
     }
     
     @GetMapping("/addComment/{publicationType}/{publicationId}")
-    public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model,
-                                     @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-        
-        if (accountSessionDTO == null){
-            return LOGIN_REDIRECT;
-        }
+    public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model){
         
         model.addAttribute(COMMENTARY_ATT, new CommentaryDTO());
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
@@ -89,9 +82,9 @@ public class CommentController {
     }
     
     @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
-    public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute("commentary") CommentaryDTO commentaryDTO,
+    public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute(COMMENTARY_ATT) CommentaryDTO commentaryDTO,
                                                      BindingResult br, Model model,
-                                                     @SessionAttribute ("accountSession") AccountSessionDTO accountSessionDTO,
+                                                     @SessionAttribute (ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
                                                      @PathVariable String publicationType,
                                                      @PathVariable String publicationId,
                                                      @PathVariable(required = false) String commentaryId){

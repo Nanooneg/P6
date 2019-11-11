@@ -30,6 +30,7 @@ public class TopoController {
     
     /* Attributes names */
     private static final String ACCOUNT_ATT = "account";
+    private static final String ACCOUNT_SESSION_ATT = "accountSession";
     private static final String MESSAGE_ATT = "message";
     private static final String TOPO_ATT = "topo";
     private static final String TOPOBOOKING_RECEIVED_ATT = "topoBookingReceived";
@@ -43,9 +44,6 @@ public class TopoController {
     /* Messages content */
     private static final String ALREADY_ASK_MESS = "Vous avez déjà une demande en attente pour ce topo. Si vous souaitez" +
             " en faire une nouvelle, supprimer d'abord l'ancienne depuis votre espace utilisateur";
-    
-    /* Redirection */
-    private static final String LOGIN_REDIRECT = "redirect:/login";
     
     private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
     private List<String> listCondition = HandlingEnumValues.getEnumConditionStringValues();
@@ -79,7 +77,7 @@ public class TopoController {
     }
     
     @PostMapping("/topoSpot")
-    public String displayTopoPageWithSearchResult(@ModelAttribute SearchFilter filter, Model model){
+    public String displayTopoPageWithSearchResult(@ModelAttribute(SEARCH_ATT) SearchFilter filter, Model model){
         
         List<TopoDTO> topoDTOList = topoService.searchTopoByFilter(filter);
         
@@ -92,12 +90,7 @@ public class TopoController {
     }
     
     @GetMapping("/topoForm")
-    public String displayTopoForm (Model model,
-                                   @SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
-    
-        if (accountSessionDTO == null){
-            return LOGIN_REDIRECT;
-        }
+    public String displayTopoForm (Model model){
         
         model.addAttribute(TOPO_ATT,new TopoDTO());
         model.addAttribute(REGION_ATT,listRegion);
@@ -119,8 +112,8 @@ public class TopoController {
     }
     
     @PostMapping({"/saveTopo/","/saveTopo/{topoId}"})
-    public String saveTopo(@Valid @ModelAttribute("topo") TopoDTO topoDTO,
-                           @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
+    public String saveTopo(@Valid @ModelAttribute(TOPO_ATT) TopoDTO topoDTO,
+                           @SessionAttribute(value = ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
                            BindingResult bResult, Model model, @PathVariable(required = false) String topoId){
         
         if (bResult.hasErrors()){
@@ -161,12 +154,7 @@ public class TopoController {
     }
     
     @GetMapping("/askForLending/{topoId}")
-    public String askForLending(Model model, @PathVariable String topoId,
-                                @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-    
-        if (accountSessionDTO == null){
-            return LOGIN_REDIRECT;
-        }
+    public String askForLending(Model model, @PathVariable String topoId){
         
         model.addAttribute(TOPO_ATT,topoService.searchTopoById(Integer.parseInt(topoId)));
         
@@ -174,12 +162,11 @@ public class TopoController {
     }
     
     @GetMapping("/validAskForLending/{accountId}/{topoId}")
-    public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId,
-                                    @SessionAttribute(value = "accountSession")AccountSessionDTO accountSessionDTO){
+    public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId){
         
         if (!topoBookingService.checkTopoBookingAskRequest(accountId,topoId)) {
             model.addAttribute(MESSAGE_ATT,ALREADY_ASK_MESS);
-            return askForLending(model,topoId,accountSessionDTO);
+            return askForLending(model,topoId);
         }
         topoBookingService.saveTopoBooking(Integer.parseInt(accountId),Integer.parseInt(topoId));
         

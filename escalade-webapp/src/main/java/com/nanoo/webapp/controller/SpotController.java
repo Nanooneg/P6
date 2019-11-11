@@ -27,6 +27,7 @@ public class SpotController {
     
     /* Attributes names */
     private static final String ACCOUNT_ATT = "account";
+    private static final String ACCOUNT_SESSION_ATT = "accountSession";
     private static final String SPOT_SERV_ATT = "saveSpot";
     private static final String LIST_SITE_ATT = "listSite";
     private static final String MESSAGE_ATT = "message";
@@ -40,9 +41,6 @@ public class SpotController {
     private static final String LIST_SECTOR_ATT = "listSector";
     private static final String WAY_ATT = "way";
     private static final String MAP_WAY_BY_SECTOR_ID_ATT = "wayListBySectorId";
-    
-    /* Redirection */
-    private static final String LOGIN_REDIRECT = "redirect:/login";
     
     private List<String> listRating = HandlingEnumValues.getEnumRatingStringValues();
     private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();
@@ -75,7 +73,7 @@ public class SpotController {
     }
     
     @PostMapping("/climbSpot")
-    public String displaySpotPageWithResult (@ModelAttribute SearchFilter filter, Model model){
+    public String displaySpotPageWithResult (@ModelAttribute(SEARCH_ATT) SearchFilter filter, Model model){
         
         List<SiteDTO> siteDTOListResult = spotService.searchSiteByFilter(filter);
         
@@ -104,18 +102,13 @@ public class SpotController {
         return Views.SITE;
     }
     
-    @GetMapping("/spotForm1")
-    public String displaySpotFormSiteStep (Model model,
-                                           @SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
-    
-        if (accountSessionDTO == null){
-            return LOGIN_REDIRECT;
-        }
+    @GetMapping("/user/siteForm")
+    public String displaySpotFormSiteStep (Model model){
         
         model.addAttribute(SITE_ATT,new SiteDTO());
         model.addAttribute(REGION_ATT,listRegion);
     
-        return Views.SPOT_FORM1;
+        return Views.SITE_FORM;
     }
     
     @GetMapping("/updateSite/{siteID}")
@@ -124,21 +117,16 @@ public class SpotController {
         model.addAttribute(SITE_ATT,spotService.searchSiteById(Integer.parseInt(siteID)));
         model.addAttribute(REGION_ATT,listRegion);
         
-        return Views.SPOT_FORM1;
+        return Views.SITE_FORM;
     }
     
     @GetMapping("/spotForm2/{siteId}")
-    public String displaySpotFormSectorStep(Model model, @PathVariable String siteId,
-                                            @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO) {
-    
-        if (accountSessionDTO == null){
-            return LOGIN_REDIRECT;
-        }
+    public String displaySpotFormSectorStep(Model model, @PathVariable String siteId) {
         
         model.addAttribute(SECTOR_ATT,new SectorDTO());
         model.addAttribute(SITE_ID_ATT, siteId);
     
-        return Views.SPOT_FORM2;
+        return Views.SECTOR_FORM;
     }
     
     @GetMapping("/updateSector/{siteId}/{sectorId}")
@@ -147,22 +135,17 @@ public class SpotController {
         model.addAttribute(SECTOR_ATT,spotService.searchSectorById(Integer.parseInt(sectorId)));
         model.addAttribute(SITE_ID_ATT, siteId);
         
-        return Views.SPOT_FORM2;
+        return Views.SECTOR_FORM;
     }
     
     @GetMapping("/spotForm3/{sectorId}")
-    public String displaySpotFormWayStep(Model model, @PathVariable String sectorId,
-                                         @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-    
-        if (accountSessionDTO == null){
-            return LOGIN_REDIRECT;
-        }
+    public String displaySpotFormWayStep(Model model, @PathVariable String sectorId){
     
         model.addAttribute(WAY_ATT,new WayDTO());
         model.addAttribute(RATING_ATT,listRating);
         model.addAttribute(SECTOR_ID_ATT,sectorId);
     
-        return Views.SPOT_FORM3;
+        return Views.WAY_FORM;
     }
     
     @GetMapping("/updateWay/{sectorId}/{wayId}")
@@ -172,11 +155,11 @@ public class SpotController {
         model.addAttribute(RATING_ATT,listRating);
         model.addAttribute(SITE_ID_ATT, sectorId);
         
-        return Views.SPOT_FORM3;
+        return Views.WAY_FORM;
     }
     
     @PostMapping({"/saveSite/","/saveSite/{siteID}"})
-    public String displaySpotAfterSaving(@Valid @ModelAttribute("site") SiteDTO siteDTO,
+    public String displaySpotAfterSaving(@Valid @ModelAttribute(SITE_ATT) SiteDTO siteDTO,
                                          BindingResult bResult, Model model,
                                          @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
                                          @PathVariable(required = false) String siteID){
@@ -185,7 +168,7 @@ public class SpotController {
             model.addAttribute(SITE_ATT, siteDTO);
             model.addAttribute(REGION_ATT, listRegion);
             model.addAttribute(SPOT_SERV_ATT, spotService);
-            return Views.SPOT_FORM1;
+            return Views.SITE_FORM;
         }
     
         if (siteID != null)
@@ -205,8 +188,7 @@ public class SpotController {
     }
     
     @GetMapping("/deleteSite/{siteId}")
-    public String deleteSite(@PathVariable String siteId, Model model,
-                             @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+    public String deleteSite(@PathVariable String siteId, Model model){
         
         spotService.deleteSiteWithId(Integer.parseInt(siteId));
         
@@ -214,16 +196,16 @@ public class SpotController {
     }
     
     @PostMapping({"/saveSector/{siteId}","/saveSector/{siteId}/{sectorId}"})
-    public String displaySiteAfterSaveSector(@Valid @ModelAttribute("sector") SectorDTO sectorDTO,
+    public String displaySiteAfterSaveSector(@Valid @ModelAttribute(SECTOR_ATT) SectorDTO sectorDTO,
                                              BindingResult bResult, Model model,
-                                             @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
+                                             @SessionAttribute(value = ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
                                              @PathVariable String siteId, @PathVariable (required = false) String sectorId){
         
         
         if (bResult.hasErrors()) {
             model.addAttribute(SECTOR_ATT, sectorDTO);
             model.addAttribute(SPOT_SERV_ATT, spotService);
-            return Views.SPOT_FORM2;
+            return Views.SECTOR_FORM;
         }
         
         if (sectorId != null)
@@ -238,8 +220,7 @@ public class SpotController {
     }
     
     @GetMapping("/deleteSector/{siteId}/{sectorId}")
-    public String deleteSector(@PathVariable String sectorId, Model model, @PathVariable String siteId,
-                               @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+    public String deleteSector(@PathVariable String sectorId, Model model, @PathVariable String siteId){
         
         spotService.deleteSectorWithId(Integer.parseInt(sectorId));
         
@@ -247,16 +228,16 @@ public class SpotController {
     }
     
     @PostMapping({"/saveWay/{sectorId}","/saveWay/{sectorId}/{wayId}"})
-    public String displaySiteAfterSaveWay(@Valid @ModelAttribute("way") WayDTO wayDTO,
+    public String displaySiteAfterSaveWay(@Valid @ModelAttribute(WAY_ATT) WayDTO wayDTO,
                                           BindingResult bResult, Model model,
-                                          @SessionAttribute(value = "accountSession") AccountSessionDTO accountSessionDTO,
+                                          @SessionAttribute(value = ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
                                           @PathVariable String sectorId, @PathVariable(required = false) String wayId){
         
         if (bResult.hasErrors()) {
             model.addAttribute(WAY_ATT, wayDTO);
             model.addAttribute(RATING_ATT, listRating);
             model.addAttribute(SPOT_SERV_ATT, spotService);
-            return Views.SPOT_FORM3;
+            return Views.WAY_FORM;
         }
         
         if (wayId != null)
@@ -273,8 +254,7 @@ public class SpotController {
     }
     
     @GetMapping("/deleteWay/{siteId}/{wayId}")
-    public String deleteWay(@PathVariable String wayId, Model model, @PathVariable String siteId,
-                            @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+    public String deleteWay(@PathVariable String wayId, Model model, @PathVariable String siteId){
         
         spotService.deleteWayWithId(Integer.parseInt(wayId));
         

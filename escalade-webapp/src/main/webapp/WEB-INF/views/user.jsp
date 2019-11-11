@@ -25,7 +25,7 @@
         </div>
         <div class="icon-bar">
             <div class="d-none d-md-block">
-                <a href="<c:url value="/updateAccount/${sessionScope.accountSession.id}"/>" class="text-info-link">
+                <a href="<c:url value="/user/updateAccount/${sessionScope.accountSession.id}"/>" class="text-info-link">
                     <em class="fas fa-pen"></em> Modifier mon compte</a>
             </div>
             <div class="d-sm-block d-md-none icon-only">
