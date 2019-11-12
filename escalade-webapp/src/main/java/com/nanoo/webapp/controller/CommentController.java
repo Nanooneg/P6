@@ -23,7 +23,8 @@ import java.util.Map;
 @Controller
 public class CommentController {
     
-    private static final String ACCOUNT_ATT = "account";
+    /* Attributes names */
+    private static final String ACCOUNT_SESSION_ATT = "accountSession";
     private static final String MESSAGE_ATT = "message";
     private static final String PUBLICATION_ID_ATT = "publicationId";
     private static final String PUBLICATION_TYPE_ATT = "publicationType";
@@ -31,6 +32,9 @@ public class CommentController {
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
     
+    /* Messages content */
+    private static final String COMMENTARY_ADD_RESULT_MESS = "L'ajout a échoué";
+
     private final CommentaryService commentaryService;
     
     @Autowired
@@ -56,14 +60,8 @@ public class CommentController {
         return Views.COMMENTARY;
     }
     
-    @GetMapping("/addComment/{publicationType}/{publicationId}")
-    public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model,
-                                     @SessionAttribute(value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-    
-        if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
-        }
+    @GetMapping("/user/addComment/{publicationType}/{publicationId}")
+    public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model){
         
         model.addAttribute(COMMENTARY_ATT, new CommentaryDTO());
         model.addAttribute(PUBLICATION_ID_ATT, publicationId);
@@ -72,7 +70,7 @@ public class CommentController {
         return Views.COMMENTARY_FORM;
     }
     
-    @GetMapping("/updateCommentary/{publicationType}/{publicationId}/{commentaryId}")
+    @GetMapping("/user/updateCommentary/{publicationType}/{publicationId}/{commentaryId}")
     public String updateCommentary(@PathVariable String commentaryId, Model model,
                                    @PathVariable String publicationId, @PathVariable String publicationType){
         
@@ -86,17 +84,18 @@ public class CommentController {
         return Views.COMMENTARY_FORM;
     }
     
-    @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
-    public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute("commentary") CommentaryDTO commentaryDTO,
+    @PostMapping({"/user/saveComment/{publicationType}/{publicationId}/",
+                  "/user/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
+    public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute(COMMENTARY_ATT) CommentaryDTO commentaryDTO,
                                                      BindingResult br, Model model,
-                                                     @SessionAttribute ("accountSession") AccountSessionDTO accountSessionDTO,
+                                                     @SessionAttribute (ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
                                                      @PathVariable String publicationType,
                                                      @PathVariable String publicationId,
                                                      @PathVariable(required = false) String commentaryId){
         
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);
-            model.addAttribute(MESSAGE_ATT, "L'ajout a échoué");
+            model.addAttribute(MESSAGE_ATT,COMMENTARY_ADD_RESULT_MESS);
             return Views.COMMENTARY_FORM;
         }
         
@@ -112,9 +111,10 @@ public class CommentController {
         return displayCommentaryView(publicationType, publicationId, model);
     }
     
-    @GetMapping("/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
+    @GetMapping("/user/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
     public String deleteCommentAnsDisplayCommentaryView(@PathVariable String publicationId, @PathVariable String commentaryId,
                                                         Model model, @PathVariable String publicationType){
+        
         commentaryService.deleteCommentById(Integer.parseInt(commentaryId));
         
         return displayCommentaryView(publicationType, publicationId, model);

@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="form-group bottom-link text-center">
-                <a href="<c:url value="/spotForm1"/>" class="forgot"><em class="fas fa-plus-circle"></em> Ajouter un site</a>
+                <a href="<c:url value="/user/siteForm"/>" class="text-info-link"><em class="fas fa-plus-circle"></em> Ajouter un site</a>
             </div>
         </form:form>
     </div>

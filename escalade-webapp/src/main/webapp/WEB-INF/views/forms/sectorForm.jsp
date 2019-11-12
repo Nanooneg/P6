@@ -3,11 +3,11 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 
 <section>
     <div id="spot-form-2" class="login-dark">
-        <form:form action="/saveSector/${siteId}/${sector.id}" method="post" modelAttribute="sector" cssClass="background-custom">
+        <form:form action="/user/saveSector/${siteId}/${sector.id}" method="post" modelAttribute="sector" cssClass="background-custom">
             <h1 class="text-center">
                 <c:choose>
                     <c:when test="${empty sector.id}">Création de Secteur</c:when>
@@ -37,4 +37,4 @@
     </div>
 </section>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

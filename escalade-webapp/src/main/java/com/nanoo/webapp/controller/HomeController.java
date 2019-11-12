@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @Controller
 public class HomeController {
     
+    /* Attributes names */
+    private static final String ACCOUNT_SESSION_ATT = "accountSession";
+    
+    /* Redirection */
+    private static final String USER_HOME_REDIRECT = "redirect:/user/user-area";
     
     @GetMapping(value = {"/","/home"})
-    public String home(@SessionAttribute(value = "accountSession", required = false) AccountSessionDTO accountSessionDTO){
+    public String home(@SessionAttribute(value = ACCOUNT_SESSION_ATT, required = false) AccountSessionDTO accountSessionDTO){
         
         if (accountSessionDTO != null){
-            return "redirect:/user/user-area" ;
+            return USER_HOME_REDIRECT;
         }
         
         return Views.HOME;

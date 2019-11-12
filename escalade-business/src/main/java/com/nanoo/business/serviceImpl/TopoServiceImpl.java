@@ -118,12 +118,11 @@ public class TopoServiceImpl implements TopoService {
      */
     @Override
     public void deleteTopo(int topoId){
-        uploadUtil = new UploadUtil();
         Optional<Topo> topo = topoRepository.findById(topoId);
     
         if (topo.isPresent()) {
             topoRepository.deleteById(topoId);
-            uploadUtil.eraseOldPicture(topo.get().getPicturePath());
+            UploadUtil.eraseOldPicture(topo.get().getPicturePath());
             commentaryService.deleteCommentByPublicationId(topoId);
         }
     }

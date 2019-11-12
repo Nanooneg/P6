@@ -68,13 +68,14 @@ public class UploadUtil {
      *
      * @param oldPicturePath old picture path
      */
-    public void eraseOldPicture(String oldPicturePath){
-        
-        try{
-            String realPicturePath = oldPicturePath.replace(ABS_PATH,REAL_PATH);
-            Files.delete(Paths.get(realPicturePath));
-        }catch (IOException e){
-            log.error(e.getMessage());
+    public static void eraseOldPicture(String oldPicturePath){
+        if (oldPicturePath != null){
+            try{
+                String realPicturePath = oldPicturePath.replace(ABS_PATH,REAL_PATH);
+                Files.delete(Paths.get(realPicturePath));
+            }catch (IOException e){
+                log.error(e.getMessage());
+            }
         }
     }
 }

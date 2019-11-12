@@ -3,10 +3,10 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 
-<s:url value="/saveAccount" var="save"/>
-<s:url value="/updateAccount/${account.id}" var="update"/>
+<s:url value="/user/saveAccount" var="save"/>
+<s:url value="/user/updateAccount/${account.id}" var="update"/>
 
 <div id="account-form" class="login-dark">
     <form:form action="${empty account.id ? save : update}" class="background-custom" method="post" modelAttribute="account">
@@ -82,4 +82,4 @@
     </form:form>
 </div>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

@@ -19,10 +19,10 @@ import java.util.List;
  * @create 16/09/2019 - 23:22
  */
 @Controller
-@RequestMapping("/user")
 @SessionAttributes("accountSession")
 public class UserController {
     
+    /* Attributes names */
     private static final String ACCOUNT_SERV_ATT = "registration";
     private static final String ACCOUNT_ATT = "account";
     private static final String ACCOUNT_SESSION_ATT = "accountSession";
@@ -30,6 +30,9 @@ public class UserController {
     private static final String LIST_TOPO_ATT = "listTopo";
     private static final String TOPOBOOKING_R_ATT = "topoBookingReceived";
     private static final String TOPOBOOKING_S_ATT = "topoBookingSent";
+    
+    /* Redirect */
+    private static final String REDIRECT_AFTER_LOGIN = "redirect:/user/";
     
     private final AccountService accountService;
     private final SpotService spotService;
@@ -44,13 +47,19 @@ public class UserController {
         this.topoBookingService = topoBookingService;
     }
     
-    @PostMapping("/user-area")
-    public String loginValidation(@ModelAttribute("account") AccountDTO accountDTO, Model model) {
+    @PostMapping({"/user/user-area/","/user/user-area/{wantedUrI}"})
+    public String loginValidation(@ModelAttribute("account") AccountDTO accountDTO, Model model,
+                                  @PathVariable(required = false) String wantedUrI) {
         
         AccountSessionDTO accountSessionDTO = accountService.searchRegisteredAccount(accountDTO);
         
         if (accountService.getErrors().isEmpty()) {
             model.addAttribute(ACCOUNT_SESSION_ATT,accountSessionDTO);
+    
+            if(wantedUrI != null) {
+                return REDIRECT_AFTER_LOGIN + wantedUrI;
+            }
+            
             return getUserHomeView(accountSessionDTO, model);
         }else{
             model.addAttribute(ACCOUNT_ATT,accountDTO);
@@ -59,9 +68,9 @@ public class UserController {
         }
     }
     
-    @GetMapping("/user-area")
+    @GetMapping("/user/user-area")
     public String getUserHomeView(@SessionAttribute("accountSession") AccountSessionDTO accountSessionDTO, Model model){
-    
+        
         List<TopoDTO> topoDTOList = topoService.searchTopoByAccountId(accountSessionDTO.getId());
         List<SiteDTO> siteDTOList = spotService.searchSiteByAccountId(accountSessionDTO.getId());
         List<TopoBookingDTO> topoBookingReceivedPendingStatusDTOList =
@@ -77,9 +86,9 @@ public class UserController {
         return Views.USER_HOME;
     }
     
-    @GetMapping("/unlog")
+    @GetMapping("/user/unlog")
     public String logout(SessionStatus status){
-
+        
         status.setComplete();
         
         return Views.HOME;

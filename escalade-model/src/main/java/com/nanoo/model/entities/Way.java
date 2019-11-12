@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author nanoo
@@ -18,7 +15,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 public class Way extends Publication{
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_sector", nullable = false)
     private Sector sector;
     @Column(length = 20, nullable = false)

@@ -3,10 +3,10 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 
 <div id="spot-form-1" class="login-dark">
-    <form:form action="/saveSite/${site.id}" cssClass="background-custom" method="post" modelAttribute="site" enctype="multipart/form-data">
+    <form:form action="/user/saveSite/${site.id}" cssClass="background-custom" method="post" modelAttribute="site" enctype="multipart/form-data">
         <h2 class="text-center">
             <c:choose>
                 <c:when test="${empty site.id}">Création de Site</c:when>
@@ -52,4 +52,4 @@
     </form:form>
 </div>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

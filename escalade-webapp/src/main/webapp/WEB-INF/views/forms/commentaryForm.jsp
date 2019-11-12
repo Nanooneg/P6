@@ -3,10 +3,10 @@
   @Author: nanoo
 --%>
 <%@ page pageEncoding="UTF-8" %>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 
 <div id="commentary-form" class="login-dark">
-    <form:form action="/saveComment/${publicationType}/${publicationId}/${commentaryId}" method="post"
+    <form:form action="/user/saveComment/${publicationType}/${publicationId}/${commentaryId}" method="post"
                modelAttribute="commentary" cssClass="background-custom">
         <div>
             <h2 class="text-center">
@@ -38,4 +38,4 @@
     </form:form>
 </div>
 
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>

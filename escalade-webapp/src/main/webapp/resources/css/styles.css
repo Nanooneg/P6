@@ -218,7 +218,7 @@ body {
 
 .commentary-text, .message-text{
     font-size: 20px;
-    margin-bottom: 15px;
+    margin: 0 10px 15px 10px;
     text-align: justify;
 }
 

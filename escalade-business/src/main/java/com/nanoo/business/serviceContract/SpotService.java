@@ -83,15 +83,6 @@ public interface SpotService {
     List<SiteDTO> searchSiteByFilter(SearchFilter filter);
     
     /**
-     * This method search the id of a site who contains
-     * a particular sector
-     *
-     * @param sectorId id of the sector contained in the searched site
-     * @return the id of the searched site
-     */
-    int getSiteIdWithSectorId(String sectorId);
-    
-    /**
      * This method search a distinct sector in DB
      *
      * @param sectorID id of sector searched

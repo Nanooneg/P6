@@ -4,7 +4,6 @@ import com.nanoo.business.dto.AccountDTO;
 import com.nanoo.business.dto.AccountSessionDTO;
 import com.nanoo.business.serviceContract.AccountService;
 import com.nanoo.business.util.HandlingEnumValues;
-import com.nanoo.webapp.util.SessionHandling;
 import com.nanoo.webapp.util.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -15,7 +14,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,6 +25,7 @@ import java.util.List;
 @SessionAttributes("accountSession")
 public class AccountController {
     
+    /* Attributes names */
     private static final String TITLE_ATT = "listTitle";
     private static final String ACCOUNT_SERV_ATT = "registration";
     private static final String ACCOUNT_ATT = "account";
@@ -35,18 +34,20 @@ public class AccountController {
     private static final String MESSAGE_YES_ATT = "yes";
     private static final String MESSAGE_NO_ATT = "no";
     
+    /* Fields names */
     private static final String MAIL_FIELD = "mail";
     
+    /* Redirection */
+    private static final String USER_AREA_REDIRECT = "redirect:/user/user-area";
+    
+    /* Message content */
     private static final String ERROR_REGISTER_MESSAGE = "L'enregistrement a échoué !";
     private static final String ERROR_MAIL_MESSAGE = "Cette adresse mail est déjà utilisée";
-    private static final String LOGOUT1_MESSAGE = "vous nous quittez déjà?";
-    private static final String LOGOUT2_MESSAGE = "vous devez vous déconnecter pour faire ceci !";
-    private static final String YES1_MESSAGE = "Oui, je dois partir";
-    private static final String YES2_MESSAGE = "Ok, je me déconnecte";
+    private static final String LOGOUT_MESSAGE = "vous nous quittez déjà?";
+    private static final String YES_MESSAGE = "Oui, je dois partir";
     private static final String NO_MESSAGE = "Non je reste encore un peu";
     
     private List<String> listTitle = HandlingEnumValues.getEnumTitleStringValues();
-    private SessionHandling sessionHandling;
     
     private final AccountService accountService;
     
@@ -64,18 +65,7 @@ public class AccountController {
     }
     
     @GetMapping("/register")
-    public String displayAccountRegistrationForm(Model model,HttpServletResponse response,
-                                                 @SessionAttribute (value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
-    
-        /* if user use previous button after logout */
-        sessionHandling = new SessionHandling();
-        sessionHandling.clearCache(response);
-        if (accountSessionDTO != null){
-            model.addAttribute(MESSAGE_ATT,LOGOUT2_MESSAGE);
-            model.addAttribute(MESSAGE_YES_ATT,YES2_MESSAGE);
-            model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
-            return Views.SIGNOUT;
-        }
+    public String displayAccountRegistrationForm(Model model){
         
         model.addAttribute(ACCOUNT_ATT,new AccountDTO());
         model.addAttribute(TITLE_ATT,listTitle);
@@ -83,7 +73,7 @@ public class AccountController {
         return Views.ACCOUNT_FORM;
     }
     
-    @GetMapping("/updateAccount/{accountId}")
+    @GetMapping("/user/updateAccount/{accountId}")
     public String updateAccount(@PathVariable String accountId, Model model){
         
         AccountDTO accountDTO = accountService.searchAccountById(Integer.parseInt(accountId));
@@ -96,12 +86,11 @@ public class AccountController {
         return Views.ACCOUNT_FORM;
     }
     
-    @PostMapping("/updateAccount/{accountId}")
-    public String saveUpdatedAccount(@PathVariable("accountId") String accountId,
-                                     @Valid @ModelAttribute("account") AccountDTO accountDTO,
+    @PostMapping("/user/updateAccount/{accountId}")
+    public String saveUpdatedAccount(@PathVariable String accountId,
+                                     @Valid @ModelAttribute(ACCOUNT_ATT) AccountDTO accountDTO,
                                      BindingResult bResult, Model model){
-    
-        sessionHandling = new SessionHandling();
+        
         boolean mailAvailability = accountService.checkMailAvailabilityForUpdate(accountDTO.getMail(), Integer.parseInt(accountId));
         
         if (bResult.hasErrors() || !mailAvailability ) {
@@ -112,15 +101,15 @@ public class AccountController {
                 bResult.addError(new FieldError(ACCOUNT_ATT,MAIL_FIELD,ERROR_MAIL_MESSAGE));
             return Views.ACCOUNT_FORM;
         }
-    
+        
         accountDTO.setId(Integer.parseInt(accountId));
         accountService.saveAccount(accountDTO);
         AccountSessionDTO accountSessionDTO = accountService.searchRegisteredAccount(accountDTO);
         
         model.addAttribute(ACCOUNT_SERV_ATT,accountService);
         model.addAttribute(ACCOUNT_SESSION_ATT,accountSessionDTO);
-    
-        return "redirect:/user/user-area";
+        
+        return USER_AREA_REDIRECT;
         
     }
     
@@ -135,8 +124,8 @@ public class AccountController {
     
     @PostMapping("/saveAccount")
     public String displayLoginFormAfterRegisterAccount(
-            @Valid @ModelAttribute("account")AccountDTO accountDTO, BindingResult bResult, Model model){
-    
+            @Valid @ModelAttribute(ACCOUNT_ATT)AccountDTO accountDTO, BindingResult bResult, Model model){
+        
         model.addAttribute(ACCOUNT_ATT,accountDTO);
         boolean mailAvailability = accountService.checkMailAvailability(accountDTO.getMail());
         
@@ -155,20 +144,11 @@ public class AccountController {
         
     }
     
-    @GetMapping("/signout")
-    public String confirmLogout(HttpServletResponse response, Model model,
-                                @SessionAttribute (value = "accountSession", required = false)AccountSessionDTO accountSessionDTO){
+    @GetMapping("/user/signout")
+    public String confirmLogout(Model model){
         
-        /* if user use previous button after logout */
-        sessionHandling = new SessionHandling();
-        sessionHandling.clearCache(response);
-        if (accountSessionDTO == null){
-            model.addAttribute(ACCOUNT_ATT,new AccountDTO());
-            return Views.LOGIN;
-        }
-        
-        model.addAttribute(MESSAGE_ATT,LOGOUT1_MESSAGE);
-        model.addAttribute(MESSAGE_YES_ATT,YES1_MESSAGE);
+        model.addAttribute(MESSAGE_ATT,LOGOUT_MESSAGE);
+        model.addAttribute(MESSAGE_YES_ATT,YES_MESSAGE);
         model.addAttribute(MESSAGE_NO_ATT,NO_MESSAGE);
         
         return Views.SIGNOUT;

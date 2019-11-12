@@ -6,7 +6,7 @@
 <%@include file="common/header.jsp" %>
 
 <div id="login-form" class="login-dark">
-    <form:form action="/user/user-area" class="background-custom" method="post" modelAttribute="account">
+    <form:form action="/user/user-area/${wantedUrI}" class="background-custom" method="post" modelAttribute="account">
         <div>
             <h2 class="text-center">Connexion</h2>
         </div>
