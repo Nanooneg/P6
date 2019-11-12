@@ -31,6 +31,9 @@ public class UserController {
     private static final String TOPOBOOKING_R_ATT = "topoBookingReceived";
     private static final String TOPOBOOKING_S_ATT = "topoBookingSent";
     
+    /* Redirect */
+    private static final String REDIRECT_AFTER_LOGIN = "redirect:/user/";
+    
     private final AccountService accountService;
     private final SpotService spotService;
     private final TopoService topoService;
@@ -44,13 +47,19 @@ public class UserController {
         this.topoBookingService = topoBookingService;
     }
     
-    @PostMapping("/user-area")
-    public String loginValidation(@ModelAttribute("account") AccountDTO accountDTO, Model model) {
+    @PostMapping({"/user/user-area/","/user/user-area/{wantedUrI}"})
+    public String loginValidation(@ModelAttribute("account") AccountDTO accountDTO, Model model,
+                                  @PathVariable(required = false) String wantedUrI) {
         
         AccountSessionDTO accountSessionDTO = accountService.searchRegisteredAccount(accountDTO);
         
         if (accountService.getErrors().isEmpty()) {
             model.addAttribute(ACCOUNT_SESSION_ATT,accountSessionDTO);
+    
+            if(wantedUrI != null) {
+                return REDIRECT_AFTER_LOGIN + wantedUrI;
+            }
+            
             return getUserHomeView(accountSessionDTO, model);
         }else{
             model.addAttribute(ACCOUNT_ATT,accountDTO);

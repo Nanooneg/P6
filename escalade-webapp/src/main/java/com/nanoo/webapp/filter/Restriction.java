@@ -16,11 +16,12 @@ public class Restriction implements Filter {
     /* Attributes names */
     private static final String ACCOUNT_SESSION_ATT = "accountSession";
     private static final String ACCOUNT_ATT = "account";
+    private static final String WANTED_URL_ATT = "wantedUrI";
     
     private static final String LOGIN_JSP = "/WEB-INF/views/" + Views.LOGIN + ".jsp";
     
     @Override
-    public void init(FilterConfig config) throws ServletException {
+    public void init(FilterConfig config){
     
     }
     
@@ -29,10 +30,9 @@ public class Restriction implements Filter {
     
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        
-        //TODO not working
-        response.setHeader("buffer","true");
-        response.setHeader("ExpiresAbsolute","Now()-1");
+    
+        //save page wanted by user
+        String beforeRedirect = request.getRequestURI().replace("/user/","");
         
         //Empty cache of browser to avoid user to get access to restricted pages after log out and press previous button
         response.setHeader("Cache-Control","no-cache,no-store,must-revalidate"); // HTTP 1.1
@@ -40,8 +40,9 @@ public class Restriction implements Filter {
         response.setDateHeader("Expires",0); // Proxies
     
         HttpSession session = request.getSession(false);
-        
-        if (session.getAttribute(ACCOUNT_SESSION_ATT) == null){
+    
+        if (session.getAttribute(ACCOUNT_SESSION_ATT) == null && !beforeRedirect.equals("user-area/")){
+            request.setAttribute(WANTED_URL_ATT,beforeRedirect);
             request.setAttribute(ACCOUNT_ATT,new AccountDTO());
             request.getRequestDispatcher(LOGIN_JSP).forward(request, response);
         }else {

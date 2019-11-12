@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="form-group text-center bottom-link">
-            <a href="<c:url value="/topoForm"/>" class="text-info-link"><em class="fas fa-plus-circle"></em> Ajouter un topo</a>
+            <a href="<c:url value="/user/topoForm"/>" class="text-info-link"><em class="fas fa-plus-circle"></em> Ajouter un topo</a>
         </div>
         </form:form>
     </div>

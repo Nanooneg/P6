@@ -16,7 +16,7 @@
         </div>
         <div class="row form-group">
             <div class="col-md-4 offset-md-4 col-sm-12">
-                <a href="<c:url value="/lendingRequestReceived/${sessionScope.accountSession.id }"/>">
+                <a href="<c:url value="/user/lendingRequestReceived/${sessionScope.accountSession.id }"/>">
                     <button type="button" class="btn btn-primary btn-block">
                         Demandes de prêt : ${topoBookingReceived + topoBookingSent}
                     </button>
@@ -29,7 +29,7 @@
                     <em class="fas fa-pen"></em> Modifier mon compte</a>
             </div>
             <div class="d-sm-block d-md-none icon-only">
-                <a href="<c:url value="/updateAccount/${sessionScope.accountSession.id}"/>" class="text-info-link">
+                <a href="<c:url value="/user/updateAccount/${sessionScope.accountSession.id}"/>" class="text-info-link">
                     <em class="fas fa-pen"></em></a>
             </div>
         </div>

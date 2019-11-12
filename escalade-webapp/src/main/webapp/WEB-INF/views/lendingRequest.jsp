@@ -42,11 +42,11 @@
                     <c:if test="${tBooking.status == 'En attente'}">
                         <div class="col-md-12 form-group row message-button">
                             <div class="col-md-2 offset-md-4 col-sm-12">
-                                <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/acceptance"/>">
+                                <a href="<c:url value="/user/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/acceptance"/>">
                                     <button type="button" class="btn btn-primary btn-block">Oui, j'ai compris</button></a>
                             </div>
                             <div class="col-md-2 col-sm-12">
-                                <a href="<c:url value="/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/refusal"/>">
+                                <a href="<c:url value="/user/validLendingRequest/${sessionScope.accountSession.id}/${tBooking.id}/refusal"/>">
                                     <button type="button" class="btn btn-primary btn-block">Non, merci</button></a>
                             </div>
                         </div>
@@ -90,12 +90,12 @@
                 </div>
                 <div class="icon-bar col-md-12">
                     <div class="d-none d-md-block">
-                        <a href="<c:url value="/deleteTopoBooking/${tBooking.idAccountBorrower}/${tBooking.id}"/>" class="text-info-link">
+                        <a href="<c:url value="/user/deleteTopoBooking/${tBooking.idAccountBorrower}/${tBooking.id}"/>" class="text-info-link">
                             <em class="fas fa-minus-circle"></em> Supprimer la demande
                         </a>
                     </div>
                     <div class="d-sm-block d-md-none icon-only">
-                        <a href="<c:url value="/deleteTopoBooking/${tBooking.idAccountBorrower}/${tBooking.id}"/>" class="text-info-link">
+                        <a href="<c:url value="/user/deleteTopoBooking/${tBooking.idAccountBorrower}/${tBooking.id}"/>" class="text-info-link">
                             <em class="fas fa-minus-circle"></em>
                         </a>
                     </div>

@@ -86,7 +86,7 @@ public class AccountController {
         return Views.ACCOUNT_FORM;
     }
     
-    @PostMapping("/updateAccount/{accountId}")
+    @PostMapping("/user/updateAccount/{accountId}")
     public String saveUpdatedAccount(@PathVariable String accountId,
                                      @Valid @ModelAttribute(ACCOUNT_ATT) AccountDTO accountDTO,
                                      BindingResult bResult, Model model){

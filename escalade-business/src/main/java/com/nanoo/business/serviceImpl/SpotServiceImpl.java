@@ -108,7 +108,7 @@ public class SpotServiceImpl implements SpotService {
         if ((!Objects.equals(site.getPicture().getOriginalFilename(), "")) && site.getPicture() != null){
             site.setPicturePath(uploadUtil.doUpload(site.getPicture(),site.getName(),site.getDateOfUpdate().toString(),SITE_ATT));
             if (!Objects.equals(oldPicturePath, site.getPicturePath()) && oldPicturePath != null) {
-                    uploadUtil.eraseOldPicture(oldPicturePath);
+                    UploadUtil.eraseOldPicture(oldPicturePath);
             }
         }
     
@@ -127,12 +127,11 @@ public class SpotServiceImpl implements SpotService {
      */
     @Override
     public void deleteSiteWithId(int siteId) {
-        uploadUtil = new UploadUtil();
         Optional<Site> site = siteRepository.findById(siteId);
         
         if (site.isPresent()) {
             siteRepository.deleteById(siteId);
-            uploadUtil.eraseOldPicture(site.get().getPicturePath());
+            UploadUtil.eraseOldPicture(site.get().getPicturePath());
             commentaryService.deleteCommentByPublicationId(siteId);
         }
     }
@@ -345,26 +344,6 @@ public class SpotServiceImpl implements SpotService {
             result = siteDTOList.size() + " sites correspondent à vos critères";
             
         return siteDTOList;
-    }
-    
-    /**
-     * This method search the id of a site who contains
-     * a particular sector
-     *
-     * @param sectorId id of the sector contained in the searched site
-     * @return the id of the searched site if exist
-     */
-    @Override
-    public int getSiteIdWithSectorId(String sectorId) {
-        Optional<Sector> sector = sectorRepository.findById(Integer.parseInt(sectorId));
-        Sector existingSector;
-        
-        if (sector.isPresent()){
-            existingSector = sector.get();
-            return existingSector.getSite().getId();
-        }
-    
-        return 0;
     }
     
     /**

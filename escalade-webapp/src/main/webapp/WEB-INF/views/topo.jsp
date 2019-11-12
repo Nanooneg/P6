@@ -53,7 +53,7 @@
                     <c:if test="${sessionScope.accountSession.id == topo.idAccount
                             || sessionScope.accountSession.roleName == 'Member'
                             || sessionScope.accountSession.roleName == 'Administrator'}">
-                        <a href="<c:url value="/updateTopo/${topo.id}"/>" class="text-info-link">
+                        <a href="<c:url value="/user/updateTopo/${topo.id}"/>" class="text-info-link">
                             <em class="fas fa-pen"></em> Modifier le topo</a>
                     </c:if>
                 </div>
@@ -61,7 +61,7 @@
                     <c:if test="${sessionScope.accountSession.id == topo.idAccount
                             || sessionScope.accountSession.roleName == 'Member'
                             || sessionScope.accountSession.roleName == 'Administrator'}">
-                        <a href="<c:url value="/deleteTopo/${topo.id}"/>" class="text-info-link">
+                        <a href="<c:url value="/user/deleteTopo/${topo.id}"/>" class="text-info-link">
                             <em class="fas fa-minus-circle"></em> Supprimer ce topo</a>
                     </c:if>
                 </div>
@@ -73,7 +73,7 @@
                     <c:if test="${sessionScope.accountSession.id == topo.idAccount
                             || sessionScope.accountSession.roleName == 'Member'
                             || sessionScope.accountSession.roleName == 'Administrator'}">
-                        <a href="<c:url value="/updateTopo/${topo.id}"/>" class="text-info-link">
+                        <a href="<c:url value="/user/updateTopo/${topo.id}"/>" class="text-info-link">
                             <em class="fas fa-pen"></em></a>
                     </c:if>
                 </div>
@@ -81,7 +81,7 @@
                     <c:if test="${sessionScope.accountSession.id == topo.idAccount
                             || sessionScope.accountSession.roleName == 'Member'
                             || sessionScope.accountSession.roleName == 'Administrator'}">
-                        <a href="<c:url value="/deleteTopo/${topo.id}"/>" class="text-info-link">
+                        <a href="<c:url value="/user/deleteTopo/${topo.id}"/>" class="text-info-link">
                             <em class="fas fa-minus-circle"></em></a>
                     </c:if>
                 </div>
@@ -89,7 +89,7 @@
             <br/>
             <div class="button">
                 <c:if test="${topo.lendable && topo.idAccount != sessionScope.accountSession.id}">
-                    <a href="<c:url value="/askForLending/${topo.id}"/>">
+                    <a href="<c:url value="/user/askForLending/${topo.id}"/>">
                         <button type="button" class="btn btn-primary btn-block">Demander</button>
                     </a>
                 </c:if>

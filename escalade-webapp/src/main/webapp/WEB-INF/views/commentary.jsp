@@ -15,7 +15,7 @@
         </div>
         <div class="form-group row">
             <div class="col-md-2 offset-md-4 col-sm-12">
-                <a href="<c:url value="/addComment/${publicationType}/${publicationId}"/>">
+                <a href="<c:url value="/user/addComment/${publicationType}/${publicationId}"/>">
                     <button type="button" class="btn btn-primary btn-block">Commenter</button>
                 </a>
             </div>
@@ -49,7 +49,7 @@
                             <c:if test="${sessionScope.accountSession.id == commentary.key.idAccount
                                     || sessionScope.accountSession.roleName == 'Member'
                                     || sessionScope.accountSession.roleName == 'Administrator'}">
-                                <a href="<c:url value="/updateCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
+                                <a href="<c:url value="/user/updateCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
                                     <em class="fas fa-pen"></em> Modifier le commentaire</a>
                             </c:if>
                         </div>
@@ -57,8 +57,7 @@
                             <c:if test="${sessionScope.accountSession.id == commentary.key.idAccount
                                     || sessionScope.accountSession.roleName == 'Member'
                                     || sessionScope.accountSession.roleName == 'Administrator'}">
-
-                                <a href="<c:url value="/deleteCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
+                                <a href="<c:url value="/user/deleteCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
                                     <em class="fas fa-minus-circle"></em> Supprimer le commentaire</a>
                             </c:if>
                         </div>
@@ -66,7 +65,7 @@
                             <c:if test="${sessionScope.accountSession.id == commentary.key.idAccount
                                     || sessionScope.accountSession.roleName == 'Member'
                                     || sessionScope.accountSession.roleName == 'Administrator'}">
-                                <a href="<c:url value="/updateCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
+                                <a href="<c:url value="/user/updateCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
                                     <em class="fas fa-pen"></em></a>
                             </c:if>
                         </div>
@@ -74,8 +73,7 @@
                             <c:if test="${sessionScope.accountSession.id == commentary.key.idAccount
                                     || sessionScope.accountSession.roleName == 'Member'
                                     || sessionScope.accountSession.roleName == 'Administrator'}">
-
-                                <a href="<c:url value="/deleteCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
+                                <a href="<c:url value="/user/deleteCommentary/${publicationType}/${publicationId}/${commentary.key.id}"/>" class="text-info-link">
                                     <em class="fas fa-minus-circle"></em></a>
                             </c:if>
                         </div>

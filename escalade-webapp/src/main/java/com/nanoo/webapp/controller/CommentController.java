@@ -31,6 +31,9 @@ public class CommentController {
     private static final String COMMENTARY_ID_ATT = "commentaryId";
     private static final String COMMENTARY_LIST_ATT = "listCommentaries";
     private static final String COMMENTARY_ATT = "commentary";
+    
+    /* Messages content */
+    private static final String COMMENTARY_ADD_RESULT_MESS = "L'ajout a échoué";
 
     private final CommentaryService commentaryService;
     
@@ -57,7 +60,7 @@ public class CommentController {
         return Views.COMMENTARY;
     }
     
-    @GetMapping("/addComment/{publicationType}/{publicationId}")
+    @GetMapping("/user/addComment/{publicationType}/{publicationId}")
     public String displayCommentForm(@PathVariable String publicationType, @PathVariable String publicationId, Model model){
         
         model.addAttribute(COMMENTARY_ATT, new CommentaryDTO());
@@ -67,7 +70,7 @@ public class CommentController {
         return Views.COMMENTARY_FORM;
     }
     
-    @GetMapping("/updateCommentary/{publicationType}/{publicationId}/{commentaryId}")
+    @GetMapping("/user/updateCommentary/{publicationType}/{publicationId}/{commentaryId}")
     public String updateCommentary(@PathVariable String commentaryId, Model model,
                                    @PathVariable String publicationId, @PathVariable String publicationType){
         
@@ -81,7 +84,8 @@ public class CommentController {
         return Views.COMMENTARY_FORM;
     }
     
-    @PostMapping({"/saveComment/{publicationType}/{publicationId}/","/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
+    @PostMapping({"/user/saveComment/{publicationType}/{publicationId}/",
+                  "/user/saveComment/{publicationType}/{publicationId}/{commentaryId}"})
     public String addCommentAndDisplayCommentaryView(@Valid @ModelAttribute(COMMENTARY_ATT) CommentaryDTO commentaryDTO,
                                                      BindingResult br, Model model,
                                                      @SessionAttribute (ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
@@ -91,7 +95,7 @@ public class CommentController {
         
         if (br.hasErrors()) {
             model.addAttribute(COMMENTARY_ATT,commentaryDTO);
-            model.addAttribute(MESSAGE_ATT, "L'ajout a échoué");
+            model.addAttribute(MESSAGE_ATT,COMMENTARY_ADD_RESULT_MESS);
             return Views.COMMENTARY_FORM;
         }
         
@@ -107,7 +111,7 @@ public class CommentController {
         return displayCommentaryView(publicationType, publicationId, model);
     }
     
-    @GetMapping("/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
+    @GetMapping("/user/deleteCommentary/{publicationType}/{publicationId}/{commentaryId}")
     public String deleteCommentAnsDisplayCommentaryView(@PathVariable String publicationId, @PathVariable String commentaryId,
                                                         Model model, @PathVariable String publicationType){
         

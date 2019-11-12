@@ -28,7 +28,7 @@
         </c:if>
         <div class="form-group row message-button">
             <div class="col-md-2 offset-md-4 col-sm-12">
-                <a href="<c:url value="/validAskForLending/${sessionScope.accountSession.id}/${topo.id}"/>">
+                <a href="<c:url value="/user/validAskForLending/${sessionScope.accountSession.id}/${topo.id}"/>">
                     <button type="button" class="btn btn-primary btn-block">Oui, j'ai compris</button></a>
             </div>
             <div class="col-md-2 col-sm-12">

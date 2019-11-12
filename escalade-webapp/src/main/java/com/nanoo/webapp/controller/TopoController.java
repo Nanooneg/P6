@@ -89,7 +89,7 @@ public class TopoController {
         return Views.TOPO_SEARCH;
     }
     
-    @GetMapping("/topoForm")
+    @GetMapping("/user/topoForm")
     public String displayTopoForm (Model model){
         
         model.addAttribute(TOPO_ATT,new TopoDTO());
@@ -111,7 +111,7 @@ public class TopoController {
         return Views.TOPO;
     }
     
-    @PostMapping({"/saveTopo/","/saveTopo/{topoId}"})
+    @PostMapping({"/user/saveTopo/","/user/saveTopo/{topoId}"})
     public String saveTopo(@Valid @ModelAttribute(TOPO_ATT) TopoDTO topoDTO,
                            @SessionAttribute(value = ACCOUNT_SESSION_ATT) AccountSessionDTO accountSessionDTO,
                            BindingResult bResult, Model model, @PathVariable(required = false) String topoId){
@@ -135,7 +135,7 @@ public class TopoController {
         return displayTopoPage(model);
     }
     
-    @GetMapping("/updateTopo/{topoId}")
+    @GetMapping("/user/updateTopo/{topoId}")
     public String updateTopo(@PathVariable String topoId, Model model){
         
         model.addAttribute(TOPO_ATT, topoService.searchTopoById(Integer.parseInt(topoId)));
@@ -145,7 +145,7 @@ public class TopoController {
         return Views.TOPO_FORM;
     }
     
-    @GetMapping("/deleteTopo/{topoId}")
+    @GetMapping("/user/deleteTopo/{topoId}")
     public String deleteTopo(@PathVariable String topoId, Model model){
         
         topoService.deleteTopo(Integer.parseInt(topoId));
@@ -153,7 +153,7 @@ public class TopoController {
         return displayTopoPage(model);
     }
     
-    @GetMapping("/askForLending/{topoId}")
+    @GetMapping("/user/askForLending/{topoId}")
     public String askForLending(Model model, @PathVariable String topoId){
         
         model.addAttribute(TOPO_ATT,topoService.searchTopoById(Integer.parseInt(topoId)));
@@ -161,7 +161,7 @@ public class TopoController {
         return Views.ASK_FOR_LENDING;
     }
     
-    @GetMapping("/validAskForLending/{accountId}/{topoId}")
+    @GetMapping("/user/validAskForLending/{accountId}/{topoId}")
     public String createTopoBooking(Model model, @PathVariable String accountId, @PathVariable String topoId){
         
         if (!topoBookingService.checkTopoBookingAskRequest(accountId,topoId)) {
@@ -173,7 +173,7 @@ public class TopoController {
         return displayTopo(topoId,model);
     }
     
-    @GetMapping("/lendingRequestReceived/{userId}")
+    @GetMapping("/user/lendingRequestReceived/{userId}")
     public String displayLendingRequestReceived(@PathVariable String userId, Model model){
         
         List<TopoBookingDTO> topoBookingReceivedDTOList =
@@ -187,7 +187,7 @@ public class TopoController {
         return Views.LENDING_REQUEST;
     }
     
-    @GetMapping("/validLendingRequest/{userId}/{topoBookingId}/{answer}")
+    @GetMapping("/user/validLendingRequest/{userId}/{topoBookingId}/{answer}")
     public String giveAnswerToLendingRequest(@PathVariable String topoBookingId,
                                              @PathVariable String answer, Model model,
                                              @PathVariable String userId){
@@ -197,7 +197,7 @@ public class TopoController {
         return displayLendingRequestReceived(userId,model);
     }
     
-    @GetMapping("/deleteTopoBooking/{userId}/{topoBookingId}")
+    @GetMapping("/user/deleteTopoBooking/{userId}/{topoBookingId}")
     public String deleteTopoBooking(@PathVariable String userId, @PathVariable String topoBookingId, Model model){
         
         topoBookingService.deleteTopoBooking(Integer.parseInt(topoBookingId));

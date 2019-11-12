@@ -6,7 +6,7 @@
 <%@include file="../common/header.jsp" %>
 
 <div id="topo-form" class="login-dark">
-    <form:form action="/saveTopo/${topo.id}" method="post" modelAttribute="topo" enctype="multipart/form-data" cssClass="background-custom">
+    <form:form action="/user/saveTopo/${topo.id}" method="post" modelAttribute="topo" enctype="multipart/form-data" cssClass="background-custom">
         <h2 class="text-center">
             <c:choose>
                 <c:when test="${empty topo.id}">Création de Topo</c:when>

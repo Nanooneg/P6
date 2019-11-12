@@ -7,7 +7,7 @@
 
 <section>
     <div id="spot-form-3" class="login-dark">
-        <form:form action="/saveWay/${sectorId}/${way.id}" method="post" modelAttribute="way" cssClass="background-custom">
+        <form:form action="/user/saveWay/${siteId}/${sectorId}/${way.id}" method="post" modelAttribute="way" cssClass="background-custom">
             <h1 class="text-center">
                 <c:choose>
                     <c:when test="${empty way.id}">Création de Voie</c:when>
