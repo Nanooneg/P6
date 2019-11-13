@@ -141,11 +141,6 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>6.0.17.Final</version>
             </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-ehcache</artifactId>
-                <version>${hibernate.version}</version>
-            </dependency>
 
             <!-- MapStruct -->
             <dependency>
@@ -165,13 +160,6 @@
                 <groupId>org.glassfish</groupId>
                 <artifactId>javax.el</artifactId>
                 <version>3.0.1-b09</version>
-            </dependency>
-
-            <!-- EhCache -->
-            <dependency>
-                <groupId>org.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>3.8.1</version>
             </dependency>
 
             <!-- Lombok -->
@@ -259,11 +247,6 @@
                                 <artifactId>lombok</artifactId>
                                 <version>${lombok.version}</version>
                             </path>
-                            <!--<path>
-                                <groupId>joda-time</groupId>
-                                <artifactId>joda-time</artifactId>
-                                <version>${joda-time.version}</version>
-                            </path>-->
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>

@@ -5,7 +5,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@include file="../common/header.jsp" %>
 
-<s:url value="/user/saveAccount" var="save"/>
+<s:url value="/saveAccount" var="save"/>
 <s:url value="/user/updateAccount/${account.id}" var="update"/>
 
 <div id="account-form" class="login-dark">

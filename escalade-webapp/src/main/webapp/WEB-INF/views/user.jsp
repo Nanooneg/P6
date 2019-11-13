@@ -18,7 +18,10 @@
             <div class="col-md-4 offset-md-4 col-sm-12">
                 <a href="<c:url value="/user/lendingRequestReceived/${sessionScope.accountSession.id }"/>">
                     <button type="button" class="btn btn-primary btn-block">
-                        Demandes de prêt : ${topoBookingReceived + topoBookingSent}
+                        <c:choose>
+                            <c:when test="${topoBookingReceived + topoBookingSent > 1}">Demandes de prêt : ${topoBookingReceived + topoBookingSent}</c:when>
+                            <c:otherwise>Demande de prêt : ${topoBookingReceived + topoBookingSent}</c:otherwise>
+                        </c:choose>
                     </button>
                 </a>
             </div>

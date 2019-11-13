@@ -42,7 +42,7 @@ public class TopoController {
     private static final String LIST_TOPO_ATT = "listTopo";
     
     /* Messages content */
-    private static final String ALREADY_ASK_MESS = "Vous avez déjà une demande en attente pour ce topo. Si vous souaitez" +
+    private static final String ALREADY_ASK_MESS = "Vous avez déjà une demande en attente pour ce topo. Si vous souhaitez" +
             " en faire une nouvelle, supprimer d'abord l'ancienne depuis votre espace utilisateur";
     
     private List<String> listRegion = HandlingEnumValues.getEnumRegionStringValues();

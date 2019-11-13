@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@SequenceGenerator(name = "seq_publication",sequenceName = "seq_site", initialValue = 100)
 public class Site extends Publication implements Serializable {
     
     private static final long serialVersionUID = 1L;

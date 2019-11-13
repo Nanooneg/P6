@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@SequenceGenerator(name = "seq_publication",sequenceName = "seq_way", initialValue = 2000)
 public class Way extends Publication{
     
     @ManyToOne(fetch = FetchType.LAZY)

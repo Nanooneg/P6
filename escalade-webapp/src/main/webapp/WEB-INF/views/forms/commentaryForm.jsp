@@ -30,7 +30,7 @@
             <form:errors path="text" cssClass="error"/>
         </div>
         <div class="form-group">
-            <input type="submit" name="submit" class="btn btn-primary btn-block" value="Enregistrer">
+            <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
             <a href="<c:out value="javascript:history.go(-1)"/>">
                 <button type="button" class="btn btn-primary btn-block">Annuler</button>
             </a>

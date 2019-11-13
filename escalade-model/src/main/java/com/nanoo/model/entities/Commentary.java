@@ -1,7 +1,8 @@
 package com.nanoo.model.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,13 +13,15 @@ import java.util.Date;
  * @create 31/08/2019 - 12:18
  */
 @Entity
-@Data @NoArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
+@SequenceGenerator(name = "seq_commentary", initialValue = 20)
 public class Commentary implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_commentary")
     private Integer id;
     
     /* Required */

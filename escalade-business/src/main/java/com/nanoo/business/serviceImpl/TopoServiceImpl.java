@@ -99,7 +99,7 @@ public class TopoServiceImpl implements TopoService {
         if ((!Objects.equals(topo.getPicture().getOriginalFilename(), "")) && topo.getPicture() != null){
             topo.setPicturePath(uploadUtil.doUpload(topo.getPicture(),topo.getName(),topo.getDateOfUpdate().toString(),TOPO_ATT));
             if (!Objects.equals(oldPicturePath, topo.getPicturePath()) && oldPicturePath != null) {
-                    uploadUtil.eraseOldPicture(oldPicturePath);
+                    UploadUtil.eraseOldPicture(oldPicturePath);
             }
         }
     

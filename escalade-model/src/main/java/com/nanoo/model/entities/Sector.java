@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@SequenceGenerator(name = "seq_publication",sequenceName = "seq_sector", initialValue = 1000)
 public class Sector extends Publication {
     
     @ManyToOne(fetch = FetchType.LAZY)

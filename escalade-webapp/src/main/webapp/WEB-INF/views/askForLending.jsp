@@ -15,8 +15,8 @@
                 <h2>Au sujet du topo "${topo.name}"</h2>
             </div>
             <div class="message-text">
-                <p>Vous êtes sur le point de demander sur l'on vous prête ce topo. Les amis de l'escalade se
-                   contentent de mettre en relation les passionnés. Si le propriétaire accepte, nous vous communiquerons ses
+                <p>Vous êtes sur le point de demander que l'on vous prête ce topo. Notre association se
+                   contente de mettre en relation les utilisateurs. Si le propriétaire accepte, nous vous communiquerons ses
                    coordonnées pour que vous le contactiez directement.</p>
                 <p>Vous pourrez voir l'avancée de votre demande dans votre espace personnel.</p>
             </div>

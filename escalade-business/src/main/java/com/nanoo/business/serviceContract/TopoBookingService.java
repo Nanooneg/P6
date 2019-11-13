@@ -27,7 +27,7 @@ public interface TopoBookingService {
     List<TopoBookingDTO> searchAllTopoBookingByIdOwnerWithPendingStatus(Integer accountId);
     
     /**
-     * This method search all topobooking who concern particular vuser.
+     * This method search all topobooking who concern particular user.
      *
      * @param accountId id of user
      * @return list of topoBooking if exist

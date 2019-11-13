@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author nanoo
@@ -44,23 +43,14 @@ public interface TopoRepository extends PagingAndSortingRepository<Topo,Integer>
     List<Topo> findAllByIdAccount (Integer accountID, Sort sort);
     
     /**
-     * This method find all id from topos posted by a particular user.
+     * This method search the id of the owner of a particular Topo
      *
-     * @param accountId id of user
-     * @return a list of Integer is topos exist
-     */
-    @Query(value = "SELECT t.id FROM topo t WHERE t.id_account = :accountId",
-           nativeQuery = true)
-    Set<Integer> getTopoIdByAccountId(@Param("accountId") Integer accountId);
-    
-    /**
-     * TODO
-     *
-     * @param topoId
-     * @return
+     * @param topoId id of topo
+     * @return the id of the owner of the topo
      */
     @Query(value = "SELECT t.id_account FROM topo t WHERE t.id = :topoId",
            nativeQuery = true)
     Integer getAccountIdByTopoId(@Param("topoId") Integer topoId);
     
 }
+            

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
     
+    //10 Mo
     private static final int MAX_UPLOAD_SIZE = 10 * 1024 * 1024;
 
     @Bean

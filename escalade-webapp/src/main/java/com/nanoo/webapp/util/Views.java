@@ -11,8 +11,6 @@ public class Views {
     private Views() {
     }
     
-    //TODO rename views topoSpot climbSpot
-    
     public static final String HOME = "home";
     public static final String LOGIN= "login";
     public static final String SIGNOUT= "signout";

@@ -20,8 +20,8 @@ public class UploadUtil {
     private static final Logger log = LoggerFactory.getLogger(UploadUtil.class);
     
     
-    private static final String ABS_PATH = "/resources/";
-    private static final String REAL_PATH = "/home/nanoo/dev/static/picture/escalade-pictures/";
+    private static final String APP_PATH = "/resources/";
+    private static final String SERVER_PATH = "/home/nanoo/dev/static/picture/escalade-pictures/";
     
     /**
      * This method is use to upload pictures, write them on disk and return their paths.
@@ -33,15 +33,14 @@ public class UploadUtil {
      */
     public String doUpload(MultipartFile picture, String name, String date, String publication) {
         
-        if (!new File(REAL_PATH + publication + "/").exists()) {
-            new File(REAL_PATH + publication + "/").mkdirs();
+        if (!new File(SERVER_PATH + publication + "/").exists()) {
+            new File(SERVER_PATH + publication + "/").mkdirs();
         }
         
         try{
             InputStream in = picture.getInputStream();
             
-            // server upload
-            File serverDestination = new File(REAL_PATH + publication + "/" + formatString(date) + "_" + formatString(name) + ".jpg");
+            File serverDestination = new File(SERVER_PATH + publication + "/" + formatString(date) + "_" + formatString(name) + ".jpg");
             FileUtils.copyInputStreamToFile(in,serverDestination);
             
             in.close();
@@ -49,11 +48,11 @@ public class UploadUtil {
             log.error(e.getMessage());
         }
         
-        return ABS_PATH + publication + "/" + formatString(date) + "_" + formatString(name) + ".jpg";
+        return APP_PATH + publication + "/" + formatString(date) + "_" + formatString(name) + ".jpg";
     }
     
     /**
-     * This method remove some characters from a string
+     * This method replaces some characters from a string
      *
      * @param string string to manipulate
      * @return the string reformatted
@@ -71,7 +70,7 @@ public class UploadUtil {
     public static void eraseOldPicture(String oldPicturePath){
         if (oldPicturePath != null){
             try{
-                String realPicturePath = oldPicturePath.replace(ABS_PATH,REAL_PATH);
+                String realPicturePath = oldPicturePath.replace(APP_PATH,SERVER_PATH);
                 Files.delete(Paths.get(realPicturePath));
             }catch (IOException e){
                 log.error(e.getMessage());
