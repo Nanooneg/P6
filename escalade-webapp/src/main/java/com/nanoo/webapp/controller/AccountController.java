@@ -125,7 +125,7 @@ public class AccountController {
     @PostMapping("/saveAccount")
     public String displayLoginFormAfterRegisterAccount(
             @Valid @ModelAttribute(ACCOUNT_ATT)AccountDTO accountDTO, BindingResult bResult, Model model){
-        
+    
         model.addAttribute(ACCOUNT_ATT,accountDTO);
         boolean mailAvailability = accountService.checkMailAvailability(accountDTO.getMail());
         

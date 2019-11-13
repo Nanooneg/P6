@@ -14,8 +14,7 @@
             <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
                 <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse"
-                 id="navcol-1">
+            <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<c:url value="/topoSpot"/>">Topo</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<c:url value="/climbSpot"/>">Site de grimpe</a></li>
@@ -26,7 +25,8 @@
                     </c:if>
                     <c:choose>
                         <c:when test="${sessionScope.accountSession != null}">
-                            <a class="btn btn-light action-button" role="button" href="<c:url value="/user/signout"/>">Déconnexion</a>                        </c:when>
+                            <a class="btn btn-light action-button" role="button" href="<c:url value="/user/signout"/>">Déconnexion</a>
+                        </c:when>
                         <c:otherwise>
                             <a class="btn btn-light action-button" role="button" href="<c:url value="/register"/>">Créer un compte</a>
                         </c:otherwise>

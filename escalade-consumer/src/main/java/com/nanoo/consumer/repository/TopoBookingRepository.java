@@ -1,7 +1,6 @@
 package com.nanoo.consumer.repository;
 
 import com.nanoo.model.entities.TopoBooking;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author nanoo
@@ -18,15 +16,6 @@ import java.util.Set;
  */
 @Repository
 public interface TopoBookingRepository extends PagingAndSortingRepository<TopoBooking,Integer> {
-    
-    /**
-     * This method find all topobooking in DB who concern some topos
-     *
-     * @param topoIdList if of topos concerned
-     * @param sort way to sort result
-     * @return a list of topobooking if exist findAllTopoBookingByIdTopo
-     */
-    List<TopoBooking> findAllTopoBookingByIdTopo (Set<Integer> topoIdList, Sort sort);
     
     /**
      * This method find all topobooking in DB for a particular user
@@ -37,10 +26,10 @@ public interface TopoBookingRepository extends PagingAndSortingRepository<TopoBo
     List<TopoBooking> findAllByIdAccountBorrower (Integer accountId);
     
     /**
-     * TODO
+     * This method find all topobooking in DB for a particular user
      *
-     * @param accountId
-     * @return
+     * @param accountId id of the user
+     * @return a list of topobooking if exist
      */
     List<TopoBooking> findAllByIdAccountOwner (Integer accountId);
     

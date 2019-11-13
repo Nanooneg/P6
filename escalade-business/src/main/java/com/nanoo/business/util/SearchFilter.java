@@ -1,13 +1,15 @@
 package com.nanoo.business.util;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author nanoo
  * @create 23/09/2019 - 19:33
  */
-@Data @NoArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
 public class SearchFilter {
 
     /* criteria recover from site and topo search forms */

@@ -114,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
             setError(MAIL_FIELD, "Aucun compte ne correspond à votre adresse mail");
             result = ERROR_LOG_MESSAGE;
             
-            return accountSessionMapper.fromAccountToSessionDto(account);
+            return null;
         }else if (!checkPassword(accountDTO.getPassword(), account.getPassword())) {
             setError(PASSWORD_FIELD, "Le mot de passe renseigné n'est pas correct");
             result = ERROR_LOG_MESSAGE;

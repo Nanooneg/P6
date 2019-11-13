@@ -1,7 +1,6 @@
 package com.nanoo.business.serviceImpl;
 
 import com.nanoo.business.dto.TopoBookingDTO;
-import com.nanoo.business.dto.TopoDTO;
 import com.nanoo.business.mapper.TopoBookingMapper;
 import com.nanoo.business.serviceContract.TopoBookingService;
 import com.nanoo.business.serviceContract.TopoService;
@@ -12,7 +11,6 @@ import com.nanoo.model.entities.Topo;
 import com.nanoo.model.entities.TopoBooking;
 import com.nanoo.model.enums.EnumStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,8 +24,6 @@ public class TopoBookingServiceImpl implements TopoBookingService {
     
     private Calendar calendar;
     
-    private final TopoService topoService;
-    
     private final TopoBookingRepository topoBookingRepository;
     private final AccountRepository accountRepository;
     private final TopoRepository topoRepository;
@@ -36,7 +32,6 @@ public class TopoBookingServiceImpl implements TopoBookingService {
     
     @Autowired
     public TopoBookingServiceImpl(TopoService topoService, TopoBookingRepository topoBookingRepository, AccountRepository accountRepository, TopoRepository topoRepository, TopoBookingMapper topoBookingMapper) {
-        this.topoService = topoService;
         this.topoBookingRepository = topoBookingRepository;
         this.accountRepository = accountRepository;
         this.topoRepository = topoRepository;

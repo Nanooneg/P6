@@ -16,7 +16,6 @@
   </parent>
 
   <!-- Infos Module -->
-  <groupId>com.nanoo</groupId>
   <artifactId>escalade-consumer</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>

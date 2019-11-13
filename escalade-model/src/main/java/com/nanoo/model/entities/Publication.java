@@ -20,7 +20,7 @@ class Publication implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_publication")
     private Integer id;
     @Column(name = "id_account", nullable = false)
     private Integer idAccount;

@@ -1,7 +1,8 @@
 package com.nanoo.model.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -13,7 +14,9 @@ import java.util.Date;
  * @create 31/08/2019 - 12:17
  */
 @Entity
-@Data @NoArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
+@SequenceGenerator(name = "seq_publication",sequenceName = "seq_topo", initialValue = 10000)
 public class Topo extends Publication implements Serializable{
     
     private static final long serialVersionUID = 1L;

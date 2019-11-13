@@ -16,8 +16,8 @@
             </div>
             <div class="col-md-7 col-sm-12 home-text">
                 <div class="home-description">
-                    Nous somme une association de passionnés ! Sur ce site vous trouverez des infos sur les spots de grimpe
-                    que les utilisateurs ont postées. Certains de ces sites ont été reconnus par nos membres et porte le label
+                    Nous sommes une association de passionnés ! Sur ce site vous trouverez des infos sur les spots de grimpe
+                    que les utilisateurs ont postés. Certains de ces sites ont été reconnus par nos membres et portent le label
                     "officiel les amis de l'escalade" : <img id="label-icon-result"
                                                              src="<c:url value="/resources/pictures/label-3-white.png"/>"
                                                              alt="label">
@@ -28,11 +28,11 @@
                     <img class="lendable-icon-result" src="<c:url value="/resources/pictures/label-lendable-green.png"/>" alt="lendable"/> <br/>
                     Un topo indisponible :
                     <img class="lendable-icon-result" src="<c:url value="/resources/pictures/label-lendable-red.png"/>" alt="lendable"/> <br/>
-                    Vous pouvez faire une demande auprès du propriétaire et s'il l'accepte, vous aurez accès à ses coordonnées
+                    Vous pouvez faire une demande auprès du propriétaire et si il accepte, vous aurez accès à ses coordonnées
                     pour prendre contact directement avec lui!
                 </div>
                 <div class="home-description">
-                    N'hésitez pas à créer un compte pour profiter de cette fonctionalité et bien d'autre (commenter, poster
+                    N'hésitez pas à créer un compte pour profiter de cette fonctionnalité et bien d'autres (commenter, poster
                     vous-même un topo ou des infos sur un spot).
                 </div>
                 <div class="home-description button">

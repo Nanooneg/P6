@@ -1,7 +1,8 @@
 package com.nanoo.model.entities;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,14 +13,15 @@ import java.util.Date;
  * @create 31/08/2019 - 12:17
  */
 @Entity
-@Data
+@Getter @Setter
 @NoArgsConstructor
+@SequenceGenerator(name = "seq_booking", initialValue = 10)
 public class TopoBooking implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_booking")
     private Integer id;
     @Column(name = "id_account_borrower", nullable = false)
     private Integer idAccountBorrower;

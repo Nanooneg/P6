@@ -33,7 +33,7 @@ public class JpaConfig {
     private Properties properties = new Properties();
     {
         try {
-            properties.load(getClass().getResourceAsStream("/persistence/jdbc.properties"));
+            properties.load(getClass().getResourceAsStream("/persistence/hibernate.properties"));
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }
@@ -87,9 +87,6 @@ public class JpaConfig {
         addProperties.setProperty("hibernate.current_session_context_class", properties.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
         addProperties.setProperty("hibernate.format_sql", properties.getProperty("spring.jpa.properties.hibernate.format_sql"));
         addProperties.setProperty("hibernate.jdbc.lob.non_contextual_creation", properties.getProperty("spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation"));
-        addProperties.setProperty("hibernate.cache.use_second_level_cache",properties.getProperty("spring.jpa.properties.hibernate.cache.use_second_level_cache"));
-        addProperties.setProperty("hibernate.cache.region.factory_class",properties.getProperty("spring.jpa.properties.hibernate.cache.region.factory_class"));
-        addProperties.setProperty("hibernate.cache.provider_class",properties.getProperty("spring.jpa.properties.hibernate.cache.provider_class"));
         addProperties.setProperty("hibernate.use_sql_comments",properties.getProperty("spring.jpa.use_sql_comments"));
         
         return addProperties;
