@@ -1,7 +1,6 @@
 #Directory
 .idea/
 target/
-backup-db-soutenance/
 
 #File
 *.iml
